@@ -1,4 +1,4 @@
-collection_template
-===================
+Collection of C++ Scripts
+=========================
 
-template for collection repos
+WIP
