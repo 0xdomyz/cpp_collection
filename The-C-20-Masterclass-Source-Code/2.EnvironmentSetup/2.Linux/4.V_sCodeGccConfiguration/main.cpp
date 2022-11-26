@@ -1,11 +1,8 @@
 #include <iostream>
 
-consteval int get_value(){
-    return 3;
-}
-
-int main(){
-    constexpr int value = get_value();
+int main()
+{
+    int value = 3;
     std::cout << "value : " << value << std::endl;
     return 0;
 }
