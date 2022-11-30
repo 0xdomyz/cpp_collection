@@ -1,31 +1,37 @@
 #include <iostream>
 
-int& max_return_reference(int& a, int& b)
+int &max_return_reference(int &a, int &b)
 {
-    if(a > b) {
+    if (a > b)
+    {
         return a;
-    } else {
+    }
+    else
+    {
         return b;
     }
 }
 
-int& sum( int& a, int& b){
-    int result = a + b; 
-    return result;// Reference to local variable returned
+int &sum(int &a, int &b)
+{
+    int result = a + b;
+    return result; // Reference to local variable returned
 }
 
-
-int& max_input_by_value (int a, int b)
+int &max_input_by_value(int a, int b)
 {
-    if(a > b) {
+    if (a > b)
+    {
         return a; // Reference to local variable returned
-    } else {
+    }
+    else
+    {
         return b; // Reference to local variable returned
     }
 }
 
-
-int main(){
+int main()
+{
 
     /*
     int x{14};
@@ -48,23 +54,19 @@ int main(){
 
     */
 
-
-   /*
-    int x{14};
-    int y{9};
-    int& result = sum(x,y); // Reference
-    std::cout << "result : " << result << std::endl;
-    */
-
+    /*
+     int x{14};
+     int y{9};
+     int& result = sum(x,y); // Reference
+     std::cout << "result : " << result << std::endl;
+     */
 
     int x{14};
     int y{9};
-    int& result = max_input_by_value(x,y); // Reference
+    int &result = max_return_reference(x, y); // Reference
     std::cout << "result : " << result << std::endl;
-
-
 
     std::cout << "Done!" << std::endl;
-   
+
     return 0;
 }
