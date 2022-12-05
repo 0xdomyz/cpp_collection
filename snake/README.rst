@@ -4,7 +4,7 @@
 
 `lin example 2 <https://github.com/jayprakashkumar1/Snake-Game-in-cpp-language-for-Linux-Environment>`_
 
-`lin example 3 <https://stackoverflow.com/questions/58466603/snake-game-in-linux-source-code-c-language>`
+`lin example 3 <https://stackoverflow.com/questions/58466603/snake-game-in-linux-source-code-c-language>`_
 
 `lin example 4 <https://medium.com/@ngbaanh/classic-snake-in-cpp-100-lines-of-code-for-practice-with-full-explain-in-simplicity-6b278ccd0a0f>`_
 
