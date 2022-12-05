@@ -6,7 +6,7 @@
 #include <sys/ioctl.h>
 #include <sys/select.h>
 #include <termios.h>
-#include <stropts.h>
+// #include <stropts.h>
 #include <iostream>
 #include <unistd.h>
 
