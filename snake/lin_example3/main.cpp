@@ -92,14 +92,15 @@ char waitForAnyKey(void)
 
 int getGameSpeed()
 {
-    int speed = 1;
+    int speed = 9;
     clrscr();
 
-    while (speed < 1 || speed > 9)
-    {
-        return (speed);
-    }
-    return 1;
+    // while (speed < 1 || speed > 9)
+    // {
+    //     return (speed);
+    // }
+    // return 1;
+    return (speed);
 }
 
 // This function checks if a key has pressed, then checks if its any of the arrow keys/ p/esc key. It changes direction acording to the key pressed.
