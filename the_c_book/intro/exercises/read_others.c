@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int read_bin(void)
+int read_decimal(void)
 {
     int n = 0;
     int ch;
@@ -43,7 +43,7 @@ char *convert_to_hexadecimal(int n)
         n /= 16;
         if (remainder < 10)
         {
-            hexadecimal[i] = remainder;
+            hexadecimal[i] = remainder + '0';
         }
         else if (remainder == 10)
         {
@@ -86,19 +86,36 @@ char *convert_to_hexadecimal(int n)
     }
 
     // end of string
-    hexadecimal[i] = '\0';
+    hexadecimal[i] = 0;
 
-    return hexadecimal;
+    // append 0x
+    char *hexadecimal2 = malloc(100 * sizeof(char));
+    hexadecimal2[0] = '0';
+    hexadecimal2[1] = 'x';
+    int l = 2;
+    while (hexadecimal[l - 2] != 0)
+    {
+        hexadecimal2[l] = hexadecimal[l - 2];
+        l++;
+    }
+    hexadecimal2[l] = 0;
+
+    free(hexadecimal);
+
+    return hexadecimal2;
 }
 
 int main(void)
 {
     int n;
     printf("Enter a number: ");
-    n = read_bin();
+
+    n = read_decimal();
     printf("You entered %d\n", n);
-    n = convert_to_binary(n);
-    printf("You entered binary %d\n", n);
+
+    int n2 = convert_to_binary(n);
+    printf("You entered binary %d\n", n2);
+
     char *hexadecimal;
     hexadecimal = convert_to_hexadecimal(n);
     printf("You entered hexadecimal %s\n", hexadecimal);
