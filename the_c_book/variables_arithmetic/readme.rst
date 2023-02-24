@@ -11,3 +11,13 @@ print_chars.c
 - limits.h
 - CHAR_MIN, CHAR_MAX
 
+count_stop_comma.c
+
+- multiple assignment
+- constant EOF
+- getchar() != EOF
+
+maybe_chars.c
+
+- char, int
+
