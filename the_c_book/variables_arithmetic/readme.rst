@@ -38,6 +38,10 @@ endless_unsigned.c
 expression and arithemetic
 ---------------------------
 
+precedence.c
+
+- precedence
+
 signed_to_unsigned.c
 
 - arithemetic conversion
@@ -65,9 +69,5 @@ bits_on_off.c
 grouping.c
 
 - grouping
-
-constants
-------------
-
 
 
