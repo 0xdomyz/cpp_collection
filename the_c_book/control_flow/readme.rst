@@ -2,6 +2,18 @@ relational_operator.c
 
 - zero or not zero
 
+logical.c
+
+- logical operators
+
+question_mark.c
+
+- question mark operator
+
+comma.c
+
+- comma operator
+
 control of flow
 ----------------------
 
