@@ -1,3 +1,7 @@
+pointer_to_func.c
+
+- pointer to function
+
 pointers
 ---------
 
@@ -28,16 +32,6 @@ walk_thru_array.c
 character handling
 -------------------
 
-echo.c
-
-- fprintf
-- malloc
-- getchar into int
-- free
-- mark end of string
-- strcpy
-- EOF
-
 line_length.c
 
 - getc
@@ -50,13 +44,43 @@ secret.c
 - putchar
 - char* = string
 
-sort_input.c
-
-sort_input2.c
-
-sort_input3.c
-
 str_eq.c
 
 - const char*
-- 
+- string end with int 0
+
+storage
+------------
+
+sort_input.c
+
+- array name convert to pointer in expression
+- 2d array first level of elementhas type array of values
+- \n, EOF, null pointer
+- sort array
+
+sort_input2.c
+
+- storage allocation
+
+sort_input3.c
+
+- char **p
+
+echo.c
+
+- fprintf
+- malloc
+- getchar into int
+- free
+- mark end of string
+- strcpy
+- EOF
+
+size_of_limit.c
+
+- array vs pointer
+
+size_t.c
+
+- size_t
