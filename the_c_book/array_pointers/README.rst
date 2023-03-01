@@ -84,3 +84,17 @@ size_of_limit.c
 size_t.c
 
 - size_t
+
+expresson involving pointers
+--------------------------------
+
+conversion.c
+
+- conversion to/from void*
+
+arithmetic.c
+
+- pointer arithmetic
+
+
+
