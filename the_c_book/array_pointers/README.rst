@@ -2,6 +2,33 @@ pointer_to_func.c
 
 - pointer to function
 
+conversion.c
+
+- conversion to/from void*
+
+arithmetic.c
+
+- pointer arithmetic
+
+array_pointer.c
+
+- pointer to array
+- multi-dimensional array
+- array as function argument
+
+exercise
+---------------
+
+array_of_ten.c
+
+- array
+
+string_funcs.c
+
+- str cmp
+- find char
+- find string
+
 pointers
 ---------
 
@@ -84,17 +111,5 @@ size_of_limit.c
 size_t.c
 
 - size_t
-
-expresson involving pointers
---------------------------------
-
-conversion.c
-
-- conversion to/from void*
-
-arithmetic.c
-
-- pointer arithmetic
-
 
 
