@@ -1,3 +1,5 @@
+// gcc -o tree tree.c && ./tree
+
 #include <stdio.h>
 #include <stdlib.h>
 struct tree_node
@@ -51,10 +53,23 @@ main()
     root_p->right_p = &tree[5];
 
     /* try the search */
-    tp = t_search(root_p, 9);
+    tp = t_search(root_p, 5);
     if (tp)
-        printf("found at position %d\n", tp - tree);
+        printf("found at position %ld\n", tp - tree);
     else
         printf("value not found\n");
+
+    tp = t_search(root_p, 1);
+    if (tp)
+        printf("found at position %ld\n", tp - tree);
+    else
+        printf("value not found\n");
+
+    tp = t_search(root_p, 9);
+    if (tp)
+        printf("found at position %ld\n", tp - tree);
+    else
+        printf("value not found\n");
+
     exit(EXIT_SUCCESS);
 }
