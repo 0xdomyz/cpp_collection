@@ -1,3 +1,5 @@
+// gcc -o tree2 tree2.c && ./tree2
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -93,5 +95,10 @@ main()
         else
             printf("%d not found\n", i);
     }
+
+    /* walk the tree */
+    printf("tree walk:\n");
+    t_walk(root_p);
+
     exit(EXIT_SUCCESS);
 }
