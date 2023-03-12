@@ -35,6 +35,7 @@ public:
     virtual ~Container() {}              // destructor (§3.2.1.2)
 };
 
+// virtual function
 void use(Container &c)
 {
     const int sz = c.size();
