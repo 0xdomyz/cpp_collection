@@ -11,6 +11,8 @@ void do_work(void)
 {
     // sleep
     this_thread::sleep_for(chrono::seconds(2));
+    // sleep for decimal seconds
+    this_thread::sleep_for(chrono::milliseconds(505));
     // do something
     cout << "do_work" << endl;
 }
