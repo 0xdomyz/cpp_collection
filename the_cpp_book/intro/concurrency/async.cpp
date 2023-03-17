@@ -35,5 +35,10 @@ int main(void)
     vector<double> v(10001, 3.14);
     double res = comp4(v);
     cout << res << endl;
+
+    // make big vector
+    vector<double> v2(100000000, 3.14);
+    double res2 = comp4(v2);
+    cout << res2 << endl;
     return 0;
 }
