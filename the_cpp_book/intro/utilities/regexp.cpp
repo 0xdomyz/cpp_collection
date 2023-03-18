@@ -8,9 +8,10 @@ using namespace std;
 
 int main(void)
 {
-    regex pat(R"(\w{2}\s*\d{5}(-\d{4})?)");
-    // regex pat(R"(\d)");
-    // ZIP code pattern: XXddddd-dddd and var iants
+    std::string pat_str = R"(\w{2}\s*\d{5}(-\d{4})?)";
+    // ZIP code pattern: XXddddd-dddd and variants
+    std::regex pat(pat_str);
+    std::cout << "pattern: " << pat_str << '\n';
 
     int lineno = 0;
     for (string line; getline(cin, line);)
