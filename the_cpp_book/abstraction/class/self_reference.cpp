@@ -42,7 +42,15 @@ public:
                 m++;
             }
         }
-        else if (m == 2)
+        else if (m == 2 && leapyear(y))
+        {
+            if (d > 29)
+            {
+                d -= 29;
+                m++;
+            }
+        }
+        else if (m == 2 && !leapyear(y))
         {
             if (d > 28)
             {
@@ -50,6 +58,7 @@ public:
                 m++;
             }
         }
+        d += n;
         return *this;
     }; // add n days
     string string_rep() const
@@ -82,8 +91,12 @@ void f(void)
     d3.add_day(1).add_month(1).add_year(1);
     cout << d3.string_rep() << endl;
 
-    Date d2{2000, 2, 28};
-    d2.add_day(1).add_month(1).add_year(1);
+    Date d2{2000, 2, 29};
+    d2.add_year(1);
+    cout << d2.string_rep() << endl;
+    d2.add_day(1);
+    cout << d2.string_rep() << endl;
+    d2.add_month(1);
     cout << d2.string_rep() << endl;
     // ...
 }
