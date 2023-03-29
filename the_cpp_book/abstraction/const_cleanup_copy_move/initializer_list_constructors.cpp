@@ -26,6 +26,13 @@ void f(initializer_list<int> lst)
     cout << endl;
 }
 
+struct X
+{
+    X(initializer_list<int>){};
+    X(){};
+    X(int){};
+};
+
 int main(void)
 {
     void f(initializer_list<int>);
@@ -34,4 +41,17 @@ int main(void)
     f({}); // the empty list
     // f{1, 2}; // error : function call () missing
     years.insert({{"Bjarne", "Stroustrup"}, {1950, 1975, 1985}});
+
+    X x0{};  // empty list: default constructor or initializer-list constructor? (the default constructor)
+    X x1{1}; // one integer: an int argument or a list of one element? (the initializer-list constructor)
+
+    vector<int> v1{1};       // one element
+    vector<int> v2{1, 2};    // two elements
+    vector<int> v3{1, 2, 3}; // three elements
+    vector<string> vs1{"one"};
+    vector<string> vs2{"one", "two"};
+    vector<string> vs3{"one", "two", "three"};
+
+    vector<int> vv1(1);    // one element with the default value (0)
+    vector<int> vv2(1, 2); // one element with the value 2
 }
