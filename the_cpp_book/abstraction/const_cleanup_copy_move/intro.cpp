@@ -21,3 +21,13 @@ int main()
     cout << s1 << endl;
     cout << s2 << endl;
 }
+
+// • A constructor initializing a string with a string literal (used for s1 and s2)
+// • A copy constructor copying a string (into the function argument arg)
+// • A move constructor moving the value of a string (from arg out of ident() into a temporary
+// variable holding the result of ident(s1))
+// • A move assignment moving the value of a string (from the temporary variable holding the
+// result of ident(s1) into s1)
+// • A copy assignment copying a string (from s2 into s1)
+// • A destructor releasing the resources owned by s1, s2, and the temporary variable holding the
+// result of ident(s1)
