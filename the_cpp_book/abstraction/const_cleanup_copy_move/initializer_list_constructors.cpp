@@ -10,6 +10,7 @@
 using namespace std;
 
 vector<double> v = {1, 2, 3.456, 99.99};
+vector<double> vv{1, 2, 3.456, 99.99};
 list<pair<string, string>> languages = {
     {"Nygaard", "Simula"}, {"Richards", "BCPL"}, {"Ritchie", "C"}};
 // map<vector<string>, vector<int>> years = {

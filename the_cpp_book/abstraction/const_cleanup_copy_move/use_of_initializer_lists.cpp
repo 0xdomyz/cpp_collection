@@ -53,7 +53,8 @@ template <class E>
 Vector<E>::Vector(std::initializer_list<E> s)
     : sz{s.size()} // set vector size
 {
-    // reserve(sz);                                  // get the right amount of space
+    // get size of mem for elem
+    elem = new E[s.size()];                       // allocate memory for elements
     uninitialized_copy(s.begin(), s.end(), elem); // initialize elements in elem[0:s.size())
 }
 
