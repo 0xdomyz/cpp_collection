@@ -20,6 +20,7 @@ S f(S arg)
 
 int main(void)
 {
-    S s2{f({string{"abc"}, 1})}; // move assignment
+    S s2{};
+    s2 = f({string{"abc"}, 1}); // move assignment
     return 0;
 }
