@@ -37,55 +37,52 @@ class Ival_slider : public Ival_box
 {
 private:
     // ... graphics stuff to define what the slider looks like, etc. ...
-    int high, low; // range of values
+    int slider_pos; // position of slider
 public:
-    Ival_slider(int a, int b) : Ival_box{a, b}, high{b}, low{a} {};
-    int get_value() { return 1; };
-    void set_value(int){};
-    void prompt() { cout << "Enter a value between " << low << " and " << high << ": "; };
-    bool was_changed() const { return true; };
+    Ival_slider(int a, int b) : Ival_box{a, b}, slider_pos{10} {};
+    int get_value()
+    {
+        return Ival_box::get_value();
+    }
+    void set_value(int i) { Ival_box::set_value(i); };
+    void prompt() override
+    {
+        cout << "Enter a value between " << low << " and " << high << ": ";
+        // get value from user
+        int value;
+        std::cin >> value;
+        set_value(value);
+        cout << "Value set to " << value << endl;
+    };
+    bool was_changed() const { return Ival_box::was_changed(); };
 };
 
-class Ival_dial : public Ival_box
-{
-private:
-    // ... graphics stuff to define what the dial looks like, etc. ...
-    int high, low; // range of values
-public:
-    Ival_dial(int ll, int hh) : Ival_box{ll, hh}, high{hh}, low{ll} {};
-    int get_value() { return 1; };
-    void set_value(int){};
-    void prompt() { cout << "Enter a value between " << low << " and " << high << ": "; };
-    bool was_changed() const { return true; };
-};
-class Flashing_ival_slider : public Ival_slider
-{ /* ... */
-};
-class Popup_ival_slider : public Ival_slider
-{ /* ... */
-};
-
+// use Ival_box as a base class for all kinds of Ival objects
 void interact(Ival_box *pb)
 {
     pb->prompt(); // aler t user
     // ...
+    bool changed = pb->was_changed();
+    cout << "Changed: " << changed << endl;
+
     int i = pb->get_value();
     if (pb->was_changed())
     {
         // ... new value; do something ...
+        cout << "New value: " << i << endl;
     }
     else
     {
         // ... do something else ...
+        cout << "No change" << endl;
     }
 };
 
+// use Ival_box as a base class for all kinds of Ival objects
 void some_fct()
 {
     unique_ptr<Ival_box> p1{new Ival_slider{0, 5}}; // Ival_slider derived from Ival_box
     interact(p1.get());
-    unique_ptr<Ival_box> p2{new Ival_dial{1, 12}};
-    interact(p2.get());
 };
 
 int main(void)
