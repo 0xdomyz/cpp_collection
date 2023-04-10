@@ -1,4 +1,4 @@
-// compile and run: g++ -o implementation_inheritance implementation_inheritance.cpp && ./implementation_inheritance
+// compile and run: g++ -o implementation implementation.cpp && ./implementation
 
 #include <iostream>
 #include <memory>
