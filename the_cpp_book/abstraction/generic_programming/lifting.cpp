@@ -1,5 +1,4 @@
-// wip
-//  g++ lifting.cpp -o lifting -std=c++11 && ./lifting
+// g++ lifting.cpp -o lifting -std=c++11 && ./lifting
 
 #include <iostream>
 #include <iterator>
