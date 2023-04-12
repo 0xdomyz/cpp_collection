@@ -1,6 +1,5 @@
-// complie: g++ -o subscript subscript.cpp
 // make a file of 3 words: echo "hello world hello" > words.txt
-// run: ./subscript < words.txt
+// complie and run: g++ -o subscript subscript.cpp && ./subscript < words.txt
 
 #include <iostream>
 #include <string>
