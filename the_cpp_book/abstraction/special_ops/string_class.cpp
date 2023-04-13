@@ -4,38 +4,32 @@
 #include <stdexcept>
 #include <vector>
 #include <memory>
+#include <cstring>
 
 using namespace std;
 
 class String
 {
-    /*
-    A simple string that implements the short str ing optimization
-    size()==sz is the number of elements
-    if size()<= short_max, the characters are held in the String object itself;
-    otherwise the free store is used.
-    ptr points to the start of the character sequence
-    the character sequence is kept zero-ter minated: ptr[size()]==0;
-    this allows us to use C librar y str ing functions and to easily return a C-style string: c_str()
-    To allow efficient addition of characters at end, String grows by doubling its allocation;
-    capacity() is the amount of space available for characters
-    (excluding the terminating 0): sz+space
-    */
-
 public:
+    // essential operations
     String();                          // default constructor : x{""}
     explicit String(const char *p);    // constructor from C-style string: x{"Euler"}
     String(const String &);            // copy constr uctor
     String &operator=(const String &); // copy assignment
-    String(String &&x);                // move constr uctor
-    String &operator=(String &&x);     // move assignment
+    // by reference when dont need copy for copy be affordable
+    String(String &&x);            // move constr uctor
+    String &operator=(String &&x); // move assignment
     ~String()
     {
         if (short_max < sz)
             delete[] ptr;
-    }                                          // destructor
+    } // destructor
+
+    // access to characters
     char &operator[](int n) { return ptr[n]; } // unchecked element access
     char operator[](int n) const { return ptr[n]; }
+    // provide const and non-const versions of the access functions to allow them to be used for
+    // const as well as other objects
     char &at(int n)
     {
         check(n);
@@ -56,9 +50,27 @@ public:
     }
 
 private:
+    /*
+    A simple string that implements the short string optimization
+
+    size()==sz is the number of elements
+    if size()<= short_max, the characters are held in the String object itself;
+    otherwise the free store is used.
+
+    ptr points to the start of the character sequence
+    the character sequence is kept zero-terminated: ptr[size()]==0;
+    this allows us to use C librar y string functions and to easily return a C-style string: c_str()
+
+    To allow efficient addition of characters at end, String grows by doubling its allocation;
+    capacity() is the amount of space available for characters
+    (excluding the terminating 0): sz+space
+    */
     static const int short_max = 15;
     int sz; // number of characters
     char *ptr;
+    // anonymous union
+    // , which is specifically designed to allow a class to manage alternative representations of
+    // objects
     union
     {
         int space;              // unused allocated space
@@ -79,7 +91,7 @@ private:
 char *expand(const char *ptr, int n) // expand into free store
 {
     char *p = new char[n];
-    // strcpy(p, ptr); // §43.4 todo
+    strcpy(p, ptr); // §43.4, copy elements from ptr to p
     return p;
 }
 
@@ -87,8 +99,10 @@ void String::copy_from(const String &x)
 // make *this a copy of x
 {
     if (x.sz <= short_max)
-    { // copy *this
-        // memcpy(this, &x, sizeof(x)); // §43.5 todo
+    {                                // copy *this
+        memcpy(this, &x, sizeof(x)); // §43.5
+        // memcpy prototype: void *memcpy(void *dest, const void *src, size_t n);
+        // copies n bytes from memory area src to memory area dest
         ptr = ch;
     }
     else
@@ -102,8 +116,8 @@ void String::copy_from(const String &x)
 void String::move_from(String &x)
 {
     if (x.sz <= short_max)
-    { // copy *this
-        // memcpy(this, &x, sizeof(x)); // §43.5 todo
+    {                                // copy *this
+        memcpy(this, &x, sizeof(x)); // §43.5
         ptr = ch;
     }
     else
@@ -117,7 +131,7 @@ void String::move_from(String &x)
     }
 }
 
-// usages
+// use [] for ordinary use
 int hash(const String &s)
 {
     int h{s[0]};
@@ -126,6 +140,7 @@ int hash(const String &s)
     return h;
 }
 
+//  use at() where we see a possibility of mistakes
 void print_in_order(const String &s, const vector<int> &index)
 {
     for (auto x : index)
