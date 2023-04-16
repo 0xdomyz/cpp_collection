@@ -44,7 +44,7 @@ enum class Kind : char
     end,
     plus = '+',
     minus = '-',
-    mul = '=',
+    mul = '*',
     div = '/',
     print = ';',
     assign = '=',
@@ -110,7 +110,7 @@ double term(bool get) // multiply and divide
         switch (ts.current().kind)
         {
         case Kind::mul:
-            left == prim(true);
+            left *= prim(true);
             break;
         case Kind::div:
             if (auto d = prim(true))
