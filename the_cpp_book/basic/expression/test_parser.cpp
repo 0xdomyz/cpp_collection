@@ -107,21 +107,27 @@ class Token_stream
 public:
     Token_stream(int size, Token *buffer)
         : size{size}, buffer{buffer} {};
-    // list constructor
-    Token_stream(initializer_list<Token> lst)
-        : size{static_cast<int>(lst.size())},
-          buffer{new Token[size]}
-    {
-        copy(lst.begin(), lst.end(), buffer);
-    };
     ~Token_stream() { delete[] buffer; };
     Token get()
     {
         if (index < size)
-            return buffer[index++];
-        return Token{Kind::end};
+            ct = buffer[index++];
+        else
+            ct = Token{Kind::end};
+        return ct;
     };                               // read and return next token
     Token &current() { return ct; }; // most recently read token
+    // cout by cout buffer in a loop
+    friend ostream &operator<<(ostream &os, const Token_stream &ts)
+    {
+        os << "Token_stream{" << endl;
+        for (int i = 0; i < ts.size; i++)
+        {
+            os << ts.buffer[i] << '\n';
+        }
+        os << "}" << endl;
+        return os;
+    }
 
 private:
     int size;
@@ -130,9 +136,13 @@ private:
     Token ct{Kind::end}; // current token
 };
 
-Token_stream ts{Token{Kind::name, "pi", 3.14159},
-                Token{Kind::print},
-                Token{Kind::end}};
+Token_stream ts{6, new Token[6]{
+                       Token{Kind::name, "x", 0},
+                       Token{Kind::assign},
+                       Token{Kind::number, "", 2},
+                       Token{Kind::print},
+                       Token{Kind::name, "x", 0},
+                       Token{Kind::end}}};
 
 double error(const string &s);
 
@@ -144,6 +154,7 @@ double term(bool get) // multiply and divide
     double left = prim(get);
     for (;;)
     {
+        cout << "term:" << ts.current() << '\n';
         switch (ts.current().kind)
         {
         case Kind::mul:
@@ -166,6 +177,7 @@ double prim(bool get) // handle primar ies
 {
     if (get)
         ts.get(); // read next token
+    cout << "prim:" << ts.current() << '\n';
     switch (ts.current().kind)
     {
     case Kind::number: // floating-point constant
@@ -201,6 +213,7 @@ double expr(bool get) // add and subtract
     double left = term(get);
     for (;;)
     { // ‘‘forever’’
+        cout << "expr:" << ts.current() << '\n';
         switch (ts.current().kind)
         {
         case Kind::plus:
@@ -231,6 +244,51 @@ double error(const string &s)
     return 1;
 }
 
+void calculate()
+{
+    cout << "calculate:" << ts << '\n';
+    cout << endl;
+
+    for (;;)
+    {
+        ts.get();
+        cout << "calculate:" << ts.current() << '\n';
+        if (ts.current().kind == Kind::end)
+            break;
+        if (ts.current().kind == Kind::print)
+            continue;
+        cout << expr(false) << '\n';
+    }
+}
+
 int main(void)
 {
+    calculate();
+
+    // ts = Token_stream{9, new Token[9]{
+    //                          Token{Kind::name, "x", 0},
+    //                          Token{Kind::assign},
+    //                          Token{Kind::number, "", 2},
+    //                          Token{Kind::print},
+    //                          Token{Kind::name, "x", 0},
+    //                          Token{Kind::plus},
+    //                          Token{Kind::number, "", 3},
+    //                          Token{Kind::print},
+    //                          Token{Kind::end}}};
+    // calculate();
+
+    // ts = Token_stream{
+    //     13, new Token[13]{
+    //             Token{Kind::number, "", 16},
+    //             Token{Kind::plus, "", 0},
+    //             Token{Kind::lp, "", 0},
+    //             Token{Kind::number, "", 3.2},
+    //             Token{Kind::minus, "", 0},
+    //             Token{Kind::number, "", 2},
+    //             Token{Kind::rp, "", 0},
+    //             Token{Kind::mul, "", 0},
+    //             Token{Kind::number, "", 0.4},
+    //             Token{Kind::end, "", 0},
+    //         }};
+    // calculate();
 }
