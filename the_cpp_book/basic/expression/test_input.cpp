@@ -53,41 +53,48 @@ enum class Kind : char
     rp = ')'
 };
 
+// cout for Kind
+ostream &operator<<(ostream &os, const Kind &k)
+{
+    switch (k)
+    {
+    case Kind::name:
+        return os << "Kind::name";
+    case Kind::number:
+        return os << "Kind::number";
+    case Kind::end:
+        return os << "Kind::end";
+    case Kind::plus:
+        return os << "Kind::plus";
+    case Kind::minus:
+        return os << "Kind::minus";
+    case Kind::mul:
+        return os << "Kind::mul";
+    case Kind::div:
+        return os << "Kind::div";
+    case Kind::print:
+        return os << "Kind::print";
+    case Kind::assign:
+        return os << "Kind::assign";
+    case Kind::lp:
+        return os << "Kind::lp";
+    case Kind::rp:
+        return os << "Kind::rp";
+    default:
+        return os << "Kind::unknown";
+    }
+}
+
 struct Token
 {
     Kind kind;
-    string string_value;
-    double number_value;
-    // cout
+    string string_value{""};
+    double number_value{0};
+    // cout as debug shape: Token{Kind::name, "x", 0} etc
     friend ostream &operator<<(ostream &os, const Token &t)
     {
-        switch (t.kind)
-        {
-        case Kind::name:
-            return os << "name: " << t.string_value;
-        case Kind::number:
-            return os << "number: " << t.number_value;
-        case Kind::end:
-            return os << "end";
-        case Kind::plus:
-            return os << "plus";
-        case Kind::minus:
-            return os << "minus";
-        case Kind::mul:
-            return os << "mul";
-        case Kind::div:
-            return os << "div";
-        case Kind::print:
-            return os << "print";
-        case Kind::assign:
-            return os << "assign";
-        case Kind::lp:
-            return os << "lp";
-        case Kind::rp:
-            return os << "rp";
-        default:
-            return os << "unknown";
-        }
+        return os << "Token{" << t.kind
+                  << ", " << t.string_value << ", " << t.number_value << "}";
     }
 };
 

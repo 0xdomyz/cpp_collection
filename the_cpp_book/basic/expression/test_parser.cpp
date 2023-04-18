@@ -53,11 +53,49 @@ enum class Kind : char
     rp = ')'
 };
 
+// cout for Kind
+ostream &operator<<(ostream &os, const Kind &k)
+{
+    switch (k)
+    {
+    case Kind::name:
+        return os << "Kind::name";
+    case Kind::number:
+        return os << "Kind::number";
+    case Kind::end:
+        return os << "Kind::end";
+    case Kind::plus:
+        return os << "Kind::plus";
+    case Kind::minus:
+        return os << "Kind::minus";
+    case Kind::mul:
+        return os << "Kind::mul";
+    case Kind::div:
+        return os << "Kind::div";
+    case Kind::print:
+        return os << "Kind::print";
+    case Kind::assign:
+        return os << "Kind::assign";
+    case Kind::lp:
+        return os << "Kind::lp";
+    case Kind::rp:
+        return os << "Kind::rp";
+    default:
+        return os << "Kind::unknown";
+    }
+}
+
 struct Token
 {
     Kind kind;
-    string string_value;
-    double number_value;
+    string string_value{""};
+    double number_value{0};
+    // cout as debug shape: Token{Kind::name, "x", 0} etc
+    friend ostream &operator<<(ostream &os, const Token &t)
+    {
+        return os << "Token{" << t.kind
+                  << ", " << t.string_value << ", " << t.number_value << "}";
+    }
 };
 
 double term(bool);
