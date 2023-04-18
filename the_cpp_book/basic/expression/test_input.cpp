@@ -4,6 +4,7 @@
 #include <string>   // strings
 #include <map>      // map
 #include <cctype>   // isalpha(), etc.
+#include <sstream>
 
 using namespace std;
 
@@ -57,6 +58,37 @@ struct Token
     Kind kind;
     string string_value;
     double number_value;
+    // cout
+    friend ostream &operator<<(ostream &os, const Token &t)
+    {
+        switch (t.kind)
+        {
+        case Kind::name:
+            return os << "name: " << t.string_value;
+        case Kind::number:
+            return os << "number: " << t.number_value;
+        case Kind::end:
+            return os << "end";
+        case Kind::plus:
+            return os << "plus";
+        case Kind::minus:
+            return os << "minus";
+        case Kind::mul:
+            return os << "mul";
+        case Kind::div:
+            return os << "div";
+        case Kind::print:
+            return os << "print";
+        case Kind::assign:
+            return os << "assign";
+        case Kind::lp:
+            return os << "lp";
+        case Kind::rp:
+            return os << "rp";
+        default:
+            return os << "unknown";
+        }
+    }
 };
 
 class Token_stream
@@ -178,6 +210,34 @@ double error(const string &s)
     return 1;
 }
 
+// driver
+
+void calculate()
+{
+    for (;;)
+    {
+        ts.get();
+        cout << ts.current() << '\n';
+        if (ts.current().kind == Kind::end)
+            break;
+        if (ts.current().kind == Kind::print)
+            continue;
+    }
+}
+
+void test_string(string s)
+{
+    cout << "test_string: " << s << '\n';
+    ts.set_input(new istringstream{s});
+    calculate();
+    cout << endl;
+}
+
 int main(void)
 {
+    test_string("1.2+21.5;-3.0+4.00");
+    test_string("pi=3.14; r = 2; area = pi * r * r");
+    test_string("16+(3.2-2)*0.4");
+    test_string("6+3.2-2*0.4");
+    test_string("6+-3.2*-0.5");
 }
