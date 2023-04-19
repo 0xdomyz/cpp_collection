@@ -105,8 +105,34 @@ double prim(bool);
 class Token_stream
 {
 public:
+    Token_stream(){};
     Token_stream(int size, Token *buffer)
         : size{size}, buffer{buffer} {};
+    // copy constructor
+    Token_stream(const Token_stream &ts)
+    {
+        size = ts.size;
+        buffer = new Token[size];
+        for (int i = 0; i < size; i++)
+        {
+            buffer[i] = ts.buffer[i];
+        }
+    }
+    // copy assignment
+    Token_stream &operator=(const Token_stream &ts)
+    {
+        if (this != &ts)
+        {
+            delete[] buffer;
+            size = ts.size;
+            buffer = new Token[size];
+            for (int i = 0; i < size; i++)
+            {
+                buffer[i] = ts.buffer[i];
+            }
+        }
+        return *this;
+    }
     ~Token_stream() { delete[] buffer; };
     Token get()
     {
@@ -134,19 +160,13 @@ public:
     }
 
 private:
-    int size;
+    int size{0};
     int index{0};
     Token *buffer;
     Token ct{Kind::end}; // current token
 };
 
-Token_stream ts{6, new Token[6]{
-                       Token{Kind::name, "x", 0},
-                       Token{Kind::assign},
-                       Token{Kind::number, "", 2},
-                       Token{Kind::print},
-                       Token{Kind::name, "x", 0},
-                       Token{Kind::end}}};
+Token_stream ts;
 
 double error(const string &s);
 
@@ -161,20 +181,22 @@ double term(bool get) // multiply and divide
     term_count++;
     string func_sig = "term(" + to_string(get) + ") " + to_string(local_count);
 
-    cout << func_sig << " start" << '\n';
+    cout << func_sig << '\n';
 
     double left = prim(get);
     int i = 0;
     for (;;)
     {
-        cout << func_sig << " iteration " << i << ", switch on :" << ts.current() << '\n';
+        cout << func_sig << " iteration " << i << '\n';
         i++;
         switch (ts.current().kind)
         {
         case Kind::mul:
+            cout << func_sig << " mul" << '\n';
             left *= prim(true);
             break;
         case Kind::div:
+            cout << func_sig << " div" << '\n';
             if (auto d = prim(true))
             {
                 left /= d;
@@ -196,17 +218,17 @@ double prim(bool get) // handle primar ies
     prim_count++;
     string func_sig = "prim(" + to_string(get) + ") " + to_string(local_count);
 
-    cout << func_sig << " start" << '\n';
+    cout << func_sig << '\n';
 
     if (get)
         ts.get(); // read next token
 
-    cout << func_sig << " switch on:" << ts.current() << '\n';
     double result;
     switch (ts.current().kind)
     {
     case Kind::number: // floating-point constant
     {
+        cout << func_sig << " case number" << '\n';
         double v = ts.current().number_value;
         ts.get();
         result = v;
@@ -214,24 +236,25 @@ double prim(bool get) // handle primar ies
     }
     case Kind::name:
     {
+        cout << func_sig << " case name" << '\n';
         string s = ts.current().string_value;
         double &v = table[s]; // find the corresponding
         if (ts.get().kind == Kind::assign)
         {
-            cout << func_sig << " assign call expr with true with curren token: " << ts.current() << '\n';
+            cout << func_sig << " case name assign" << '\n';
             v = expr(true); // ’=’ seen: assignment
-            cout << func_sig << " assign call expr done, assigned: " << v << " to: " << s << '\n';
+            cout << func_sig << " case name assign assigned" << '\n';
         }
         result = v;
         break;
     }
     case Kind::minus: // unar y minus
-        cout << func_sig << " minus call prim with true with curren token: " << ts.current() << '\n';
+        cout << func_sig << " case minus" << '\n';
         result = -prim(true);
         break;
     case Kind::lp:
     {
-        cout << func_sig << " lp call expr with true with curren token: " << ts.current() << '\n';
+        cout << func_sig << " case lp" << '\n';
         auto e = expr(true);
         if (ts.current().kind != Kind::rp)
             return error("')' expected");
@@ -254,20 +277,22 @@ double expr(bool get) // add and subtract
     expr_count++;
     string func_sig = "expr(" + to_string(get) + ") " + to_string(local_count);
 
-    cout << func_sig << " start" << '\n';
+    cout << func_sig << '\n';
 
     double left = term(get);
     int i = 0;
     for (;;)
     { // ‘‘forever’’
-        cout << func_sig << " iteration " << i << ", switch on: " << ts.current() << '\n';
+        cout << func_sig << " iteration " << i << '\n';
         i++;
         switch (ts.current().kind)
         {
         case Kind::plus:
+            cout << func_sig << " case plus" << '\n';
             left += term(true);
             break;
         case Kind::minus:
+            cout << func_sig << " case minus" << '\n';
             left -= term(true);
             break;
         default:
@@ -316,13 +341,21 @@ void calculate()
             break;
         if (ts.current().kind == Kind::print)
             continue;
-        cout << func_sig << " called expr with current being:" << ts.current() << '\n';
+        cout << func_sig << " called expr" << '\n';
         cout << expr(false) << '\n';
     }
 }
 
 int main(void)
 {
+    ts = Token_stream{6, new Token[6]{
+                             Token{Kind::name, "x", 0},
+                             Token{Kind::assign},
+                             Token{Kind::number, "", 2},
+                             Token{Kind::print},
+                             Token{Kind::name, "x", 0},
+                             Token{Kind::end}}};
+
     calculate();
 
     // ts = Token_stream{9, new Token[9]{
