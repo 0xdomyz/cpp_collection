@@ -114,9 +114,13 @@ public:
             ct = buffer[index++];
         else
             ct = Token{Kind::end};
+        cout << "Token_stream get: " << ct << '\n';
         return ct;
-    };                               // read and return next token
-    Token &current() { return ct; }; // most recently read token
+    }; // read and return next token
+    Token &current()
+    {
+        return ct;
+    }; // most recently read token
     // cout by cout buffer in a loop
     friend ostream &operator<<(ostream &os, const Token_stream &ts)
     {
@@ -151,10 +155,11 @@ map<string, double> table;
 
 double term(bool get) // multiply and divide
 {
+    cout << "term called prim with get: " << get << '\n';
     double left = prim(get);
     for (;;)
     {
-        cout << "term:" << ts.current() << '\n';
+        cout << "term switch on :" << ts.current() << '\n';
         switch (ts.current().kind)
         {
         case Kind::mul:
@@ -168,6 +173,7 @@ double term(bool get) // multiply and divide
             }
             return error("divide by 0");
         default:
+            cout << "term return: " << left << '\n';
             return left;
         }
     }
@@ -177,43 +183,59 @@ double prim(bool get) // handle primar ies
 {
     if (get)
         ts.get(); // read next token
-    cout << "prim:" << ts.current() << '\n';
+
+    cout << "prim switch on:" << ts.current() << '\n';
+    double result;
     switch (ts.current().kind)
     {
     case Kind::number: // floating-point constant
     {
         double v = ts.current().number_value;
         ts.get();
-        return v;
+        result = v;
+        break;
     }
     case Kind::name:
     {
-        double &v = table[ts.current().string_value]; // find the corresponding
+        string s = ts.current().string_value;
+        double &v = table[s]; // find the corresponding
         if (ts.get().kind == Kind::assign)
+        {
+            cout << "prim assign call expr with true with curren token: " << ts.current() << '\n';
             v = expr(true); // ’=’ seen: assignment
-        return v;
+            cout << "prim assign call expr done, assigned: " << v << " to: " << s << '\n';
+        }
+        result = v;
+        break;
     }
     case Kind::minus: // unar y minus
-        return -prim(true);
+        cout << "prim minus call prim with true with curren token: " << ts.current() << '\n';
+        result = -prim(true);
+        break;
     case Kind::lp:
     {
+        cout << "prim lp call expr with true with curren token: " << ts.current() << '\n';
         auto e = expr(true);
         if (ts.current().kind != Kind::rp)
             return error("')' expected");
         ts.get(); // eat ’)’
-        return e;
+        result = e;
+        break;
     }
     default:
         return error("primary expected");
     }
+    cout << "prim return: " << result << '\n';
+    return result;
 }
 
 double expr(bool get) // add and subtract
 {
+    cout << "expr called term with get: " << get << '\n';
     double left = term(get);
     for (;;)
     { // ‘‘forever’’
-        cout << "expr:" << ts.current() << '\n';
+        cout << "expr switch on: " << ts.current() << '\n';
         switch (ts.current().kind)
         {
         case Kind::plus:
@@ -223,6 +245,7 @@ double expr(bool get) // add and subtract
             left -= term(true);
             break;
         default:
+            cout << "expr return: " << left << '\n';
             return left;
         }
     }
@@ -252,11 +275,12 @@ void calculate()
     for (;;)
     {
         ts.get();
-        cout << "calculate:" << ts.current() << '\n';
+        cout << "calculate check end or print:" << ts.current() << '\n';
         if (ts.current().kind == Kind::end)
             break;
         if (ts.current().kind == Kind::print)
             continue;
+        cout << "calculate called expr with current being:" << ts.current() << '\n';
         cout << expr(false) << '\n';
     }
 }
