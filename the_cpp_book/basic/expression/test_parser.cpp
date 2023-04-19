@@ -293,20 +293,30 @@ double error(const string &s)
     return 1;
 }
 
+int calculate_count = 0;
+
 void calculate()
 {
-    cout << "calculate:" << ts << '\n';
+    int local_count = calculate_count;
+    calculate_count++;
+    string func_sig = "calculate " + to_string(local_count);
+
+    cout << func_sig << ts << '\n';
     cout << endl;
 
+    int i = 0;
     for (;;)
     {
+        cout << func_sig << " iteration " << i << '\n';
+        i++;
+
         ts.get();
-        cout << "calculate check end or print:" << ts.current() << '\n';
+        cout << func_sig << " check end or print:" << ts.current() << '\n';
         if (ts.current().kind == Kind::end)
             break;
         if (ts.current().kind == Kind::print)
             continue;
-        cout << "calculate called expr with current being:" << ts.current() << '\n';
+        cout << func_sig << " called expr with current being:" << ts.current() << '\n';
         cout << expr(false) << '\n';
     }
 }
