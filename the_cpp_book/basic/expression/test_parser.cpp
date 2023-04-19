@@ -113,6 +113,7 @@ public:
     {
         size = ts.size;
         buffer = new Token[size];
+        index = ts.index;
         for (int i = 0; i < size; i++)
         {
             buffer[i] = ts.buffer[i];
@@ -126,6 +127,7 @@ public:
             delete[] buffer;
             size = ts.size;
             buffer = new Token[size];
+            index = ts.index;
             for (int i = 0; i < size; i++)
             {
                 buffer[i] = ts.buffer[i];
@@ -192,11 +194,11 @@ double term(bool get) // multiply and divide
         switch (ts.current().kind)
         {
         case Kind::mul:
-            cout << func_sig << " mul" << '\n';
+            cout << func_sig << " case mul" << '\n';
             left *= prim(true);
             break;
         case Kind::div:
-            cout << func_sig << " div" << '\n';
+            cout << func_sig << " case div" << '\n';
             if (auto d = prim(true))
             {
                 left /= d;
@@ -204,7 +206,7 @@ double term(bool get) // multiply and divide
             }
             return error("divide by 0");
         default:
-            cout << func_sig << " return left: " << left << '\n';
+            cout << func_sig << " case not mul or div, return left: " << left << '\n';
             return left;
         }
     }
@@ -243,7 +245,7 @@ double prim(bool get) // handle primar ies
         {
             cout << func_sig << " case name assign" << '\n';
             v = expr(true); // ’=’ seen: assignment
-            cout << func_sig << " case name assign assigned" << '\n';
+            cout << func_sig << " case name assign assigned: " << s << " = " << v << '\n';
         }
         result = v;
         break;
@@ -296,7 +298,7 @@ double expr(bool get) // add and subtract
             left -= term(true);
             break;
         default:
-            cout << func_sig << " return: " << left << '\n';
+            cout << func_sig << " case not plus or minus, return: " << left << '\n';
             return left;
         }
     }
@@ -327,7 +329,6 @@ void calculate()
     string func_sig = "calculate " + to_string(local_count);
 
     cout << func_sig << ts << '\n';
-    cout << endl;
 
     int i = 0;
     for (;;)
@@ -344,6 +345,8 @@ void calculate()
         cout << func_sig << " called expr" << '\n';
         cout << expr(false) << '\n';
     }
+
+    cout << endl;
 }
 
 int main(void)
@@ -358,30 +361,31 @@ int main(void)
 
     calculate();
 
-    // ts = Token_stream{9, new Token[9]{
-    //                          Token{Kind::name, "x", 0},
-    //                          Token{Kind::assign},
-    //                          Token{Kind::number, "", 2},
-    //                          Token{Kind::print},
-    //                          Token{Kind::name, "x", 0},
-    //                          Token{Kind::plus},
-    //                          Token{Kind::number, "", 3},
-    //                          Token{Kind::print},
-    //                          Token{Kind::end}}};
-    // calculate();
+    ts = Token_stream{9, new Token[9]{
+                             Token{Kind::name, "x", 0},
+                             Token{Kind::assign},
+                             Token{Kind::number, "", 2},
+                             Token{Kind::print},
+                             Token{Kind::name, "x", 0},
+                             Token{Kind::plus},
+                             Token{Kind::number, "", 3},
+                             Token{Kind::print},
+                             Token{Kind::end}}};
+    calculate();
 
-    // ts = Token_stream{
-    //     13, new Token[13]{
-    //             Token{Kind::number, "", 16},
-    //             Token{Kind::plus, "", 0},
-    //             Token{Kind::lp, "", 0},
-    //             Token{Kind::number, "", 3.2},
-    //             Token{Kind::minus, "", 0},
-    //             Token{Kind::number, "", 2},
-    //             Token{Kind::rp, "", 0},
-    //             Token{Kind::mul, "", 0},
-    //             Token{Kind::number, "", 0.4},
-    //             Token{Kind::end, "", 0},
-    //         }};
-    // calculate();
+    ts = Token_stream{
+        11, new Token[11]{
+                Token{Kind::number, "", 16},
+                Token{Kind::plus, "", 0},
+                Token{Kind::lp, "", 0},
+                Token{Kind::number, "", 3.2},
+                Token{Kind::minus, "", 0},
+                Token{Kind::number, "", 2},
+                Token{Kind::rp, "", 0},
+                Token{Kind::mul, "", 0},
+                Token{Kind::number, "", 0.4},
+                Token{Kind::print},
+                Token{Kind::end, "", 0},
+            }};
+    calculate();
 }
