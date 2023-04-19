@@ -114,7 +114,7 @@ public:
             ct = buffer[index++];
         else
             ct = Token{Kind::end};
-        cout << "Token_stream get: " << ct << '\n';
+        cout << "Token_stream get and update current: " << ct << '\n';
         return ct;
     }; // read and return next token
     Token &current()
@@ -153,13 +153,22 @@ double error(const string &s);
 // symbol table
 map<string, double> table;
 
+int term_count = 0;
+
 double term(bool get) // multiply and divide
 {
-    cout << "term called prim with get: " << get << '\n';
+    int local_count = term_count;
+    term_count++;
+    string func_sig = "term(" + to_string(get) + ") " + to_string(local_count);
+
+    cout << func_sig << " start" << '\n';
+
     double left = prim(get);
+    int i = 0;
     for (;;)
     {
-        cout << "term switch on :" << ts.current() << '\n';
+        cout << func_sig << " iteration " << i << ", switch on :" << ts.current() << '\n';
+        i++;
         switch (ts.current().kind)
         {
         case Kind::mul:
@@ -173,18 +182,26 @@ double term(bool get) // multiply and divide
             }
             return error("divide by 0");
         default:
-            cout << "term return: " << left << '\n';
+            cout << func_sig << " return left: " << left << '\n';
             return left;
         }
     }
 }
 
+int prim_count = 0;
+
 double prim(bool get) // handle primar ies
 {
+    int local_count = prim_count;
+    prim_count++;
+    string func_sig = "prim(" + to_string(get) + ") " + to_string(local_count);
+
+    cout << func_sig << " start" << '\n';
+
     if (get)
         ts.get(); // read next token
 
-    cout << "prim switch on:" << ts.current() << '\n';
+    cout << func_sig << " switch on:" << ts.current() << '\n';
     double result;
     switch (ts.current().kind)
     {
@@ -201,20 +218,20 @@ double prim(bool get) // handle primar ies
         double &v = table[s]; // find the corresponding
         if (ts.get().kind == Kind::assign)
         {
-            cout << "prim assign call expr with true with curren token: " << ts.current() << '\n';
+            cout << func_sig << " assign call expr with true with curren token: " << ts.current() << '\n';
             v = expr(true); // ’=’ seen: assignment
-            cout << "prim assign call expr done, assigned: " << v << " to: " << s << '\n';
+            cout << func_sig << " assign call expr done, assigned: " << v << " to: " << s << '\n';
         }
         result = v;
         break;
     }
     case Kind::minus: // unar y minus
-        cout << "prim minus call prim with true with curren token: " << ts.current() << '\n';
+        cout << func_sig << " minus call prim with true with curren token: " << ts.current() << '\n';
         result = -prim(true);
         break;
     case Kind::lp:
     {
-        cout << "prim lp call expr with true with curren token: " << ts.current() << '\n';
+        cout << func_sig << " lp call expr with true with curren token: " << ts.current() << '\n';
         auto e = expr(true);
         if (ts.current().kind != Kind::rp)
             return error("')' expected");
@@ -225,17 +242,26 @@ double prim(bool get) // handle primar ies
     default:
         return error("primary expected");
     }
-    cout << "prim return: " << result << '\n';
+    cout << func_sig << " return: " << result << '\n';
     return result;
 }
 
+int expr_count = 0;
+
 double expr(bool get) // add and subtract
 {
-    cout << "expr called term with get: " << get << '\n';
+    int local_count = expr_count;
+    expr_count++;
+    string func_sig = "expr(" + to_string(get) + ") " + to_string(local_count);
+
+    cout << func_sig << " start" << '\n';
+
     double left = term(get);
+    int i = 0;
     for (;;)
     { // ‘‘forever’’
-        cout << "expr switch on: " << ts.current() << '\n';
+        cout << func_sig << " iteration " << i << ", switch on: " << ts.current() << '\n';
+        i++;
         switch (ts.current().kind)
         {
         case Kind::plus:
@@ -245,7 +271,7 @@ double expr(bool get) // add and subtract
             left -= term(true);
             break;
         default:
-            cout << "expr return: " << left << '\n';
+            cout << func_sig << " return: " << left << '\n';
             return left;
         }
     }
