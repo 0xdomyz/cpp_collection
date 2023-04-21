@@ -33,20 +33,47 @@ primary:
     ( expression )
 */
 
-// namespaces
+// interfaces
 
 namespace Lexer
 {
+    // enum class Kind : char;
+    // class Token_stream;
+    // Token_stream ts;
 }
 
 namespace Parser
 {
-    using namespace Lexer;
+    double expr(bool);
+}
+
+// namespace Table
+// {
+//     map<string, double> table;
+// }
+
+// namespace Error
+// {
+//     int no_of_errors;
+// }
+
+// namespace Driver
+// {
+//     void calculate();
+// }
+
+// namespaces - implementation
+namespace Parser
+{
 
     double expr(bool);
     double prim(bool get);
     double term(bool get);
     double expr(bool);
+
+    using namespace Lexer;
+    // using Error::error;
+    // using Table::table;
 }
 
 namespace Lexer
