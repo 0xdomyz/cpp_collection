@@ -33,134 +33,107 @@ primary:
     ( expression )
 */
 
-// parser
+// namespaces
+
+namespace Lexer
+{
+}
+
 namespace Parser
 {
+    using namespace Lexer;
+
     double expr(bool);
     double prim(bool get);
     double term(bool get);
     double expr(bool);
 }
 
-enum class Kind : char
+namespace Lexer
 {
-    name,
-    number,
-    end,
-    plus = '+',
-    minus = '-',
-    mul = '*',
-    div = '/',
-    print = ';',
-    assign = '=',
-    lp = '(',
-    rp = ')'
-};
-
-struct Token
-{
-    Kind kind;
-    string string_value;
-    double number_value;
-};
-
-using namespace Parser;
-
-class Token_stream
-{
-public:
-    Token_stream(istream &s) : ip{&s}, owns{false} {}
-    Token_stream(istream *p) : ip{p}, owns{true} {}
-    ~Token_stream() { close(); }
-    Token get();      // read and return next token
-    Token &current(); // most recently read token
-    void set_input(istream &s)
+    enum class Kind : char
     {
-        close();
-        ip = &s;
-        owns = false;
-    }
-    void set_input(istream *p)
+        name,
+        number,
+        end,
+        plus = '+',
+        minus = '-',
+        mul = '*',
+        div = '/',
+        print = ';',
+        assign = '=',
+        lp = '(',
+        rp = ')'
+    };
+    struct Token
     {
-        close();
-        ip = p;
-        owns = true;
-    }
-
-private:
-    void close()
+        Kind kind;
+        string string_value;
+        double number_value;
+    };
+    bool isnumber(char ch);
+    class Token_stream
     {
-        if (owns)
-            delete ip;
-    }
-    istream *ip;         // pointer to an input stream
-    bool owns;           // does the Token_stream own the istream?
-    Token ct{Kind::end}; // current token
-};
+    public:
+        Token_stream(istream &s) : ip{&s}, owns{false} {}
+        Token_stream(istream *p) : ip{p}, owns{true} {}
+        ~Token_stream() { close(); }
+        Token get();      // read and return next token
+        Token &current(); // most recently read token
+        void set_input(istream &s);
+        void set_input(istream *p);
 
-Token_stream ts{cin}; // use input from cin
-
-double error(const string &s);
-
-// symbol table
-map<string, double> table;
-
-double Parser::term(bool get) // multiply and divide
-{
-    double left = prim(get);
-    for (;;)
-    {
-        switch (ts.current().kind)
-        {
-        case Kind::mul:
-            left *= prim(true);
-            break;
-        case Kind::div:
-            if (auto d = prim(true))
-            {
-                left /= d;
-                break;
-            }
-            return error("divide by 0");
-        default:
-            return left;
-        }
-    }
+    private:
+        void close();
+        istream *ip;         // pointer to an input stream
+        bool owns;           // does the Token_stream own the istream?
+        Token ct{Kind::end}; // current token
+    };
+    Token_stream ts{cin}; // use input from cin
 }
 
-double Parser::prim(bool get) // handle primar ies
+namespace Table
 {
-    if (get)
-        ts.get(); // read next token
-    switch (ts.current().kind)
-    {
-    case Kind::number: // floating-point constant
-    {
-        double v = ts.current().number_value;
-        ts.get();
-        return v;
-    }
-    case Kind::name:
-    {
-        double &v = table[ts.current().string_value]; // find the corresponding
-        if (ts.get().kind == Kind::assign)
-            v = expr(true); // ’=’ seen: assignment
-        return v;
-    }
-    case Kind::minus: // unar y minus
-        return -prim(true);
-    case Kind::lp:
-    {
-        auto e = expr(true);
-        if (ts.current().kind != Kind::rp)
-            return error("')' expected");
-        ts.get(); // eat ’)’
-        return e;
-    }
-    default:
-        return error("primary expected");
-    }
+    map<string, double> table;
 }
+
+namespace Driver
+{
+    using Lexer::Kind;
+    using Lexer::ts;
+    using Parser::expr;
+    void calculate();
+}
+
+namespace Error
+{
+    int no_of_errors;
+    double error(const string &s);
+}
+
+// implementations - Lexer
+
+void Lexer::Token_stream::set_input(istream &s)
+{
+    close();
+    ip = &s;
+    owns = false;
+};
+
+void Lexer::Token_stream::set_input(istream *p)
+{
+    close();
+    ip = p;
+    owns = true;
+};
+
+void Lexer::Token_stream::close()
+{
+    if (owns)
+        delete ip;
+}
+
+// implementations - Parser
 
 double Parser::expr(bool get) // add and subtract
 {
@@ -181,59 +154,71 @@ double Parser::expr(bool get) // add and subtract
     }
 }
 
-// input func
+double Parser::term(bool get) // multiply and divide
+{
+    double left = prim(get);
+    for (;;)
+    {
+        switch (ts.current().kind)
+        {
+        case Kind::mul:
+            left *= prim(true);
+            break;
+        case Kind::div:
+            if (auto d = prim(true))
+            {
+                left /= d;
+                break;
+            }
+            return Error::error("divide by 0");
+        default:
+            return left;
+        }
+    }
+}
 
-// Token Token_stream::get()
-// {
-//     char ch = 0;
-//     *ip >> ch;
-//     switch (ch)
-//     {
-//     case 0:
-//         return ct = {Kind::end}; // assign and return
-//     case ';':                    // end of expression; print
-//     case '*':
-//     case '/':
-//     case '+':
-//     case '-':
-//     case '(':
-//     case ')':
-//     case '=':
-//         return ct = {static_cast<Kind>(ch)};
-//     case '0':
-//     case '1':
-//     case '2':
-//     case '3':
-//     case '4':
-//     case '5':
-//     case '6':
-//     case '7':
-//     case '8':
-//     case '9':
-//     case '.':
-//         ip->putback(ch);        // put the first digit (or .) back into the input stream
-//         *ip >> ct.number_value; // read number into ct
-//         ct.kind = Kind::number;
-//         return ct;
-//     default: // name, name =, or error
-//         if (isalpha(ch))
-//         {
-//             ip->putback(ch);        // put the first character back into the input stream
-//             *ip >> ct.string_value; // read string into ct
-//             ct.kind = Kind::name;
-//             return ct;
-//         }
-//         error("bad token");
-//         return ct = {Kind::print};
-//     }
-// };
+double Parser::prim(bool get) // handle primar ies
+{
+    if (get)
+        ts.get(); // read next token
+    switch (ts.current().kind)
+    {
+    case Kind::number: // floating-point constant
+    {
+        double v = ts.current().number_value;
+        ts.get();
+        return v;
+    }
+    case Kind::name:
+    {
+        double &v = Table::table[ts.current().string_value]; // find the corresponding
+        if (ts.get().kind == Kind::assign)
+            v = expr(true); // ’=’ seen: assignment
+        return v;
+    }
+    case Kind::minus: // unar y minus
+        return -prim(true);
+    case Kind::lp:
+    {
+        auto e = expr(true);
+        if (ts.current().kind != Kind::rp)
+            return Error::error("')' expected");
+        ts.get(); // eat ’)’
+        return e;
+    }
+    default:
+        return Error::error("primary expected");
+    }
+}
 
-bool isnumber(char ch)
+// implementations - Lexer
+
+bool Lexer::isnumber(char ch)
 {
     return ch >= '0' && ch <= '9';
 }
 
-Token Token_stream::get()
+Lexer::Token Lexer::Token_stream::get()
 {
     char ch;
     do
@@ -277,7 +262,7 @@ Token Token_stream::get()
             ct.number_value = stod(string_value); // convert string to double
             return ct;
         }
-        error("bad number token");
+        Error::error("bad number token");
         return ct = {Kind::print};
     default: // NAME, NAME=, or error
         if (isalpha(ch))
@@ -290,19 +275,18 @@ Token Token_stream::get()
             ct.string_value = string_value;
             return ct;
         }
-        error("bad alpha token");
+        Error::error("bad alpha token");
         return ct = {Kind::print};
     }
 }
 
-Token &Token_stream::current()
+Lexer::Token &Lexer::Token_stream::current()
 {
     return ct;
 }
 
 // error handling
-int no_of_errors;
-double error(const string &s)
+double Error::error(const string &s)
 {
     no_of_errors++;
     cerr << "error: " << s << '\n';
@@ -311,7 +295,7 @@ double error(const string &s)
 
 // driver
 
-void calculate()
+void Driver::calculate()
 {
     for (;;)
     {
@@ -347,16 +331,16 @@ int main(int argc, char *argv[])
     case 1: // read from standard input
         break;
     case 2: // read from argument string
-        ts.set_input(new istringstream{argv[1]});
+        Lexer::ts.set_input(new istringstream{argv[1]});
         break;
     default:
-        error("too many arguments");
+        Error::error("too many arguments");
         return 1;
     }
-    table["pi"] = 3.1415926535897932385; // inser t predefined names
-    table["e"] = 2.7182818284590452354;
-    calculate();
-    return no_of_errors;
+    Table::table["pi"] = 3.1415926535897932385; // inser t predefined names
+    Table::table["e"] = 2.7182818284590452354;
+    Driver::calculate();
+    return Error::no_of_errors;
 }
 
 // vector<string> arguments(int argc, char∗ argv[])
