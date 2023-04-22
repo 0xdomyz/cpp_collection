@@ -42,11 +42,6 @@ namespace Lexer
     // Token_stream ts;
 }
 
-namespace Parser
-{
-    double expr(bool);
-}
-
 // namespace Table
 // {
 //     map<string, double> table;
@@ -63,10 +58,12 @@ namespace Parser
 // }
 
 // namespaces - implementation
-namespace Parser
+namespace Parser_impl
 {
+    // using namespace Parser;
 
     double expr(bool);
+
     double prim(bool get);
     double term(bool get);
     double expr(bool);
@@ -74,6 +71,11 @@ namespace Parser
     using namespace Lexer;
     // using Error::error;
     // using Table::table;
+}
+
+namespace Parser
+{
+    using Parser_impl::expr;
 }
 
 namespace Lexer
@@ -162,7 +164,7 @@ void Lexer::Token_stream::close()
 
 // implementations - Parser
 
-double Parser::expr(bool get) // add and subtract
+double Parser_impl::expr(bool get) // add and subtract
 {
     double left = term(get);
     for (;;)
@@ -181,7 +183,7 @@ double Parser::expr(bool get) // add and subtract
     }
 }
 
-double Parser::term(bool get) // multiply and divide
+double Parser_impl::term(bool get) // multiply and divide
 {
     double left = prim(get);
     for (;;)
@@ -204,7 +206,7 @@ double Parser::term(bool get) // multiply and divide
     }
 }
 
-double Parser::prim(bool get) // handle primar ies
+double Parser_impl::prim(bool get) // handle primar ies
 {
     if (get)
         ts.get(); // read next token
@@ -335,17 +337,6 @@ void Driver::calculate()
     }
 }
 
-// interactive driver
-// g++ dc.cpp -o dc && ./dc
-
-// int main()
-// {
-//     table["pi"] = 3.1415926535897932385; // inser t predefined names
-//     table["e"] = 2.7182818284590452354;
-//     calculate();
-//     return no_of_errors;
-// }
-
 // cmd driver
 // g++ dc.cpp -o dc && ./dc "rate=1.1934;150/rate+3;19.75/(1-rate);217/-rate"
 
@@ -369,11 +360,3 @@ int main(int argc, char *argv[])
     Driver::calculate();
     return Error::no_of_errors;
 }
-
-// vector<string> arguments(int argc, char∗ argv[])
-// {
-//     vector<string> res;
-//     for (int i = 0; i != argc; ++i)
-//         res.push_back(argv[i]);
-//     return res;
-// }
