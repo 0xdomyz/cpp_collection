@@ -1,13 +1,20 @@
-// g++ -std=c++11 matrix_impl.cpp -o matrix_impl && ./matrix_impl
-// #include "matrix.h"
+// g++ -std=c++11 slice.cpp -o slice && ./slice
 
 #include <iostream>
 
 struct slice
+//  A slice describes a subset of the elements of a dimension (§40.5.4).
+// In particular, slice{i,n} refers to elements [i:i+n) of the
+// dimension to which it applies
+//
+// Selecting all elements from a point onward is so common that there is a shorthand:
+// slice{i} means
+// slice{i,max} where max is larger than the largest subscript in the dimension.
 {
     slice() : start(-1), length(-1), stride(1) {}
     explicit slice(size_t s) : start(s), length(-1), stride(1) {}
     slice(size_t s, size_t l, size_t n = 1) : start(s), length(l), stride(n) {}
+
     size_t operator()(size_t i) const { return start + i * stride; }
     static slice all;
     size_t start;  // first index
