@@ -71,6 +71,22 @@ public:
     Matrix_ref<T, N - 1> col(size_t n); // column access
     Matrix_ref<const T, N - 1> col(size_t n) const;
 
+    // mathematical
+    template <typename F>
+    Matrix &apply(F f); // f(x) for every element x
+    template <typename M, typename F>
+    Matrix &apply(const M &m, F f);     // f(x,mx) for corresponding elements
+    Matrix &operator=(const T &value);  // assignment with scalar
+    Matrix &operator+=(const T &value); // scalar addition
+    Matrix &operator-=(const T &value); // scalar subtraction
+    Matrix &operator*=(const T &value); // scalar multiplication
+    Matrix &operator/=(const T &value); // scalar division
+    Matrix &operator%=(const T &value); // scalar modulo
+    template <typename M>               // matrix addition
+    Matrix &operator+=(const M &x);
+    template <typename M> // matrix subtraction
+    Matrix &operator-=(const M &x);
+
 private:
     Matrix_slice<N> desc; // slice defining extents in the N dimensions
     vector<T> elems;      // the elements
@@ -94,4 +110,12 @@ namespace Matrix_impl
         }
     };
 
+}
+
+template <typename T, size_t N>
+Matrix<T, N> operator+(const Matrix<T, N> &m, const T &val)
+{
+    Matrix<T, N> res = m;
+    res += val;
+    return res;
 }

@@ -35,3 +35,20 @@ Matrix<T, N> &Matrix<T, N>::operator=(const Matrix_ref<U, N> &x)
     elems.assign(x.begin(), x.end());
     return *this;
 }
+
+// scalar ops
+template <typename T, size_t N>
+Matrix<T, N> &Matrix<T, N>::operator+=(const T &val)
+{
+    return apply([&](T &a)
+                 { a += val; }); // using a lambda (§11.4)
+}
+
+template <typename T, size_t N>
+template <typename F>
+Matrix<T, N> &Matrix<T, N>::apply(F f)
+{
+    for (auto &x : elems)
+        f(x); // this loop uses stride iterators
+    return *this;
+}
