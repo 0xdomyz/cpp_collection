@@ -1,6 +1,5 @@
-// g++ -I /usr/local/boost_1_82_0 -o bin_example bin_example.cpp /usr/local/lib/libboost_regex.a
-//
-// ./bin_example < email.txt
+// g++ -I /usr/local/boost_1_82_0 -o bin_example bin_example.cpp /usr/local/lib/libboost_regex.a && ./bin_example < email.txt
+// g++ -I /usr/local/boost_1_82_0 -o bin_example bin_example.cpp -L/usr/local/lib/ -lboost_regex && ./bin_example < email.txt
 
 #include <boost/regex.hpp>
 #include <iostream>
