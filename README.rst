@@ -1,6 +1,10 @@
 Collection of C++ Scripts
 =========================
 
+Accelerated book
+
+Boost scripts
+
 Collection of games
 
 Collection of snake games
@@ -13,5 +17,4 @@ A class on C++11 scripts
 
 A tute on C/C++
 
-Boost scripts
 
