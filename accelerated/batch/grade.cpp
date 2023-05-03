@@ -1,4 +1,4 @@
-// g++ grade.cpp -o grade.out && ./grade.out
+// g++ grade.cpp -o grade && ./grade
 
 #include <algorithm>
 #include <iomanip>
