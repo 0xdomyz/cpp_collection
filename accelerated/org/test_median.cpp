@@ -1,5 +1,5 @@
-// compile: g++ -o test test.cpp median.cpp && ./test
-// seperate compilation: g++ -c median.cpp && g++ -c test.cpp && g++ -o test test.o median.o && ./test
+// compile: g++ -o test_median test_median.cpp median.cpp && ./test_median
+// seperate compilation: g++ -c median.cpp && g++ -c test_median.cpp && g++ -o test_median test_median.o median.o && ./test_median
 
 #include "median.h"
 #include <iostream>
