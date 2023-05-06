@@ -1,6 +1,11 @@
 // compile: g++ -o grading grading.cpp Student_info.cpp grade.cpp median.cpp
 // run: ./grading < grades.txt
 
+// organization
+// grade.cpp uses grade.h, median.h, Student_info.h
+// grade.h uses Student_info.h
+// grading.cpp uses grade.h
+
 #include <algorithm>
 #include <iomanip>
 #include <ios>
@@ -9,7 +14,7 @@
 #include <string>
 #include <vector>
 #include "grade.h"
-#include "Student_info.h"
+// #include "Student_info.h" // not needed because grade.h includes it
 
 using std::cin;
 using std::cout;
