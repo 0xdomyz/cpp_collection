@@ -64,10 +64,20 @@ int main(void)
     // precision
     cout << "\nprecision" << endl;
     auto prec = cout.precision();
-    cout << setprecision(3) << 123.456789 << endl;
-    cout << setprecision(3) << 123.456789 << ' ' << 123.456789 << endl;
+    cout << setprecision(3) << 1234.456789 << endl;
+    cout << setprecision(3) << 123.456789 << ' ' << 1231345.456789 << endl;
     cout << 123.456789 << endl;
 
     cout << setprecision(prec) << 123.456789 << endl;
     cout << 123.456789 << endl;
+
+    // fixed, scientific
+    // display 0.0000000 with trailing zeros
+    double d = 0.000000000;
+    cout << "d: " << d << endl;
+    cout << "d: " << setprecision(10) << d << endl;
+    cout << "d: " << setprecision(10) << fixed << d << endl;
+    cout << "d: " << setprecision(10) << scientific << d << endl;
+    cout << "d: " << setprecision(10) << fixed << scientific << d << endl;
+    cout << "d: " << d << endl;
 }
