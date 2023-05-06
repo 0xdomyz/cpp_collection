@@ -1,3 +1,6 @@
+// compile: g++ -o grading grading.cpp Student_info.cpp grade.cpp median.cpp
+// run: ./grading < grades.txt
+
 #include <algorithm>
 #include <iomanip>
 #include <ios>
