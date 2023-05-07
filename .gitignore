@@ -9,6 +9,9 @@
 
 ### Above combination will ignore all files without extension ###
 
+#ignore test data
+*.csv
+
 # Ignore files with extension `.class` & `.sm`
 *.class
 *.sm
