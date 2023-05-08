@@ -49,9 +49,18 @@ void write_names_and_grade(const vector<Student_info> &students)
          iter != students.end(); ++iter)
         maxlen = max(maxlen, iter->name.size());
 
+    auto size = students.size();
+    const auto max_size = 10;
+    if (size > max_size)
+    {
+        cout << "size: " << size << endl;
+        cout << "only printing first " << max_size << " students" << endl;
+        size = max_size;
+    }
+
     // write the names and grades
     for (vector<Student_info>::size_type i = 0;
-         i != students.size(); ++i)
+         i != size; ++i)
     {
         // write the name, padded on the right to maxlen + 1 characters
         cout << students[i].name
