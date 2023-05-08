@@ -1,4 +1,4 @@
-// compile: g++ -o grading grading.cpp Student_info.cpp grade.cpp median.cpp seperate.cpp && ./grading < grades.txt
+// compile and run: g++ -o grading grading.cpp Student_info.cpp grade.cpp median.cpp seperate.cpp && ./grading < grades.txt
 
 #include <algorithm>
 #include <iostream>
