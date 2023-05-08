@@ -1,4 +1,5 @@
 // compile and run: g++ -o grading grading.cpp Student_info.cpp grade.cpp median.cpp seperate.cpp && ./grading < grades.txt
+// test file: ./make_test_file 1000 test_file.csv && ./grading < test_file.csv
 
 #include <algorithm>
 #include <iostream>
