@@ -14,11 +14,20 @@ std::string::size_type width(const std::vector<std::string> &v)
     return maxlen;
 }
 
+// write a vector<string> to an output stream: cout << v << endl;
+std::ostream &operator<<(std::ostream &os, const std::vector<std::string> &v)
+{
+    for (auto it = v.begin(); it != v.end(); ++it)
+        os << *it << std::endl;
+    return os;
+}
+
 std::vector<std::string> frame(const std::vector<std::string> &v)
 {
     std::vector<std::string> ret;
     std::string::size_type maxlen = width(v);
     std::string border(maxlen + 4, '*');
+
     // write the top border
     ret.push_back(border);
     // write each interior row, bordered by an asterisk and a space
@@ -29,15 +38,8 @@ std::vector<std::string> frame(const std::vector<std::string> &v)
     }
     // write the bottom border
     ret.push_back(border);
-    return ret;
-}
 
-// write a vector<string> to an output stream: cout << v << endl;
-std::ostream &operator<<(std::ostream &os, const std::vector<std::string> &v)
-{
-    for (auto it = v.begin(); it != v.end(); ++it)
-        os << *it << std::endl;
-    return os;
+    return ret;
 }
 
 #endif
