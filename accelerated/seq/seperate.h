@@ -2,9 +2,9 @@
 #define GUARD_seperate_h
 
 #include "Student_info.h"
-#include <vector>
+#include "container.h"
 
-// separate passing and failing student records: first try
-std::vector<Student_info> extract_fails(std::vector<Student_info> &students);
+// separate passing and failing student records
+container<Student_info> extract_fails(container<Student_info> &students);
 
 #endif

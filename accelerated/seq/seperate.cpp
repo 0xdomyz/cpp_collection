@@ -1,7 +1,7 @@
 #include "seperate.h"
 #include "grade.h"
 #include "Student_info.h"
-#include <vector>
+#include "container.h"
 #include <iostream>
 
 using namespace std;
@@ -65,12 +65,44 @@ bool fgrade(const Student_info &s)
 // }
 
 // version 4: use list instead of vector
-#include <list>
+// #include <list>
 
-list<Student_info> extract_fails(list<Student_info> &students)
+// list<Student_info> extract_fails(list<Student_info> &students)
+// {
+//     list<Student_info> fail;
+//     list<Student_info>::iterator iter = students.begin();
+//     while (iter != students.end())
+//     {
+//         if (fgrade(*iter))
+//         {
+//             fail.push_back(*iter);
+//             iter = students.erase(iter);
+//         }
+//         else
+//             ++iter;
+//     }
+//     return fail;
+// }
+
+// vector<Student_info> extract_fails(vector<Student_info> &students)
+// {
+//     // vector to list
+//     list<Student_info> students_list(students.begin(), students.end());
+//     // call list version
+//     list<Student_info> fail_list = extract_fails(students_list);
+//     // list to vector
+//     vector<Student_info> fail(fail_list.begin(), fail_list.end());
+//     // list to vector
+//     students.assign(students_list.begin(), students_list.end());
+//     return fail;
+// }
+
+// version 5
+
+container<Student_info> extract_fails(container<Student_info> &students)
 {
-    list<Student_info> fail;
-    list<Student_info>::iterator iter = students.begin();
+    container<Student_info> fail;
+    container<Student_info>::iterator iter = students.begin();
     while (iter != students.end())
     {
         if (fgrade(*iter))
@@ -81,18 +113,5 @@ list<Student_info> extract_fails(list<Student_info> &students)
         else
             ++iter;
     }
-    return fail;
-}
-
-vector<Student_info> extract_fails(vector<Student_info> &students)
-{
-    // vector to list
-    list<Student_info> students_list(students.begin(), students.end());
-    // call list version
-    list<Student_info> fail_list = extract_fails(students_list);
-    // list to vector
-    vector<Student_info> fail(fail_list.begin(), fail_list.end());
-    // list to vector
-    students.assign(students_list.begin(), students_list.end());
     return fail;
 }
