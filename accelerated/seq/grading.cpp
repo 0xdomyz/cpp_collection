@@ -21,13 +21,20 @@
 #include "grade.h"
 #include "seperate.h"
 #include "container.h"
+#include <ctime>
 
 using std::cin;
+using std::clock;
 using std::cout;
 using std::sort;
 
+// time start and finish of progrma to get running time
+
 int main()
 {
+    // start timer
+    clock_t start = clock();
+
     container<Student_info> students;
 
     // read and store all the students data.
@@ -50,6 +57,10 @@ int main()
     // write the names and grades of the fails
     cout << "\nFailing students:\n";
     write_names_and_grade(fails);
+
+    // stop timer
+    clock_t finish = clock();
+    cout << "Running time: " << (double)(finish - start) / CLOCKS_PER_SEC << " seconds" << std::endl;
 
     return 0;
 }
