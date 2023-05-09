@@ -4,7 +4,6 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <fstream>
 
 // find the length of the longest string in v
 std::string::size_type width(const std::vector<std::string> &v)
@@ -31,6 +30,14 @@ std::vector<std::string> frame(const std::vector<std::string> &v)
     // write the bottom border
     ret.push_back(border);
     return ret;
+}
+
+// write a vector<string> to an output stream: cout << v << endl;
+std::ostream &operator<<(std::ostream &os, const std::vector<std::string> &v)
+{
+    for (auto it = v.begin(); it != v.end(); ++it)
+        os << *it << std::endl;
+    return os;
 }
 
 #endif

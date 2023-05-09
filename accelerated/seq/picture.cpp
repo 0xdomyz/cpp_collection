@@ -87,14 +87,6 @@ vector<string> center(const vector<string> &pic)
     return ret;
 }
 
-// write a vector<string> to an output stream: cout << v << endl;
-ostream &operator<<(ostream &os, const vector<string> &v)
-{
-    for (auto it = v.begin(); it != v.end(); ++it)
-        os << *it << endl;
-    return os;
-}
-
 int main(void)
 {
     // read and split each line of input
