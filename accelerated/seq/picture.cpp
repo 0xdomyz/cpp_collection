@@ -1,9 +1,10 @@
-// g++ picture.cpp -o picture && cat test_picture.csv | ./picture
+// g++ split.cpp picture.cpp -o picture && cat test_picture.csv | ./picture
 
 #include <iostream>
 #include <string>
 #include <vector>
 #include <fstream>
+#include "split.h"
 
 using namespace std;
 
@@ -79,7 +80,36 @@ vector<string> center(const vector<string> &pic)
 {
     vector<string> ret;
     auto interior_len = pic.begin()->size() - 4;
-    cout << "interior_len: " << interior_len << endl;
+    // cout << "interior_len: " << interior_len << endl;
+
+    // copy first row
+    ret.push_back(*pic.begin());
+
+    // build interior rows
+    for (auto it = pic.begin() + 1; it != pic.end() - 1; ++it)
+    {
+        // extract interior string, remove excessive spaces at the end
+        string s = it->substr(2, interior_len);
+        for (auto rit = s.rbegin(); rit != s.rend(); ++rit)
+        {
+            if (*rit != ' ')
+            {
+                s = s.substr(0, s.size() - (rit - s.rbegin()));
+                break;
+            }
+        }
+
+        // position to the middle, via difference of interior_len and string length
+        // divide by 2 to get the number of spaces to add to the left and right
+        auto pos = (interior_len - s.size()) / 2;
+        auto pos2 = (interior_len - s.size()) % 2;
+        string payload = string(pos, ' ') + s + string(pos + pos2, ' ');
+        ret.push_back("* " + payload + " *");
+    }
+
+    // copy last row
+    ret.push_back(*pic.rbegin());
+
     return ret;
 }
 
@@ -134,6 +164,8 @@ int main(void)
 
     // centralise a picture's contents
     vector<string> pic6 = center(pic);
+    cout << "pic6:" << endl;
+    cout << pic6 << endl;
 
     return 0;
 }
