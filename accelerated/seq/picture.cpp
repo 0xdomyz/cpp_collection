@@ -7,6 +7,7 @@
 
 using namespace std;
 
+// find the length of the longest string in v
 string::size_type width(const vector<string> &v)
 {
     string::size_type maxlen = 0;
@@ -74,6 +75,22 @@ hcat(const vector<string> &left, const vector<string> &right)
     return ret;
 }
 
+vector<string> center(const vector<string> &pic)
+{
+    vector<string> ret;
+    auto interior_len = pic.begin()->size() - 4;
+    cout << "interior_len: " << interior_len << endl;
+    return ret;
+}
+
+// write a vector<string> to an output stream: cout << v << endl;
+ostream &operator<<(ostream &os, const vector<string> &v)
+{
+    for (auto it = v.begin(); it != v.end(); ++it)
+        os << *it << endl;
+    return os;
+}
+
 int main(void)
 {
     // read and split each line of input
@@ -86,9 +103,7 @@ int main(void)
 
     // write each line of output
     cout << "pic:" << endl;
-    for (vector<string>::size_type i = 0; i != pic.size(); ++i)
-        cout << pic[i] << endl;
-    cout << endl;
+    cout << pic << endl;
 
     // read a csv file using fstream
     ifstream infile("test_picture2.csv");
@@ -98,33 +113,27 @@ int main(void)
         v2.push_back(line);
 
     vector<string> pic2 = frame(v2);
-
     cout << "pic2:" << endl;
-    for (auto it = pic2.begin(); it != pic2.end(); ++it)
-        cout << *it << endl;
-    cout << endl;
+    cout << pic2 << endl;
 
     // concatenate two pictures
     vector<string> pic3 = vcat(pic, pic2);
     cout << "pic3:" << endl;
-    for (auto it = pic3.begin(); it != pic3.end(); ++it)
-        cout << *it << endl;
-    cout << endl;
+    cout << pic3 << endl;
 
     // concatenate two pictures
     vector<string> pic4 = hcat(pic, pic2);
     cout << "pic4:" << endl;
-    for (auto it = pic4.begin(); it != pic4.end(); ++it)
-        cout << *it << endl;
-    cout << endl;
+    cout << pic4 << endl;
 
     // hcat a unframed picture and a framed picture
     vector<string> pic5 = hcat(v, pic2);
     // vector<string> pic5 = hcat(pic, v2);
     cout << "pic5:" << endl;
-    for (auto it = pic5.begin(); it != pic5.end(); ++it)
-        cout << *it << endl;
-    cout << endl;
+    cout << pic5 << endl;
+
+    // centralise a picture's contents
+    vector<string> pic6 = center(pic);
 
     return 0;
 }
