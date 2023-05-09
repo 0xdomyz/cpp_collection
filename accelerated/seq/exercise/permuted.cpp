@@ -32,53 +32,8 @@ string combine(vector<string> v)
     return s;
 }
 
-int main(void)
+string::size_type max_length_except_last_word(vector<vector<string>> lines)
 {
-
-    // read lines
-    string s;
-    vector<string> v;
-    vector<vector<string>> lines;
-    while (getline(cin, s))
-    {
-        v = split(s);
-
-        cout << "original: ";
-        print_vector(v);
-        cout << endl;
-
-        lines.push_back(v);
-    }
-
-    // rotate vectors
-    vector<pair<vector<string>, int>> rotations;
-
-    // for each element, create copy of v, rotate it
-    for (auto l = lines.begin(); l != lines.end(); ++l)
-    {
-
-        auto v = *l;
-
-        for (auto i = 0; i != v.size(); ++i)
-        {
-            vector<string> v_copy = v;
-            rotate(v_copy.begin(), v_copy.begin() + i, v_copy.end());
-
-            // stor into rotations
-            rotations.push_back(make_pair(v_copy, i));
-        }
-    }
-
-    // sort rotations
-    auto func = [](pair<vector<string>, int> a, pair<vector<string>, int> b)
-    {
-        auto a_first_word = *a.first.begin();
-        auto b_first_word = *b.first.begin();
-        return toupper(a_first_word[0]) < toupper(b_first_word[0]);
-    };
-    sort(rotations.begin(), rotations.end(), func);
-
-    // find maxlength of characters before last word, in lines
     auto max_length = 0;
     for (auto l = lines.begin(); l != lines.end(); l++)
     {
@@ -95,7 +50,53 @@ int main(void)
             max_length = total_length;
         }
     }
-    cout << "max length: " << max_length << endl;
+    return max_length;
+}
+
+int main(void)
+{
+
+    // read lines: vec of vec of strings
+    string s;
+    vector<string> v;
+    vector<vector<string>> lines;
+    while (getline(cin, s))
+    {
+        v = split(s);
+
+        // cout << "original: ";
+        // print_vector(v);
+        // cout << endl;
+
+        lines.push_back(v);
+    }
+
+    // rotate vectors, store into rotations, which is a vec of pairs of vecs and ints
+    vector<pair<vector<string>, int>> rotations;
+    for (auto l = lines.begin(); l != lines.end(); ++l) // invariant:: done processing vecs
+    {
+        auto v = *l;
+        for (auto i = 0; i != v.size(); ++i) // invariant:: done processing word
+        {
+            vector<string> v_copy = v;
+            rotate(v_copy.begin(), v_copy.begin() + i, v_copy.end());
+            // stor into rotations
+            rotations.push_back(make_pair(v_copy, i));
+        }
+    }
+
+    // sort rotations
+    auto func = [](pair<vector<string>, int> a, pair<vector<string>, int> b)
+    {
+        auto a_first_word = *a.first.begin();
+        auto b_first_word = *b.first.begin();
+        return toupper(a_first_word[0]) < toupper(b_first_word[0]);
+    };
+    sort(rotations.begin(), rotations.end(), func);
+
+    // find maxlength of characters before last word, in lines
+    auto max_length = max_length_except_last_word(lines);
+    // cout << "max length: " << max_length << endl;
 
     // unrotate
     for (auto i = rotations.begin(); i != rotations.end(); ++i)
@@ -117,7 +118,7 @@ int main(void)
     //     cout << endl;
     // }
 
-    // split by rotation amount to left and right
+    // split by rotation amount to left and right, store into left_right
     vector<pair<vector<string>, vector<string>>> left_right;
     for (auto i = rotations.begin(); i != rotations.end(); ++i)
     {
