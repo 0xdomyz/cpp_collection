@@ -97,7 +97,7 @@ bool fgrade(const Student_info &s)
 //     return fail;
 // }
 
-// version 5
+// version 5, use container
 
 container<Student_info> extract_fails(container<Student_info> &students)
 {
@@ -115,3 +115,27 @@ container<Student_info> extract_fails(container<Student_info> &students)
     }
     return fail;
 }
+
+// version 6, only work with list
+// container<Student_info> extract_fails(container<Student_info> &students)
+// {
+//     auto size = students.size();
+
+//     container<Student_info> fail;
+//     for (auto i = 0; i != students.size(); ++i)
+//     {
+//         if (fgrade(students[i]))
+//         {
+//             fail.push_back(students[i]);
+//         }
+//         else
+//         {
+//             students.insert(students.begin(), students[i]);
+//             i++;
+//         }
+//     }
+
+//     students.resize(students.size() - size);
+
+//     return fail;
+// }
