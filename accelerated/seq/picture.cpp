@@ -6,6 +6,7 @@
 #include <fstream>
 #include "split.h"
 #include "frame.h"
+#include <algorithm>
 
 using namespace std;
 
@@ -15,10 +16,17 @@ vector<string> vcat(const vector<string> &top,
     // copy the top picture
     vector<string> ret = top;
     // copy entire bottom picture
+
+    // via iterator
     // for (vector<string>::const_iterator it = bottom.begin();
     //      it != bottom.end(); ++it)
     //     ret.push_back(*it);
-    ret.insert(ret.end(), bottom.begin(), bottom.end());
+
+    // via insert method
+    // ret.insert(ret.end(), bottom.begin(), bottom.end());
+
+    // via algo
+    copy(bottom.begin(), bottom.end(), back_inserter(ret));
 
     return ret;
 }
