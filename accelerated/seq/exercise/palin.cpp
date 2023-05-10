@@ -6,26 +6,34 @@
 #include <list>
 #include <cctype>
 #include <fstream>
+#include <algorithm>
 
 using namespace std;
 
+// via iterators
+// bool is_palindrome(const string &s)
+// {
+//     // iterate from start to end, compare to end to start
+//     // can stop in the middle if the letters do match
+//     // erase from vector if not a palindrome
+//     auto start = s.begin();
+//     auto end = s.end() - 1;
+//     while (start < end)
+//     {
+//         if (*start != *end)
+//         {
+//             return false;
+//         }
+//         ++start;
+//         --end;
+//     }
+//     return true;
+// }
+
+// via STL
 bool is_palindrome(const string &s)
 {
-    // iterate from start to end, compare to end to start
-    // can stop in the middle if the letters do match
-    // erase from vector if not a palindrome
-    auto start = s.begin();
-    auto end = s.end() - 1;
-    while (start < end)
-    {
-        if (*start != *end)
-        {
-            return false;
-        }
-        ++start;
-        --end;
-    }
-    return true;
+    return equal(s.begin(), s.end(), s.rbegin());
 }
 
 void print_first_and_last_5_elements(const list<string> &lst)
