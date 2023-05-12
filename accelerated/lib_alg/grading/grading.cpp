@@ -1,11 +1,12 @@
 // compile and run:
-// g++ -o grading grading.cpp Student_info.cpp grade.cpp median.cpp seperate.cpp && ./grading < grades.csv
+// g++ -o grading analysis.cpp grading.cpp Student_info.cpp grade.cpp median.cpp seperate.cpp && ./grading < grades.csv
 
 #include <iostream>
 #include "grade.h"
 #include "seperate.h"
 #include "container.h"
 #include <ctime>
+#include "analysis.h"
 
 using std::cin;
 using std::clock;
@@ -19,28 +20,30 @@ int main()
     // start timer
     clock_t start = clock();
 
-    container<Student_info> students;
-
-    // read and store all the students data.
-    Student_info record;
-    while (read(cin, record))
+    container<Student_info> did, didnt;
+    Student_info student;
+    // read all the records, separating them based on whether all homework was done
+    while (read(cin, student))
     {
-        students.push_back(record);
+        if (did_all_hw(student))
+            did.push_back(student);
+        else
+            didnt.push_back(student);
+    }
+    // check that both groups contain data
+    if (did.empty())
+    {
+        cout << "No student did all the homework!" << std::endl;
+        return 1;
+    }
+    if (didnt.empty())
+    {
+        cout << "Every student did all the homework!" << std::endl;
+        return 1;
     }
 
-    // alphabetize the student records
-    sortStudents(students);
-
-    // extract the fails
-    auto fails = extract_fails(students);
-
-    // write the names and grades of not fails
-    cout << "Passing students:\n";
-    write_names_and_grade(students);
-
-    // write the names and grades of the fails
-    cout << "\nFailing students:\n";
-    write_names_and_grade(fails);
+    cout << "did.size(): " << did.size() << std::endl;
+    cout << "didnt.size(): " << didnt.size() << std::endl;
 
     // stop timer
     clock_t finish = clock();
