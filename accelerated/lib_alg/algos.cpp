@@ -228,4 +228,16 @@ int main()
         cout << *iter << endl;
         cout << endl;
     }
+
+    // equal
+    {
+        vector<int> v{1, 2, 3, 4, 5};
+        vector<int> v2{5, 4, 3, 2, 1};
+        cout << "equal:" << endl;
+        cout << v << endl;
+        cout << v2 << endl;
+        cout << "equal(v.begin(), v.end(), v2.rbegin());" << endl;
+        cout << equal(v.begin(), v.end(), v2.rbegin()) << endl;
+        cout << endl;
+    }
 }
