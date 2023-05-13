@@ -7,6 +7,7 @@
 #include "container.h"
 #include <ctime>
 #include "analysis.h"
+#include "analysis.h"
 
 using std::cin;
 using std::clock;
@@ -44,6 +45,12 @@ int main()
 
     cout << "did.size(): " << did.size() << std::endl;
     cout << "didnt.size(): " << didnt.size() << std::endl;
+
+    // do the analyses
+    write_analysis(cout, "median", median_analysis, did, didnt);
+    write_analysis(cout, "average", average_analysis, did, didnt);
+    write_analysis(cout, "median of homework turned in",
+                   optimistic_median_analysis, did, didnt);
 
     // stop timer
     clock_t finish = clock();
