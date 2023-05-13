@@ -99,22 +99,22 @@ bool fgrade(const Student_info &s)
 
 // version 5, use container
 
-container<Student_info> extract_fails(container<Student_info> &students)
-{
-    container<Student_info> fail;
-    container<Student_info>::iterator iter = students.begin();
-    while (iter != students.end())
-    {
-        if (fgrade(*iter))
-        {
-            fail.push_back(*iter);
-            iter = students.erase(iter);
-        }
-        else
-            ++iter;
-    }
-    return fail;
-}
+// container<Student_info> extract_fails(container<Student_info> &students)
+// {
+//     container<Student_info> fail;
+//     container<Student_info>::iterator iter = students.begin();
+//     while (iter != students.end())
+//     {
+//         if (fgrade(*iter))
+//         {
+//             fail.push_back(*iter);
+//             iter = students.erase(iter);
+//         }
+//         else
+//             ++iter;
+//     }
+//     return fail;
+// }
 
 // version 6, only work with list
 // container<Student_info> extract_fails(container<Student_info> &students)
@@ -139,3 +139,31 @@ container<Student_info> extract_fails(container<Student_info> &students)
 
 //     return fail;
 // }
+
+// version 7, algo 2 pass
+#include <algorithm>
+
+bool pgrade(const Student_info &s)
+{
+    return !fgrade(s);
+}
+
+// container<Student_info> extract_fails(container<Student_info> &students)
+// {
+//     container<Student_info> fail;
+//     remove_copy_if(students.begin(), students.end(),
+//                    back_inserter(fail), pgrade);
+//     students.erase(remove_if(students.begin(), students.end(),
+//                              fgrade),
+//                    students.end());
+//     return fail;
+// }
+
+// version 8, algo 1 pass
+container<Student_info> extract_fails(container<Student_info> &students)
+{
+    auto iter = stable_partition(students.begin(), students.end(), pgrade);
+    container<Student_info> fail(iter, students.end());
+    students.erase(iter, students.end());
+    return fail;
+}
