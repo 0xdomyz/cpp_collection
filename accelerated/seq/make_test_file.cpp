@@ -3,6 +3,14 @@
 // write csv with below formated data, n rows
 // aaa 57 98 45.5 67.8 90.2
 
+// test file: ./make_test_file 1000 test_file.csv && ./grading < test_file.csv
+// ./make_test_file 1000 test_1000.csv
+// ./make_test_file 10000 test_10000.csv
+// ./make_test_file 20000 test_20000.csv
+// ./make_test_file 50000 test_50000.csv
+// ./make_test_file 100000 test_100000.csv
+// ./make_test_file 500000 test_500000.csv
+
 #include <iostream>
 #include <fstream>
 #include <string>

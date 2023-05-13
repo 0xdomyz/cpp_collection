@@ -1,14 +1,6 @@
 // compile and run:
 // g++ -o grading grading.cpp Student_info.cpp grade.cpp median.cpp seperate.cpp && ./grading < grades.txt
 
-// test file: ./make_test_file 1000 test_file.csv && ./grading < test_file.csv
-// ./make_test_file 1000 test_1000.csv
-// ./make_test_file 10000 test_10000.csv
-// ./make_test_file 20000 test_20000.csv
-// ./make_test_file 50000 test_50000.csv
-// ./make_test_file 100000 test_100000.csv
-// ./make_test_file 500000 test_500000.csv
-
 // tests
 // ./grading < test_1000.csv
 // ./grading < test_10000.csv
