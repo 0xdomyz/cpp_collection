@@ -40,7 +40,7 @@ int main()
     sortStudents(students);
 
     // extract the fails
-    auto fails = extract_fails(students);
+    auto fails = extract_fails(students, fgrade);
 
     // write the names and grades of not fails
     cout << "Passing students:\n";

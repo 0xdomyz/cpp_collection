@@ -160,10 +160,28 @@ bool pgrade(const Student_info &s)
 // }
 
 // version 8, algo 1 pass
-container<Student_info> extract_fails(container<Student_info> &students)
+// container<Student_info> extract_fails(container<Student_info> &students)
+// {
+//     auto iter = stable_partition(students.begin(), students.end(), pgrade);
+//     container<Student_info> fail(iter, students.end());
+//     students.erase(iter, students.end());
+//     return fail;
+// }
+
+// version 9, allow custom criteria func
+container<Student_info> extract_fails(container<Student_info> &students, bool criteria(const Student_info &))
 {
-    auto iter = stable_partition(students.begin(), students.end(), pgrade);
-    container<Student_info> fail(iter, students.end());
-    students.erase(iter, students.end());
+    container<Student_info> fail;
+    container<Student_info>::iterator iter = students.begin();
+    while (iter != students.end())
+    {
+        if (criteria(*iter))
+        {
+            fail.push_back(*iter);
+            iter = students.erase(iter);
+        }
+        else
+            ++iter;
+    }
     return fail;
 }
