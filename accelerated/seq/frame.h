@@ -31,11 +31,18 @@ std::vector<std::string> frame(const std::vector<std::string> &v)
     // write the top border
     ret.push_back(border);
     // write each interior row, bordered by an asterisk and a space
-    for (auto i = 0; i != v.size(); ++i)
+    for (auto i = v.begin(); i != v.end(); ++i)
     {
-        ret.push_back("* " + v[i] +
-                      std::string(maxlen - v[i].size(), ' ') + " *");
+        ret.push_back("* " + *i +
+                      std::string(maxlen - (*i).size(), ' ') + " *");
     }
+
+    // using indices
+    // for (auto i = 0; i != v.size(); ++i)
+    // {
+    //     ret.push_back("* " + v[i] +
+    //                   std::string(maxlen - v[i].size(), ' ') + " *");
+    // }
     // write the bottom border
     ret.push_back(border);
 
