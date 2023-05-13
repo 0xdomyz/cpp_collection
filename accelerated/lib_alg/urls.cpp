@@ -76,14 +76,35 @@ vector<string> find_urls(const string &s)
 int main(int c, char *argv[])
 {
     ifstream in(argv[1]);
+
+    // work within each line
+    // string line;
+    // while (getline(in, line))
+    // {
+    //     vector<string> urls = find_urls(line);
+    //     for (vector<string>::const_iterator it = urls.begin(); it != urls.end(); ++it)
+    //     {
+    //         cout << *it << endl;
+    //     }
+    // }
+
+    string lines;
     string line;
+    // combine all lines
     while (getline(in, line))
     {
-        vector<string> urls = find_urls(line);
-        for (vector<string>::const_iterator it = urls.begin(); it != urls.end(); ++it)
-        {
-            cout << *it << endl;
-        }
+        lines += line;
+        lines += '\n';
     }
+    // remove last newline
+    lines.pop_back();
+
+    cout << lines << endl;
+    vector<string> urls = find_urls(lines);
+    for (vector<string>::const_iterator it = urls.begin(); it != urls.end(); ++it)
+    {
+        cout << *it << endl;
+    }
+
     return 0;
 }
