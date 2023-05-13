@@ -7,7 +7,7 @@
 #include "container.h"
 #include <ctime>
 #include "analysis.h"
-#include "analysis.h"
+#include <algorithm>
 
 using std::cin;
 using std::clock;
@@ -24,13 +24,26 @@ int main()
     container<Student_info> did, didnt;
     Student_info student;
     // read all the records, separating them based on whether all homework was done
+    // while (read(cin, student))
+    // {
+    //     if (did_all_hw(student))
+    //         did.push_back(student);
+    //     else
+    //         didnt.push_back(student);
+    // }
+
+    // read into one container
+    container<Student_info> students;
     while (read(cin, student))
     {
-        if (did_all_hw(student))
-            did.push_back(student);
-        else
-            didnt.push_back(student);
+        students.push_back(student);
     }
+
+    // stable partition
+    auto it = stable_partition(students.begin(), students.end(), did_all_hw);
+    copy(students.begin(), it, back_inserter(did));
+    copy(it, students.end(), back_inserter(didnt));
+
     // check that both groups contain data
     if (did.empty())
     {
