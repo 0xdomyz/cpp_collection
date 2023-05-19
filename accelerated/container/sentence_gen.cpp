@@ -30,20 +30,33 @@ Grammar read_grammar(istream &in)
     return ret;
 }
 
-int main(void)
+ostream &operator<<(ostream &os, const Grammar &grammar)
 {
-    Grammar grammar = read_grammar(cin);
-    for (Grammar::const_iterator it = grammar.begin(); it != grammar.end(); ++it)
+    for (auto it = grammar.begin(); it != grammar.end(); ++it)
+    // each is a pair<string, Rule_collection>
     {
         cout << it->first << endl;
-        for (Rule_collection::const_iterator it2 = it->second.begin(); it2 != it->second.end(); ++it2)
+        for (auto it2 = it->second.begin(); it2 != it->second.end(); ++it2)
+        // each is a Rule
         {
-            for (Rule::const_iterator it3 = it2->begin(); it3 != it2->end(); ++it3)
+            cout << "\t rule:";
+            for (auto it3 = it2->begin(); it3 != it2->end(); ++it3)
+            // each is a string
             {
                 cout << *it3 << " ";
             }
             cout << endl;
         }
     }
+    return os;
+}
+
+int main(void)
+{
+    Grammar grammar = read_grammar(cin);
+
+    cout << "grammar:" << endl;
+    cout << grammar << endl;
+
     return 0;
 }
