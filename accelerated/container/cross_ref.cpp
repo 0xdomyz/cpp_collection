@@ -28,7 +28,15 @@ xref(istream &in,
         // remember that each word occurs on the current line
         for (vector<string>::const_iterator it = words.begin();
              it != words.end(); ++it)
-            ret[*it].push_back(line_number);
+        {
+            // check if already in, if so, skip
+            vector<int> &line_numbers = ret[*it];
+            auto find_it = find(line_numbers.begin(), line_numbers.end(), line_number);
+            if (find_it == line_numbers.end())
+            {
+                line_numbers.push_back(line_number);
+            }
+        }
     }
     return ret;
 }
