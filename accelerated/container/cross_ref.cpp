@@ -61,7 +61,7 @@ void test_libs(void)
 int main(void)
 {
     // call xref using split by default
-    map<string, vector<int>> ret = xref(cin);
+    map<string, vector<int>> ret = xref(cin, find_urls);
     // write the results
     for (map<string, vector<int>>::const_iterator it = ret.begin();
          it != ret.end(); ++it)
