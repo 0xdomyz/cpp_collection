@@ -1,4 +1,5 @@
-// g++ test_nrand.cpp nrand.cpp -o test_nrand && ./test_nrand 100 10000
+// g++ test_nrand.cpp nrand.cpp -o test_nrand && ./test_nrand 100 100
+// g++ test_nrand.cpp nrand.cpp -o test_nrand && ./test_nrand 100000 100
 
 #include "nrand.h"
 #include <iostream>
@@ -30,7 +31,7 @@ int main(int argc, char *argv[])
     int size = atoi(argv[1]);
     int times = atoi(argv[2]);
 
-    vector<int> v = random_vector(size, times);
+    const vector<int> &v = random_vector(size, times);
 
     // calc 5 stats: min, max, mean
     int min = v[0];
