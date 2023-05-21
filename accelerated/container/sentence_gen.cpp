@@ -7,6 +7,7 @@
 #include "split.h"
 #include <stdexcept>
 #include <algorithm>
+#include <list>
 
 using namespace std;
 
@@ -58,7 +59,7 @@ bool bracketed(const string &s)
     return s.size() > 1 && s[0] == '<' && s[s.size() - 1] == '>';
 }
 
-vector<string>::size_type nrand(vector<string>::size_type n)
+list<string>::size_type nrand(list<string>::size_type n)
 {
     if (n <= 0 || n > RAND_MAX)
         throw domain_error("Argument to nrand is out of range");
@@ -75,7 +76,7 @@ vector<string>::size_type nrand(vector<string>::size_type n)
     return r;
 }
 
-void gen_aux(const Grammar &g, const string &word, vector<string> &ret)
+void gen_aux(const Grammar &g, const string &word, list<string> &ret)
 {
     if (!bracketed(word))
     {
@@ -97,20 +98,61 @@ void gen_aux(const Grammar &g, const string &word, vector<string> &ret)
     }
 }
 
-vector<string> gen_sentence(const Grammar &g)
+const Rule &gen_aux_one_round(const Grammar &g, const string &word)
 {
-    vector<string> ret;
-    gen_aux(g, "<sentence>", ret);
-    return ret;
+    Grammar::const_iterator it = g.find(word);
+    if (it == g.end())
+        throw logic_error("empty rule");
+    const Rule_collection &c = it->second;
+    const Rule &r = c[nrand(c.size())];
+    return r;
 }
 
-ostream &operator<<(ostream &os, const vector<string> &v)
+list<string> gen_sentence(const Grammar &g)
+{
+    // via iteration
+    // list<string> ret;
+    // gen_aux(g, "<sentence>", ret);
+    // return ret;
+
+    // no iteration
+    vector<string> ret;
+    vector<string> stack;
+    string word = "<sentence>";
+    stack.push_back(word);
+
+    while (stack.size() > 0)
+    {
+        word = stack.back();
+        stack.pop_back();
+        if (!bracketed(word))
+        {
+            // add to first of ret
+            ret.insert(ret.begin(), word);
+        }
+        else
+        {
+            const Rule &r = gen_aux_one_round(g, word);
+            for (Rule::const_iterator i = r.begin(); i != r.end(); ++i)
+                stack.push_back(*i);
+        }
+    }
+
+    return list<string>(ret.begin(), ret.end());
+}
+
+ostream &operator<<(ostream &os, const list<string> &v)
 {
     if (v.size() > 0)
     {
-        os << v[0];
-        for (vector<string>::size_type i = 1; i < v.size(); ++i)
-            os << " " << v[i];
+        list<string>::const_iterator it = v.begin();
+        os << *it;
+        ++it;
+        while (it != v.end())
+        {
+            os << " " << *it;
+            ++it;
+        }
     }
     return os;
 }
@@ -127,7 +169,7 @@ int main(void)
     // gen 10 sentences
     for (int i = 0; i < 10; ++i)
     {
-        vector<string> sentence = gen_sentence(grammar);
+        list<string> sentence = gen_sentence(grammar);
         cout << sentence << endl;
     }
 
