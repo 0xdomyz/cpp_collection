@@ -68,16 +68,30 @@ int main(void)
     {
         // write the word
         cout << it->first << " occurs on line(s): ";
+
         // followed by one or more line numbers
         vector<int>::const_iterator line_it = it->second.begin();
+
         cout << *line_it; // write the first line number
         ++line_it;
+
         // write the rest of the line numbers, if any
+        vector<int>::size_type item_counter = 1;
         while (line_it != it->second.end())
         {
-            cout << ", " << *line_it;
+            // new line every 5 items
+            if (item_counter % 5 == 0)
+            {
+                cout << ", " << endl;
+                cout << *line_it;
+            }
+            else
+                cout << ", " << *line_it;
+            ++item_counter;
+
             ++line_it;
         }
+
         // write a new line to separate each word from the next
         cout << endl;
     }
