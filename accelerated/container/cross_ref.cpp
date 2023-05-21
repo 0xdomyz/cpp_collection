@@ -66,8 +66,11 @@ int main(void)
     for (map<string, vector<int>>::const_iterator it = ret.begin();
          it != ret.end(); ++it)
     {
-        // write the word
-        cout << it->first << " occurs on line(s): ";
+        // write the starting word, diff if only one number
+        if (it->second.size() == 1)
+            cout << it->first << " occurs on line: ";
+        else
+            cout << it->first << " occurs on line(s): ";
 
         // followed by one or more line numbers
         vector<int>::const_iterator line_it = it->second.begin();
