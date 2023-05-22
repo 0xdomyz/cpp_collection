@@ -39,25 +39,27 @@ double grade_aux(const Student_info &s)
 //                     const container<Student_info> &did,
 //                     const container<Student_info> &didnt)
 
-double do_analysis(const container<Student_info> &students,
-                   double grade_func(const Student_info &))
-{
-    container<double> grades;
-    transform(students.begin(), students.end(),
-              back_inserter(grades), grade_func);
-    return median(grades);
-}
+// defined as template, so no need to define it again
 
-void write_analysis(ostream &out, const string &name,
-                    double grade_func(const Student_info &),
-                    const container<Student_info> &did,
-                    const container<Student_info> &didnt)
-{
-    out << name;
-    out << ": median(did) = " << do_analysis(did, grade_func);
-    out << ", median(didnt) = " << do_analysis(didnt, grade_func);
-    out << endl;
-}
+// double do_analysis(const container<Student_info> &students,
+//                    double grade_func(const Student_info &))
+// {
+//     container<double> grades;
+//     transform(students.begin(), students.end(),
+//               back_inserter(grades), grade_func);
+//     return median(grades);
+// }
+
+// void write_analysis(ostream &out, const string &name,
+//                     double grade_func(const Student_info &),
+//                     const container<Student_info> &did,
+//                     const container<Student_info> &didnt)
+// {
+//     out << name;
+//     out << ": median(did) = " << do_analysis(did, grade_func);
+//     out << ", median(didnt) = " << do_analysis(didnt, grade_func);
+//     out << endl;
+// }
 
 // avg
 double average(const container<double> &v)
