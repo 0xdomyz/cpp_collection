@@ -1,6 +1,13 @@
 #ifndef CUSTOM_ALGOS_H
 #define CUSTOM_ALGOS_H
 
+// The standard library defines five categories of iterators:
+// Input iterator: Sequential access in one direction, input only
+// Output iterator: Sequential access in one direction, output only
+// Forward iterator: Sequential access in one direction, input and output
+// Bidirectional iterator: Sequential access in both directions, input and output
+// Random-access iterator: Efficient access to any element, input and output
+
 // make a namespace for our custom algorithms
 namespace custom_algos
 {
@@ -55,10 +62,80 @@ namespace custom_algos
     }
 
     // find_if(b, e, p)
+    template <class In, class Pred>
+    In find_if(In b, In e, Pred p)
+    {
+        while (b != e)
+        {
+            if (p(*b))
+                return b;
+            ++b;
+        }
+        return e;
+    }
+
     // copy(b, e, d)
+    template <class In, class Out>
+    Out copy(In b, In e, Out d)
+    {
+        while (b != e)
+        {
+            *d = *b;
+            ++b;
+            ++d;
+        }
+        return d;
+    }
+
     // remove_copy(b, e, d, t)
+    template <class In, class Out, class T>
+    Out remove_copy(In b, In e, Out d, const T &t)
+    {
+        while (b != e)
+        {
+            if (*b != t)
+            {
+                *d = *b;
+                ++d;
+            }
+            ++b;
+        }
+        return d;
+    }
+
     // remove_copy_if(b, e, d, p)
+    template <class In, class Out, class Pred>
+    Out remove_copy_if(In b, In e, Out d, Pred p)
+    {
+        while (b != e)
+        {
+            if (!p(*b))
+            {
+                *d = *b;
+                ++d;
+            }
+            ++b;
+        }
+        return d;
+    }
+
     // remove(b, e, t)
+    template <class For, class T>
+    For remove(For b, For e, const T &t)
+    {
+        For i = b;
+        while (i != e)
+        {
+            if (*i != t)
+            {
+                *b = *i;
+                ++b;
+            }
+            ++i;
+        }
+        return b;
+    }
+
     // transform(b, e, d, f)
     // partition(b, e, p)
     // accumulate(b, e, t)
