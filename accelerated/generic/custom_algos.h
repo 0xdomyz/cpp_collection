@@ -137,8 +137,57 @@ namespace custom_algos
     }
 
     // transform(b, e, d, f)
+    template <class In, class Out, class Func>
+    Out transform(In b, In e, Out d, Func f)
+    {
+        while (b != e)
+        {
+            *d = f(*b);
+            ++b;
+            ++d;
+        }
+        return d;
+    }
+
     // partition(b, e, p)
+    template <class For, class Pred>
+    For partition(For b, For e, Pred p)
+    {
+        For i = b;
+        while (i != e)
+        {
+            if (p(*i))
+            {
+                std::swap(*b, *i);
+                ++b;
+            }
+            ++i;
+        }
+        return b;
+    }
+
     // accumulate(b, e, t)
+    template <class In, class T>
+    T accumulate(In b, In e, T t)
+    {
+        while (b != e)
+        {
+            t += *b;
+            ++b;
+        }
+        return t;
+    }
+
+    template <class In, class T, class BinOp>
+    T accumulate(In b, In e, T t, BinOp op)
+    {
+        while (b != e)
+        {
+            t = op(t, *b);
+            ++b;
+        }
+        return t;
+    }
 
 }
 

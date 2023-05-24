@@ -128,6 +128,37 @@ int main()
     }
 
     // transform(b, e, d, f)
+    {
+        vector<int> v{1, 2, 3, 4, 5};
+        vector<int> v2(5);
+        vector<int> v3;
+
+        ca::transform(v.begin(), v.end(), v2.begin(), [](int i)
+                      { return i * 2; });
+        vector<int> expected{2, 4, 6, 8, 10};
+        assert(ca::equal(v2.begin(), v2.end(), expected.begin()));
+
+        ca::transform(v.begin(), v.end(), back_inserter(v3), [](int i)
+                      { return i * 2; });
+        assert(ca::equal(v3.begin(), v3.end(), expected.begin()));
+    }
+
     // partition(b, e, p)
+    {
+        vector<int> v{1, 2, 3, 4, 5};
+        vector<int> expected{1, 3, 5, 4, 2};
+
+        ca::partition(v.begin(), v.end(), [](int i)
+                      { return i % 2 == 1; });
+        assert(ca::equal(v.begin(), v.end(), expected.begin()));
+    }
+
     // accumulate(b, e, t)
+    {
+        vector<int> v{1, 2, 3, 4, 5};
+
+        assert(ca::accumulate(v.begin(), v.end(), 0) == 15);
+        assert(ca::accumulate(v.begin(), v.end(), 1, [](int a, int b)
+                              { return a * b; }) == 120);
+    }
 }
