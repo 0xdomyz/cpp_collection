@@ -15,6 +15,7 @@ void reverse(Bi begin, Bi end)
         --end;
         if (begin != end)
             swap(*begin++, *end);
+        // *begin++ = *end;
     }
 }
 
