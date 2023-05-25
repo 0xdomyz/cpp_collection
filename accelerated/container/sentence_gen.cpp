@@ -108,7 +108,9 @@ const Rule &gen_aux_one_round(const Grammar &g, const string &word)
     return r;
 }
 
-list<string> gen_sentence(const Grammar &g)
+// list<string> gen_sentence(const Grammar &g)
+template <class Bi>
+Bi gen_sentence(const Grammar &g, Bi ret)
 {
     // via iteration
     // list<string> ret;
@@ -116,7 +118,7 @@ list<string> gen_sentence(const Grammar &g)
     // return ret;
 
     // no iteration
-    vector<string> ret;
+    // vector<string> ret;
     vector<string> stack;
     string word = "<sentence>";
     stack.push_back(word);
@@ -128,7 +130,8 @@ list<string> gen_sentence(const Grammar &g)
         if (!bracketed(word))
         {
             // add to first of ret
-            ret.insert(ret.begin(), word);
+            // ret.insert(ret.begin(), word);
+            *ret++ = word;
         }
         else
         {
@@ -138,7 +141,8 @@ list<string> gen_sentence(const Grammar &g)
         }
     }
 
-    return list<string>(ret.begin(), ret.end());
+    // return list<string>(ret.begin(), ret.end());
+    return ret;
 }
 
 ostream &operator<<(ostream &os, const list<string> &v)
@@ -146,6 +150,22 @@ ostream &operator<<(ostream &os, const list<string> &v)
     if (v.size() > 0)
     {
         list<string>::const_iterator it = v.begin();
+        os << *it;
+        ++it;
+        while (it != v.end())
+        {
+            os << " " << *it;
+            ++it;
+        }
+    }
+    return os;
+}
+
+ostream &operator<<(ostream &os, const vector<string> &v)
+{
+    if (v.size() > 0)
+    {
+        vector<string>::const_iterator it = v.begin();
         os << *it;
         ++it;
         while (it != v.end())
@@ -169,8 +189,18 @@ int main(void)
     // gen 10 sentences
     for (int i = 0; i < 10; ++i)
     {
-        list<string> sentence = gen_sentence(grammar);
+        // list<string> sentence = gen_sentence(grammar);
+
+        // vector<string> sentence;
+        // gen_sentence(grammar, back_inserter(sentence));
+        // reverse(sentence.begin(), sentence.end());
+
+        list<string> sentence;
+        gen_sentence(grammar, back_inserter(sentence));
+        reverse(sentence.begin(), sentence.end());
+
         cout << sentence << endl;
+        // cout << sentence.end() << endl;
     }
 
     return 0;
