@@ -3,6 +3,8 @@
 #include <algorithm>
 #include <stdexcept>
 #include <vector>
+#include <chrono>
+#include <iostream>
 
 using namespace std;
 
@@ -21,13 +23,34 @@ T median(vector<T> v)
 
 int main()
 {
+
+    auto timer = chrono::high_resolution_clock::now();
+
     vector<int> v = {1, 2, 3, 4, 5};
     int m = median(v);
     printf("median: %d\n", m);
 
+    auto timer2 = chrono::high_resolution_clock::now();
+    cout << "Time in nano seconds: " << chrono::duration_cast<chrono::nanoseconds>(timer2 - timer).count() << " ns" << endl;
+
     vector<double> v2 = {1.1, 2.2, 3.3, 4.4, 5.5};
     double m2 = median(v2);
     printf("median: %f\n", m2);
+
+    auto timer3 = chrono::high_resolution_clock::now();
+    cout << "Time in nano seconds: " << chrono::duration_cast<chrono::nanoseconds>(timer3 - timer2).count() << " ns" << endl;
+
+    // big vector
+    vector<int> v3;
+    for (int i = 0; i < 1000000; i++)
+    {
+        v3.push_back(i);
+    }
+    int m3 = median(v3);
+    printf("median: %d\n", m3);
+
+    auto timer4 = chrono::high_resolution_clock::now();
+    cout << "Time in nano seconds: " << chrono::duration_cast<chrono::nanoseconds>(timer4 - timer3).count() << " ns" << endl;
 
     return 0;
 }
