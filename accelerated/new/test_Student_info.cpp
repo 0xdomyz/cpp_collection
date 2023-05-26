@@ -9,7 +9,10 @@ using namespace std;
 
 int main(void)
 {
-    Student_info s;
-    s.read(cin);
+    // Student_info s;
+    // s.read(cin);
+    Student_info s(cin);
+
+    cout << s.valid() << endl;
     cout << s.grade() << endl;
 }
