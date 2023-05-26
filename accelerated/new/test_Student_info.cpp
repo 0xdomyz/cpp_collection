@@ -7,7 +7,7 @@
 
 using namespace std;
 
-int main(void)
+void test_basic()
 {
     // Student_info s;
     // s.read(cin);
@@ -15,4 +15,17 @@ int main(void)
 
     cout << s.valid() << endl;
     cout << s.grade() << endl;
+}
+
+void test_exception()
+{
+    Student_info s;
+    s.grade();
+    s.read(cin);
+}
+
+int main(void)
+{
+    // test_basic();
+    test_exception();
 }
