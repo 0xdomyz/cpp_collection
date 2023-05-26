@@ -15,14 +15,17 @@ int main()
     vector<Student_info> students;
     Student_info record;
     string::size_type maxlen = 0;
+
     // read and store the data
     while (record.read(cin))
     {                                               // changed
         maxlen = max(maxlen, record.name().size()); // changed
         students.push_back(record);
     }
+
     // alphabetize the student records
     sort(students.begin(), students.end(), compare);
+
     // write the names and grades
     for (vector<Student_info>::size_type i = 0;
          i != students.size(); ++i)

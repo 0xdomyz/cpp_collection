@@ -7,9 +7,14 @@
 
 using namespace std;
 
-Student_info::Student_info() : midterm(0), final(0){};
+Student_info::Student_info() : midterm(0), final(0), g(0){};
 
-Student_info::Student_info(istream &is) { read(is); };
+double grade(double midterm, double final, const vector<double> &hw);
+
+Student_info::Student_info(istream &is)
+{
+    read(is);
+};
 
 // read homework grades from an input stream into a `vector'
 istream &read_hw(istream &in, vector<double> &hw)
@@ -32,6 +37,13 @@ istream &Student_info::read(istream &in)
 {
     in >> n >> midterm >> final;
     read_hw(in, homework);
+
+    // calculate grade
+    if (valid())
+        g = ::grade(midterm, final, homework);
+    else
+        g = 0;
+
     return in;
 }
 
@@ -64,7 +76,7 @@ double grade(double midterm, double final, const vector<double> &hw)
     return grade(midterm, final, median(hw));
 }
 
-double Student_info::grade() const
-{
-    return ::grade(midterm, final, homework);
-}
+// double Student_info::grade() const
+// {
+//     return ::grade(midterm, final, homework);
+// }
