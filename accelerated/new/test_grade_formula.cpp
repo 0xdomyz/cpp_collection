@@ -1,5 +1,5 @@
 // usual setup: compile cmd, include io, vector, using namespace std
-// g++ -o test_grading test_grading.cpp && ./test_grading
+// g++ -o test_grade_formula test_grade_formula.cpp && ./test_grade_formula
 #include <iostream>
 #include <vector>
 
