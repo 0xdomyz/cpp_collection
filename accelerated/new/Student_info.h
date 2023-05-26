@@ -5,14 +5,21 @@
 #include <vector>
 #include <iostream>
 
-struct Student_info
+class Student_info
 {
-    std::string name;
+public:
+    Student_info();
+    Student_info(std::istream &);
+
+    std::istream &read(std::istream &);
+    double grade() const;
+    std::string name() const { return n; };
+    bool valid() const { return !homework.empty(); };
+
+private:
+    std::string n;
     double midterm, final;
     std::vector<double> homework;
-
-    std::istream &read(std::istream &); // added
-    double grade() const;               // added
 };
 
 bool compare(const Student_info &x, const Student_info &y);

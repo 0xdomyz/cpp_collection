@@ -7,6 +7,10 @@
 
 using namespace std;
 
+Student_info::Student_info() : midterm(0), final(0){};
+
+Student_info::Student_info(istream &is) { read(is); };
+
 // read homework grades from an input stream into a `vector'
 istream &read_hw(istream &in, vector<double> &hw)
 {
@@ -26,7 +30,7 @@ istream &read_hw(istream &in, vector<double> &hw)
 
 istream &Student_info::read(istream &in)
 {
-    in >> name >> midterm >> final;
+    in >> n >> midterm >> final;
     read_hw(in, homework);
     return in;
 }
@@ -38,7 +42,7 @@ double grade(double midterm, double final, double homework)
 
 bool compare(const Student_info &x, const Student_info &y)
 {
-    return x.name < y.name;
+    return x.name() < y.name();
 };
 
 double median(vector<double> vec)
