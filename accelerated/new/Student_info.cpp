@@ -57,6 +57,11 @@ bool compare(const Student_info &x, const Student_info &y)
     return x.name() < y.name();
 };
 
+// bool compare(Student_info &x, Student_info &y)
+// {
+//     return x.name() < y.name();
+// };
+
 double median(vector<double> vec)
 {
     typedef vector<double>::size_type vec_sz;

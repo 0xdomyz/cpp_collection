@@ -14,6 +14,7 @@ public:
     std::istream &read(std::istream &);
     double grade() const { return g; };
     std::string name() const { return n; };
+    // std::string name() { return n; };
     bool valid() const { return !homework.empty(); };
 
 private:
@@ -24,5 +25,6 @@ private:
 };
 
 bool compare(const Student_info &x, const Student_info &y);
+// bool compare(Student_info &x, Student_info &y);
 
 #endif
