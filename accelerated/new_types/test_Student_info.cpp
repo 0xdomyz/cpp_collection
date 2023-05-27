@@ -17,15 +17,43 @@ void test_basic()
     cout << s.grade() << endl;
 }
 
-void test_exception()
+void test_exception_trigger()
 {
     Student_info s;
     s.grade();
     s.read(cin);
 }
 
+void test_exception_catch()
+{
+    Student_info s;
+    try
+    {
+        s.grade();
+    }
+    catch (domain_error e)
+    {
+        s.read(cin);
+        cout << s.grade() << endl;
+    }
+}
+
+void test_check()
+{
+    Student_info s;
+    if (s.valid())
+        cout << s.grade() << endl;
+    else
+    {
+        s.read(cin);
+        cout << s.grade() << endl;
+    }
+}
+
 int main(void)
 {
     // test_basic();
-    test_exception();
+    // test_exception_trigger();
+    // test_exception_catch();
+    test_check();
 }

@@ -38,11 +38,11 @@ istream &Student_info::read(istream &in)
     in >> n >> midterm >> final;
     read_hw(in, homework);
 
-    // calculate grade
-    if (valid())
-        g = ::grade(midterm, final, homework);
-    else
-        g = 0;
+    // pre-calculate grade
+    // if (valid())
+    //     g = ::grade(midterm, final, homework);
+    // else
+    //     g = 0;
 
     return in;
 }
@@ -81,11 +81,11 @@ double grade(double midterm, double final, const vector<double> &hw)
     return grade(midterm, final, median(hw));
 }
 
-double Student_info::grade() const
-{
-    return g;
-}
-// double Student_info::grade() const
+// double Student_info::grade() const // if pre-calculate
 // {
-//     return ::grade(midterm, final, homework);
+//     return g;
 // }
+double Student_info::grade() const // if not pre-calculate
+{
+    return ::grade(midterm, final, homework);
+}
