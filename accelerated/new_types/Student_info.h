@@ -12,7 +12,7 @@ public:
     Student_info(std::istream &);
 
     std::istream &read(std::istream &);
-    double grade() const { return g; };
+    double grade() const;
     std::string name() const { return n; };
     // std::string name() { return n; };
     bool valid() const { return !homework.empty(); };

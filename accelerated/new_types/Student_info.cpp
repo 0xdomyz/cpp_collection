@@ -81,6 +81,10 @@ double grade(double midterm, double final, const vector<double> &hw)
     return grade(midterm, final, median(hw));
 }
 
+double Student_info::grade() const
+{
+    return g;
+}
 // double Student_info::grade() const
 // {
 //     return ::grade(midterm, final, homework);
