@@ -2,6 +2,8 @@
 #include <vector>
 #include <iostream>
 #include <algorithm>
+#include <string>
+#include <stdexcept>
 
 #include "Student_info.h"
 
@@ -88,4 +90,18 @@ double grade(double midterm, double final, const vector<double> &hw)
 double Student_info::grade() const // if not pre-calculate
 {
     return ::grade(midterm, final, homework);
+}
+
+string pass_fail_grade(double midterm, double final)
+{
+    double avg = 0.5 * midterm + 0.5 * final;
+    if (avg >= 60)
+        return string("P");
+    else
+        return string("F");
+}
+
+string Student_info::pass_fail_grade() const
+{
+    return ::pass_fail_grade(midterm, final);
 }

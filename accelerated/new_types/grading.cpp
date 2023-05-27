@@ -24,7 +24,15 @@ int main()
     }
 
     // alphabetize the student records
-    sort(students.begin(), students.end(), compare);
+    // sort(students.begin(), students.end(), compare);
+
+    // order by pass/fail grade
+    auto func = [](const Student_info &x, const Student_info &y)
+    {
+        return x.pass_fail_grade() > y.pass_fail_grade();
+    };
+    sort(students.begin(), students.end(), func);
+    cout << "type of func: " << typeid(func).name() << endl;
 
     // write the names and grades
     for (vector<Student_info>::size_type i = 0;
@@ -34,10 +42,15 @@ int main()
              << string(maxlen + 1 - students[i].name().size(), ' ');
         try
         {
-            double final_grade = students[i].grade(); // changed
-            streamsize prec = cout.precision();
-            cout << setprecision(3) << final_grade
-                 << setprecision(prec) << endl;
+            // double grades
+            // double final_grade = students[i].grade(); // changed
+            // streamsize prec = cout.precision();
+            // cout << setprecision(3) << final_grade
+            //      << setprecision(prec) << endl;
+
+            // pass/fail grades
+            string pass_fail_grade = students[i].pass_fail_grade();
+            cout << pass_fail_grade << endl;
         }
         catch (domain_error e)
         {

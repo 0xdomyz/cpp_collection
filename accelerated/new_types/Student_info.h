@@ -13,6 +13,7 @@ public:
 
     std::istream &read(std::istream &);
     double grade() const;
+    std::string pass_fail_grade() const;
     std::string name() const { return n; };
     // std::string name() { return n; };
     bool valid() const { return !homework.empty(); };

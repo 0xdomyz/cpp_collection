@@ -50,10 +50,18 @@ void test_check()
     }
 }
 
+void test_pass_fail_grade()
+{
+    Student_info s;
+    s.read(cin);
+    cout << s.pass_fail_grade() << endl;
+}
+
 int main(void)
 {
     // test_basic();
     // test_exception_trigger();
     // test_exception_catch();
-    test_check();
+    // test_check();
+    test_pass_fail_grade();
 }
