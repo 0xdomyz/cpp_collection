@@ -1,9 +1,4 @@
-// g++ exercise.cpp -o exercise && ./exercise
-
-/*
-
-
-*/
+// g++ quote_backslash.cpp -o quote_backslash && ./quote_backslash
 
 #include <iostream>
 
