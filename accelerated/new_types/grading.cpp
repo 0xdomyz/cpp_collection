@@ -49,8 +49,12 @@ int main()
             //      << setprecision(prec) << endl;
 
             // pass/fail grades
-            string pass_fail_grade = students[i].pass_fail_grade();
-            cout << pass_fail_grade << endl;
+            // string pass_fail_grade = students[i].pass_fail_grade();
+            // cout << pass_fail_grade << endl;
+
+            // letter grades
+            string letter_grade = students[i].letter_grade();
+            cout << letter_grade << endl;
         }
         catch (domain_error e)
         {

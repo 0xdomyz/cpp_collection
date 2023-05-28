@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <string>
 #include <stdexcept>
-
+#include "letter_grade.h"
 #include "Student_info.h"
 
 using namespace std;
@@ -104,4 +104,9 @@ string pass_fail_grade(double midterm, double final)
 string Student_info::pass_fail_grade() const
 {
     return ::pass_fail_grade(midterm, final);
+}
+
+string Student_info::letter_grade() const
+{
+    return ::letter_grade(grade());
 }
