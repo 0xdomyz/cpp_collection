@@ -1,4 +1,4 @@
-// g++ median.cpp -o median && ./median
+// g++ vector_median.cpp -o vector_median && ./vector_median
 
 #include <algorithm>
 #include <stdexcept>
@@ -46,6 +46,31 @@ chrono::nanoseconds time_from_last_call(void)
     return res;
 }
 
+void test_big_vectors()
+{
+    // random bigger one to test in place
+    vector<int> v4;
+    for (int i = 0; i < 10000000; i++)
+    {
+        v4.push_back(rand() % 100000 * 0.1);
+    }
+
+    time_from_last_call();
+    int m5 = median(v4);
+    printf("median: %d\n", m5);
+    cout << "time: " << time_from_last_call().count() << endl;
+
+    time_from_last_call();
+    int m6 = median_in_place<vector<int>::iterator, int>(v4.begin(), v4.end());
+    printf("median: %d\n", m6);
+    cout << "time: " << time_from_last_call().count() << endl;
+
+    // speed of copying a big vector
+    time_from_last_call();
+    vector<int> v5 = v4;
+    cout << "time: " << time_from_last_call().count() << endl;
+}
+
 int main()
 {
 
@@ -77,26 +102,7 @@ int main()
     cout << "time: " << time_from_last_call().count() << endl;
 
     // random bigger one to test in place
-    vector<int> v4;
-    for (int i = 0; i < 10000000; i++)
-    {
-        v4.push_back(rand() % 100000 * 0.1);
-    }
-
-    time_from_last_call();
-    int m5 = median(v4);
-    printf("median: %d\n", m5);
-    cout << "time: " << time_from_last_call().count() << endl;
-
-    time_from_last_call();
-    int m6 = median_in_place<vector<int>::iterator, int>(v4.begin(), v4.end());
-    printf("median: %d\n", m6);
-    cout << "time: " << time_from_last_call().count() << endl;
-
-    // speed of copying a big vector
-    time_from_last_call();
-    vector<int> v5 = v4;
-    cout << "time: " << time_from_last_call().count() << endl;
+    // test_big_vectors();
 
     return 0;
 }
