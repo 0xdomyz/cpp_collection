@@ -5,7 +5,7 @@
 #include <stdexcept>
 
 template <class T, class Ran>
-T median(Ran begin, Ran end, T t)
+T median(Ran begin, Ran end)
 {
 
     if (begin == end)

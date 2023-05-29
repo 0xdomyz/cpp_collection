@@ -15,7 +15,7 @@ int main()
         v1.push_back(rand() % 100);
     }
 
-    int m1 = median(v1.begin(), v1.end(), 0);
+    int m1 = median<int>(v1.begin(), v1.end());
 
     for (auto i : v1)
     {
@@ -27,7 +27,7 @@ int main()
     // test built in array of double
     double v2[] = {9.9, 2.2, 3.3, 4.4, 5.5};
 
-    float m2 = median(v2, v2 + 5, 0.0);
+    float m2 = median<float>(v2, v2 + 5);
 
     for (auto i : v2)
     {
