@@ -124,10 +124,10 @@ template <class T>
 void Vec<T>::grow()
 {
     // when growing, allocate twice as much space as currently in use
-    size_type new_size = max(2 * (limit - data), ptrdiff_t(1));
+    size_type new_size = std::max(2 * (limit - data), ptrdiff_t(1));
     // allocate new space and copy existing elements to the new space
     iterator new_data = alloc.allocate(new_size);
-    iterator new_avail = uninitialized_copy(data, avail, new_data);
+    iterator new_avail = std::uninitialized_copy(data, avail, new_data);
     // return the old space
     uncreate();
     // reset pointers to point to the newly allocated space
