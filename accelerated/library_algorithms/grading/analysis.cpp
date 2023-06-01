@@ -5,6 +5,7 @@
 #include "median.h"
 #include "analysis.h"
 #include <numeric>
+#include <vector>
 
 using namespace std;
 
@@ -62,7 +63,7 @@ double grade_aux(const Student_info &s)
 // }
 
 // avg
-double average(const container<double> &v)
+double average(const vector<double> &v)
 {
     return accumulate(v.begin(), v.end(), 0.0) / v.size();
 }
