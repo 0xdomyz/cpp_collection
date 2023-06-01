@@ -36,4 +36,54 @@ int main(void)
     e = vs.end();
     cout << *b << endl;
     cout << *(--e) << endl;
+
+    {
+        // erase
+        Vec<string> vs;
+        vs.push_back("hello");
+        vs.push_back("world");
+        vs.push_back("!");
+        vs.push_back("1");
+
+        cout << "before erase: " << endl;
+        cout << vs << endl;
+
+        cout << "erase the third element: " << endl;
+        auto it = vs.begin();
+        ++it;
+        ++it;
+        vs.erase(it);
+        cout << vs << endl;
+
+        cout << "erase the first element: " << endl;
+        it = vs.begin();
+        vs.erase(it);
+        cout << vs << endl;
+
+        cout << "erase the last element: " << endl;
+        it = vs.end();
+        vs.erase(--it);
+        cout << vs << endl;
+
+        cout << "erase the only element: " << endl;
+        it = vs.begin();
+        vs.erase(it);
+        cout << vs << endl;
+    }
+
+    {
+        cout << "test clear: " << endl;
+        Vec<string> vs;
+        vs.push_back("hello");
+        vs.push_back("world");
+        vs.push_back("!");
+
+        cout << "before clear: " << endl;
+        cout << vs << endl;
+
+        vs.clear();
+
+        cout << "after clear: " << endl;
+        cout << vs << endl;
+    }
 }

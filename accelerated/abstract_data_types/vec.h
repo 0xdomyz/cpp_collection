@@ -2,6 +2,7 @@
 #define GUARD_VEC_H
 
 #include <memory>
+#include <iostream>
 
 template <class T>
 class Vec
@@ -36,11 +37,24 @@ public:
         unchecked_append(val); // append the new element
     }
 
+    iterator erase(iterator);
+    // iterator erase(iterator, iterator);
+
+    void clear() { uncreate(); }
+
     // iterator operations
     iterator begin() { return data; }
     const_iterator begin() const { return data; }
     iterator end() { return avail; }
     const_iterator end() const { return avail; }
+
+    // friends
+    friend std::ostream &operator<<(std::ostream &os, const Vec &v)
+    {
+        for (auto i = v.begin(); i != v.end(); ++i)
+            os << *i << " ";
+        return os;
+    }
 
 private:
     iterator data;
@@ -141,6 +155,21 @@ template <class T>
 void Vec<T>::unchecked_append(const T &val)
 {
     alloc.construct(avail++, val);
+}
+
+template <class T>
+typename Vec<T>::iterator Vec<T>::erase(iterator it)
+{
+    if (it == avail)
+        return it;
+    for (iterator i = it; i != avail; ++i)
+    {
+        alloc.destroy(i);
+        if (i + 1 != avail)
+            alloc.construct(i, *(i + 1));
+    }
+    --avail;
+    return it;
 }
 
 #endif // GUARD_VEC_H
