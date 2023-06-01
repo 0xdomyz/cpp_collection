@@ -6,8 +6,8 @@
 #include <algorithm>
 
 template <class T>
-using container = std::vector<T>;
-// using container = std::list<T>;
+// using container = std::vector<T>;
+using container = std::list<T>;
 
 template <typename T>
 void sortStudents(T &students)

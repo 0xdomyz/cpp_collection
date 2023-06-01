@@ -14,6 +14,12 @@ using std::clock;
 using std::cout;
 using std::sort;
 
+// initialize counters
+int Student_info::default_ctor_calls = 0;
+int Student_info::copy_ctor_calls = 0;
+int Student_info::assign_calls = 0;
+int Student_info::dtor_calls = 0;
+
 // time start and finish of progrma to get running time
 
 int main()
@@ -72,6 +78,15 @@ int main()
     // stop timer
     clock_t finish = clock();
     cout << "Running time: " << (double)(finish - start) / CLOCKS_PER_SEC << " seconds" << std::endl;
+
+    // type of container is
+    cout << "type of container is: " << typeid(did).name() << std::endl;
+
+    // print counters
+    cout << "default_ctor_calls: " << Student_info::default_ctor_calls << std::endl;
+    cout << "copy_ctor_calls: " << Student_info::copy_ctor_calls << std::endl;
+    cout << "assign_calls: " << Student_info::assign_calls << std::endl;
+    cout << "dtor_calls: " << Student_info::dtor_calls << std::endl;
 
     return 0;
 }
