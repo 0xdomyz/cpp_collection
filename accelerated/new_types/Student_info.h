@@ -19,6 +19,9 @@ public:
     // std::string name() { return n; };
     bool valid() const { return !homework.empty(); };
 
+    operator double() { return grade(); };
+    operator double() const { return grade(); };
+
 private:
     std::string n;
     double midterm, final;
