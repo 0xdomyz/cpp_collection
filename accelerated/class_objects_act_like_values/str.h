@@ -70,7 +70,7 @@ std::istream &operator>>(std::istream &is, Str &s)
     if (is)
     {
         do
-            s.data.push_back(c); // compile error!, data is private
+            s.data.push_back(c);
         while (is.get(c) && !std::isspace(c));
         // if we read whitespace, then put it back on the stream
         if (is)
