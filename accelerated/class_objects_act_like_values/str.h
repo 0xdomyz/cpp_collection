@@ -1,3 +1,6 @@
+#ifndef GUARD_STR_H
+#define GUARD_STR_H
+
 #include "vec.h"
 #include <cstring>
 
@@ -82,3 +85,5 @@ Str operator+(const Str &s, const Str &t)
     r += t;
     return r;
 }
+
+#endif
