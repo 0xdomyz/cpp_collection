@@ -79,4 +79,25 @@ int main(void)
         }
         cout << endl;
     }
+
+    {
+        cout << "copy()" << endl;
+        Str s = "hello";
+
+        {
+            char *p = new char[s.size() + 1];
+            s.copy(p, s.size());
+            p[s.size()] = '\0';
+            cout << p << endl;
+            delete[] p;
+        }
+
+        {
+            char *p = new char[3 + 1];
+            s.copy(p, 3);
+            p[3] = '\0';
+            cout << p << endl;
+            delete[] p;
+        }
+    }
 }

@@ -45,6 +45,10 @@ public:
 
     const char *c_str();
     const char *data();
+    void copy(char *p, size_type n) // copy into p
+    {
+        std::copy(content.begin(), content.begin() + n, p);
+    }
 
 private:
     Vec<char> content;
