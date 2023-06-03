@@ -1,7 +1,8 @@
 // g++ test_str.cpp -o test_str && ./test_str
 
 #include <iostream>
-#include "str.h"
+// #include "str.h"
+#include "str_no_vec.h"
 
 using namespace std;
 
