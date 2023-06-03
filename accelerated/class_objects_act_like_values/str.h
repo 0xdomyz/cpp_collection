@@ -43,8 +43,18 @@ public:
         return *this;
     }
 
+    const char *c_str()
+    {
+        delete[] c_str_;
+        c_str_ = new char[data.size() + 1];
+        std::copy(data.begin(), data.end(), c_str_);
+        c_str_[data.size()] = '\0';
+        return c_str_;
+    }
+
 private:
     Vec<char> data;
+    char *c_str_;
 };
 
 Str operator+(const Str &, const Str &);
