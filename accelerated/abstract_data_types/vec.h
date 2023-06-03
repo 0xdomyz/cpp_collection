@@ -24,7 +24,7 @@ public:
     // operations
     size_type size() const
     {
-        return limit - data;
+        return avail - data;
     }
 
     T &operator[](size_type i) { return data[i]; }
