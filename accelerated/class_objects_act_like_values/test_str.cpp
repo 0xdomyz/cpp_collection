@@ -57,4 +57,26 @@ int main(void)
 
         cout << endl;
     }
+
+    {
+        cout << "data()" << endl;
+        Str s = "hello";
+        cout << s.size() << endl;
+
+        const char *data = s.data();
+        for (size_t i = 0; i < s.size(); ++i)
+        {
+            cout << data[i];
+        }
+        cout << endl;
+
+        s += " world";
+
+        const char *data2 = s.data();
+        for (size_t i = 0; i < s.size(); ++i)
+        {
+            cout << data2[i];
+        }
+        cout << endl;
+    }
 }

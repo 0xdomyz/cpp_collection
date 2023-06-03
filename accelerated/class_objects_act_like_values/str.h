@@ -15,46 +15,39 @@ public:
     // default constructor; create an empty Str
     Str() {}
     // create a Str containing n copies of c
-    Str(size_type n, char c) : data(n, c) {}
+    Str(size_type n, char c) : content(n, c) {}
     // create a Str from a null-terminated array of char
     Str(const char *cp)
     {
-        std::copy(cp, cp + std::strlen(cp), std::back_inserter(data));
+        std::copy(cp, cp + std::strlen(cp), std::back_inserter(content));
     }
     // create a Str from the range denoted by iterators b and e
     template <class In>
     Str(In b, In e)
     {
-        std::copy(b, e, std::back_inserter(data));
+        std::copy(b, e, std::back_inserter(content));
     }
 
-    size_type size() const { return data.size(); }
+    size_type size() const { return content.size(); }
 
-    char &operator[](size_type i) { return data[i]; }
+    char &operator[](size_type i) { return content[i]; }
     const char &operator[](size_type i) const
     {
-        return data[i];
+        return content[i];
     }
 
     Str &operator+=(const Str &s)
     {
-        std::copy(s.data.begin(), s.data.end(),
-                  std::back_inserter(data));
+        std::copy(s.content.begin(), s.content.end(),
+                  std::back_inserter(content));
         return *this;
     }
 
-    const char *c_str()
-    {
-        delete[] c_str_;
-        c_str_ = new char[data.size() + 1];
-        std::copy(data.begin(), data.end(), c_str_);
-        c_str_[data.size()] = '\0';
-        return c_str_;
-    }
+    const char *c_str();
+    const char *data();
 
 private:
-    Vec<char> data;
-    char *c_str_;
+    Vec<char> content;
 };
 
 Str operator+(const Str &, const Str &);
@@ -63,7 +56,7 @@ Str operator+(const Str &, const Str &);
 
 std::ostream &operator<<(std::ostream &os, const Str &s)
 {
-    for (auto i = s.data.begin(); i != s.data.end(); ++i)
+    for (auto i = s.content.begin(); i != s.content.end(); ++i)
         os << *i;
     return os;
 }
@@ -71,7 +64,7 @@ std::ostream &operator<<(std::ostream &os, const Str &s)
 std::istream &operator>>(std::istream &is, Str &s)
 {
     // obliterate existing value(s)
-    s.data.clear();
+    s.content.clear();
     // read and discard leading whitespace
     char c;
     while (is.get(c) && std::isspace(c))
@@ -80,7 +73,7 @@ std::istream &operator>>(std::istream &is, Str &s)
     if (is)
     {
         do
-            s.data.push_back(c);
+            s.content.push_back(c);
         while (is.get(c) && !std::isspace(c));
         // if we read whitespace, then put it back on the stream
         if (is)
@@ -94,6 +87,27 @@ Str operator+(const Str &s, const Str &t)
     Str r = s;
     r += t;
     return r;
+}
+
+const char *Str::c_str()
+{
+    static char *c_str_ = nullptr;
+
+    delete[] c_str_;
+    c_str_ = new char[content.size() + 1];
+    std::copy(content.begin(), content.end(), c_str_);
+    c_str_[content.size()] = '\0';
+    return c_str_;
+}
+
+const char *Str::data()
+{
+    static char *c_str_2 = nullptr;
+
+    delete[] c_str_2;
+    c_str_2 = new char[content.size()];
+    std::copy(content.begin(), content.end(), c_str_2);
+    return c_str_2;
 }
 
 #endif
