@@ -10,6 +10,7 @@ class Core
 public:
     Core() : midterm(0), final(0) {}
     Core(std::istream &in) { read(in); }
+    virtual ~Core() {}
     std::string name() const;
     virtual std::istream &read(std::istream &);
     virtual double grade() const;
@@ -38,5 +39,7 @@ private:
 bool compare(const Core &c1, const Core &c2);
 
 bool compare_by_grade(const Core &c1, const Core &c2);
+
+bool compare_Core_ptrs(const Core *cp1, const Core *cp2);
 
 #endif
