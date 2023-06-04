@@ -58,3 +58,13 @@ double Grad::grade() const
 {
     return min(Core::grade(), thesis);
 }
+
+bool compare(const Core &c1, const Core &c2)
+{
+    return c1.name() < c2.name();
+}
+
+bool compare_by_grade(const Core &c1, const Core &c2)
+{
+    return c1.grade() < c2.grade();
+}
