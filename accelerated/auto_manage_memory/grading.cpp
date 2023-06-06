@@ -1,4 +1,4 @@
-// g++ handle.cpp students.cpp grading.cpp student_info.cpp -o grading && ./grading
+// g++ handle.cpp students.cpp grading.cpp -o grading && ./grading
 
 #include <vector>
 #include <iostream>

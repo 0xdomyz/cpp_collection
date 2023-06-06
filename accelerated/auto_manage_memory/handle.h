@@ -22,4 +22,15 @@ private:
     T *p;
 };
 
+template <class T>
+Handle<T> &Handle<T>::operator=(const Handle<T> &rhs)
+{
+    if (&rhs != this)
+    {
+        delete p;
+        p = rhs.p ? rhs.p->clone() : 0;
+    }
+    return *this;
+}
+
 #endif
