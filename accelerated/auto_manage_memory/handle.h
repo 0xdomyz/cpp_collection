@@ -1,6 +1,8 @@
 #ifndef GUARD_handle_h
 #define GUARD_handle_h
 
+#include <stdexcept>
+
 template <class T>
 class Handle
 {
@@ -31,6 +33,22 @@ Handle<T> &Handle<T>::operator=(const Handle<T> &rhs)
         p = rhs.p ? rhs.p->clone() : 0;
     }
     return *this;
+}
+
+template <class T>
+T &Handle<T>::operator*() const
+{
+    if (p)
+        return *p;
+    throw std::runtime_error("unbound Handle");
+}
+
+template <class T>
+T *Handle<T>::operator->() const
+{
+    if (p)
+        return p;
+    throw std::runtime_error("unbound Handle");
 }
 
 #endif
