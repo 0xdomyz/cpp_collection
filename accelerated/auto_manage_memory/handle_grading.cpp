@@ -5,7 +5,6 @@
 #include <algorithm>
 #include <iomanip>
 #include <string>
-#include "handle.h"
 #include "students.h"
 
 using namespace std;
