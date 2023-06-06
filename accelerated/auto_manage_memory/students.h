@@ -5,9 +5,12 @@
 #include <vector>
 #include <string>
 #include <stdexcept>
+#include "handle.h"
 
 class Core
 {
+    friend class Handle<Core>;
+
 public:
     Core() : midterm(0), final(0) {}
     Core(std::istream &in) { read(in); }
