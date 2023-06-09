@@ -9,6 +9,7 @@
 template <>
 Vec<char> *clone(const Vec<char> *vp)
 {
+    // std::cout << "Vec<char> *clone(const Vec<char> *vp)" << std::endl;
     return new Vec<char>(*vp);
 }
 

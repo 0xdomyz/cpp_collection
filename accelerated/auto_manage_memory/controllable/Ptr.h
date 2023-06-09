@@ -1,5 +1,5 @@
-#ifndef GUARD_PRT_H
-#define GUARD_PRT_H
+#ifndef GUARD_PTR_H
+#define GUARD_PTR_H
 
 #include <stdexcept>
 
@@ -30,7 +30,9 @@ public:
     Ptr(const Ptr &h) : refptr(h.refptr), p(h.p) { ++*refptr; }
     Ptr &operator=(const Ptr &); // implemented analogously to §14.2/261
     ~Ptr();                      // implemented analogously to §14.2/262
+
     operator bool() const { return p; }
+
     T &operator*() const
     {
         if (p)
