@@ -24,8 +24,10 @@ public:
                   std::back_inserter(*data));
         return *this;
     }
+
     // interface as before
     typedef Vec<char>::size_type size_type;
+
     // reimplement constructors to create Ptrs
     Str() : data(new Vec<char>) {}
     Str(const char *cp) : data(new Vec<char>)
@@ -33,12 +35,14 @@ public:
         std::copy(cp, cp + std::strlen(cp),
                   std::back_inserter(*data));
     }
+
     Str(size_type n, char c) : data(new Vec<char>(n, c)) {}
     template <class In>
     Str(In i, In j) : data(new Vec<char>)
     {
         std::copy(i, j, std::back_inserter(*data));
     }
+
     // call make_unique as necessary
     char &operator[](size_type i)
     {
@@ -46,6 +50,7 @@ public:
         return (*data)[i];
     }
     const char &operator[](size_type i) const { return (*data)[i]; }
+
     size_type size() const { return data->size(); }
 
 private:
