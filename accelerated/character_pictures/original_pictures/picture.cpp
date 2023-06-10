@@ -12,21 +12,8 @@ using namespace std;
 vector<string> vcat(const vector<string> &top,
                     const vector<string> &bottom)
 {
-    // copy the top picture
     vector<string> ret = top;
-    // copy entire bottom picture
-
-    // via iterator
-    // for (vector<string>::const_iterator it = bottom.begin();
-    //      it != bottom.end(); ++it)
-    //     ret.push_back(*it);
-
-    // via insert method
-    // ret.insert(ret.end(), bottom.begin(), bottom.end());
-
-    // via algo
     copy(bottom.begin(), bottom.end(), back_inserter(ret));
-
     return ret;
 }
 
@@ -54,25 +41,6 @@ hcat(const vector<string> &left, const vector<string> &right)
         ret.push_back(s);
     }
 
-    // using indices
-    // indices to look at elements from left and right respectively
-    // vector<string>::size_type i = 0, j = 0;
-    // while (i != left.size() || j != right.size())
-    // {
-    //     // construct new string to hold characters from both pictures
-    //     string s;
-    //     // copy a row from the left-hand side, if there is one
-    //     if (i != left.size())
-    //         s = left[i++];
-    //     // pad to full width
-    //     s += string(width1 - s.size(), ' ');
-    //     // copy a row from the right-hand side, if there is one
-    //     if (j != right.size())
-    //         s += right[j++];
-    //     // add s to the picture we're creating
-    //     ret.push_back(s);
-    // }
-
     return ret;
 }
 
@@ -80,7 +48,6 @@ vector<string> center(const vector<string> &pic)
 {
     vector<string> ret;
     auto interior_len = pic.begin()->size() - 4;
-    // cout << "interior_len: " << interior_len << endl;
 
     // copy first row
     ret.push_back(*pic.begin());
