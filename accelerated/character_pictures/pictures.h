@@ -24,6 +24,9 @@ class Pic_base
     virtual wd_sz width() const = 0;
     virtual ht_sz height() const = 0;
     virtual void display(std::ostream &, ht_sz, bool) const = 0;
+
+protected:
+    static void pad(std::ostream &os, wd_sz beg, wd_sz end);
 };
 
 class String_Pic : public Pic_base
@@ -34,7 +37,7 @@ class String_Pic : public Pic_base
     String_Pic(const std::vector<std::string> &v) : data(v) {}
 
     wd_sz width() const;
-    ht_sz height() const;
+    ht_sz height() const { return data.size(); }
     void display(std::ostream &, ht_sz, bool) const;
 };
 
