@@ -28,8 +28,11 @@ class Pic_base
 
 class String_Pic : public Pic_base
 {
+    friend class Picture;
+
     std::vector<std::string> data;
     String_Pic(const std::vector<std::string> &v) : data(v) {}
+
     wd_sz width() const;
     ht_sz height() const;
     void display(std::ostream &, ht_sz, bool) const;
@@ -41,6 +44,7 @@ class Frame_Pic : public Pic_base
 
     Ptr<Pic_base> p;
     Frame_Pic(const Ptr<Pic_base> &pic) : p(pic) {}
+
     wd_sz width() const { return p->width() + 4; }
     ht_sz height() const { return p->height() + 4; }
     void display(std::ostream &, ht_sz, bool) const;
@@ -48,8 +52,11 @@ class Frame_Pic : public Pic_base
 
 class VCat_Pic : public Pic_base
 {
+    friend Picture vcat(const Picture &, const Picture &);
+
     Ptr<Pic_base> top, bottom;
     VCat_Pic(const Ptr<Pic_base> &t, const Ptr<Pic_base> &b) : top(t), bottom(b) {}
+
     wd_sz width() const;
     ht_sz height() const;
     void display(std::ostream &, ht_sz, bool) const;
@@ -57,8 +64,11 @@ class VCat_Pic : public Pic_base
 
 class HCat_Pic : public Pic_base
 {
+    friend Picture hcat(const Picture &, const Picture &);
+
     Ptr<Pic_base> left, right;
     HCat_Pic(const Ptr<Pic_base> &l, const Ptr<Pic_base> &r) : left(l), right(r) {}
+
     wd_sz width() const;
     ht_sz height() const;
     void display(std::ostream &, ht_sz, bool) const;
@@ -70,6 +80,7 @@ class Picture
     friend Picture frame(const Picture &);
     friend Picture hcat(const Picture &, const Picture &);
     friend Picture vcat(const Picture &, const Picture &);
+    friend std::ostream &operator<<(std::ostream &, const Picture &);
 
 public:
     Picture(const std::vector<std::string> & =
@@ -81,10 +92,7 @@ private:
 };
 
 // nonmember functions
-Picture frame(const Picture &pic)
-{
-    return new Frame_Pic(pic.p);
-};
+Picture frame(const Picture &pic);
 Picture hcat(const Picture &, const Picture &);
 Picture vcat(const Picture &, const Picture &);
 
