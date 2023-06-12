@@ -10,8 +10,7 @@ class Picture;
 // private classes for use in the implementation only
 class Pic_base
 {
-    friend std::ostream &operator<<(std::ostream &,
-                                    const Picture &);
+    friend std::ostream &operator<<(std::ostream &, const Picture &);
     friend class Frame_Pic;
     friend class HCat_Pic;
     friend class VCat_Pic;
@@ -60,8 +59,14 @@ class VCat_Pic : public Pic_base
     Ptr<Pic_base> top, bottom;
     VCat_Pic(const Ptr<Pic_base> &t, const Ptr<Pic_base> &b) : top(t), bottom(b) {}
 
-    wd_sz width() const;
-    ht_sz height() const;
+    wd_sz width() const
+    {
+        return std::max(top->width(), bottom->width());
+    };
+    ht_sz height() const
+    {
+        return top->height() + bottom->height();
+    };
     void display(std::ostream &, ht_sz, bool) const;
 };
 
@@ -72,25 +77,27 @@ class HCat_Pic : public Pic_base
     Ptr<Pic_base> left, right;
     HCat_Pic(const Ptr<Pic_base> &l, const Ptr<Pic_base> &r) : left(l), right(r) {}
 
-    wd_sz width() const;
-    ht_sz height() const;
+    wd_sz width() const { return left->width() + right->width(); }
+    ht_sz height() const
+    {
+        return std::max(left->height(), right->height());
+    }
     void display(std::ostream &, ht_sz, bool) const;
 };
 
 // public interface class and operations
 class Picture
 {
+    friend std::ostream &operator<<(std::ostream &, const Picture &);
     friend Picture frame(const Picture &);
     friend Picture hcat(const Picture &, const Picture &);
     friend Picture vcat(const Picture &, const Picture &);
-    friend std::ostream &operator<<(std::ostream &, const Picture &);
 
 public:
-    Picture(const std::vector<std::string> & =
-                std::vector<std::string>());
-    Picture(Pic_base *ptr) : p(ptr){};
+    Picture(const std::vector<std::string> & = std::vector<std::string>());
 
 private:
+    Picture(Pic_base *ptr) : p(ptr){};
     Ptr<Pic_base> p;
 };
 
