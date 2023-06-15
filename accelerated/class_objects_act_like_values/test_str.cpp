@@ -100,4 +100,14 @@ int main(void)
             delete[] p;
         }
     }
+
+    {
+        cout << "operator==" << endl;
+        Str s = "hello world";
+        Str t = "hello world";
+        Str u = "helasdfloasdf";
+        cout << (s == t) << endl;
+        cout << (s == u) << endl;
+        cout << endl;
+    }
 }

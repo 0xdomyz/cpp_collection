@@ -44,8 +44,8 @@ public:
     }
 
     const char *c_str();
-    const char *data();
-    void copy(char *p, size_type n) // copy into p
+    const char *data() const;
+    void copy(char *p, size_type n) const // copy into p
     {
         std::copy(content.begin(), content.begin() + n, p);
     }
@@ -95,23 +95,26 @@ Str operator+(const Str &s, const Str &t)
 
 const char *Str::c_str()
 {
-    static char *c_str_ = nullptr;
-
-    delete[] c_str_;
-    c_str_ = new char[content.size() + 1];
-    std::copy(content.begin(), content.end(), c_str_);
-    c_str_[content.size()] = '\0';
-    return c_str_;
+    content.push_back('\0');
+    return content.begin();
 }
 
-const char *Str::data()
+const char *Str::data() const
 {
-    static char *c_str_2 = nullptr;
+    return content.begin();
+}
 
-    delete[] c_str_2;
-    c_str_2 = new char[content.size()];
-    std::copy(content.begin(), content.end(), c_str_2);
-    return c_str_2;
+// relational operators
+bool operator==(const Str &lhs, const Str &rhs)
+{
+    char *l = new char[lhs.size() + 1];
+    char *r = new char[rhs.size() + 1];
+    lhs.copy(l, lhs.size());
+    rhs.copy(r, rhs.size());
+    bool ret = std::strcmp(l, r) == 0;
+    delete[] l;
+    delete[] r;
+    return ret;
 }
 
 #endif
