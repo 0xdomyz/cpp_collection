@@ -2,7 +2,7 @@
 #include <iostream>
 #include <cstring>
 #include <algorithm>
-#include "str_no_vec.h"
+#include "str.h"
 
 using namespace std;
 

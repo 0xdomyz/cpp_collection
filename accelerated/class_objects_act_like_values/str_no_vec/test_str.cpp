@@ -1,7 +1,7 @@
-// g++ test_str_no_vec.cpp str_no_vec.cpp -o test_str_no_vec && ./test_str_no_vec
+// g++ test_str.cpp str.cpp -o test_str && ./test_str
 
 #include <iostream>
-#include "str_no_vec.h"
+#include "str.h"
 
 using namespace std;
 
