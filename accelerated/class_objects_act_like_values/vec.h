@@ -19,7 +19,11 @@ public:
     explicit Vec(size_type n, const T &val = T()) { create(n, val); }
     Vec(const Vec &v) { create(v.begin(), v.end()); }
     Vec &operator=(const Vec &);
-    ~Vec() { uncreate(); }
+    ~Vec()
+    {
+        uncreate();
+        // std::cout << "Vec destructor called" << std::endl;
+    }
 
     // operations
     size_type size() const
