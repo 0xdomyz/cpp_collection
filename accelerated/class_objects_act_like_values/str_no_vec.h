@@ -13,32 +13,32 @@ public:
     typedef size_t size_type;
 
     // constructors
-    Str() : data(new char[0]), len(0) {}
-    Str(size_type n, char c) : data(new char[n]), len(n)
+    Str() : data_(new char[0]), len(0) {}
+    Str(size_type n, char c) : data_(new char[n]), len(n)
     {
-        std::fill(data, data + len, c);
+        std::fill(data_, data_ + len, c);
     }
-    Str(const char *cp) : data(new char[std::strlen(cp)]), len(std::strlen(cp))
+    Str(const char *cp) : data_(new char[std::strlen(cp)]), len(std::strlen(cp))
     {
-        std::copy(cp, cp + std::strlen(cp), data);
+        std::copy(cp, cp + std::strlen(cp), data_);
     }
     template <class In>
-    Str(In b, In e) : data(new char[e - b]), len(e - b)
+    Str(In b, In e) : data_(new char[e - b]), len(e - b)
     {
-        std::copy(b, e, data);
+        std::copy(b, e, data_);
     }
 
     // destructor
     ~Str()
     {
-        delete[] data;
+        delete[] data_;
         len = 0;
     }
 
     // copy constructor
-    Str(const Str &s) : data(new char[s.len]), len(s.len)
+    Str(const Str &s) : data_(new char[s.len]), len(s.len)
     {
-        std::copy(s.data, s.data + s.len, data);
+        std::copy(s.data_, s.data_ + s.len, data_);
     }
 
     // assignment operator
@@ -46,96 +46,38 @@ public:
     {
         if (&s != this)
         {
-            delete[] data;
+            delete[] data_;
             len = s.len;
-            data = new char[len];
-            std::copy(s.data, s.data + s.len, data);
+            data_ = new char[len];
+            std::copy(s.data_, s.data_ + s.len, data_);
         }
         return *this;
     }
 
     size_type size() const { return len; }
 
-    char &operator[](size_type i) { return data[i]; }
+    char &operator[](size_type i) { return data_[i]; }
     const char &operator[](size_type i) const
     {
-        return data[i];
+        return data_[i];
     }
 
-    Str &operator+=(const Str &s)
-    {
-        char *new_data = new char[len + s.len];
-        std::copy(data, data + len, new_data);
-        std::copy(s.data, s.data + s.len, new_data + len);
-        delete[] data;
-        data = new_data;
-        len += s.len;
-        return *this;
-    }
-
-    void push_back(const char &c)
-    {
-        if (len == 0)
-        {
-            data = new char[1];
-            data[0] = c;
-            len = 1;
-        }
-        else
-        {
-            char *new_data = new char[len + 1];
-            std::copy(data, data + len, new_data);
-            new_data[len] = c;
-            delete[] data;
-            data = new_data;
-            ++len;
-        }
-    }
+    Str &operator+=(const Str &s);
+    void push_back(const char &c);
+    const char *c_str() const { return data_; };
+    const char *data() const { return data_; };
+    void copy(char *p, size_type n) const;
 
 private:
-    char *data;
+    char *data_;
     size_type len;
 };
 
+std::ostream &operator<<(std::ostream &, const Str &);
+std::istream &operator>>(std::istream &, Str &);
+
 Str operator+(const Str &, const Str &);
 
-// implementations
-
-std::ostream &operator<<(std::ostream &os, const Str &s)
-{
-    for (auto i = s.data; i != s.data + s.len; ++i)
-        os << *i;
-    return os;
-}
-
-std::istream &operator>>(std::istream &is, Str &s)
-{
-    // obliterate existing value(s)
-    delete[] s.data;
-    s.data = new char[0];
-    s.len = 0;
-    // read and discard leading whitespace
-    char c;
-    while (is.get(c) && std::isspace(c))
-        ; // nothing to do, except testing the condition
-          // if still something to read, do so until next whitespace character
-    if (is)
-    {
-        do
-            s.push_back(c);
-        while (is.get(c) && !std::isspace(c));
-        // if we read whitespace, then put it back on the stream
-        if (is)
-            is.unget();
-    }
-    return is;
-}
-
-Str operator+(const Str &s, const Str &t)
-{
-    Str r = s;
-    r += t;
-    return r;
-}
+bool operator==(const Str &, const Str &);
 
 #endif
