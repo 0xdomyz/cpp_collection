@@ -79,5 +79,9 @@ std::istream &operator>>(std::istream &, Str &);
 Str operator+(const Str &, const Str &);
 
 bool operator==(const Str &, const Str &);
+bool operator<(const Str &, const Str &);
+bool operator>(const Str &, const Str &);
+bool operator<=(const Str &, const Str &);
+bool operator>=(const Str &, const Str &);
 
 #endif

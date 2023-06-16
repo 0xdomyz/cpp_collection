@@ -7,11 +7,16 @@ using namespace std;
 
 int main(void)
 {
-    Str s = "hello";
-    cout << s << endl;
+    {
+        cout << "basic" << endl;
+        Str s = "hello";
+        cout << s << endl;
 
-    // indexing
-    cout << s[0] << endl;
+        // indexing
+        cout << s[0] << endl;
+
+        cout << endl;
+    }
 
     {
         cout << "conversions" << endl;
@@ -77,6 +82,8 @@ int main(void)
             cout << data2[i];
         }
         cout << endl;
+
+        cout << endl;
     }
 
     {
@@ -98,6 +105,8 @@ int main(void)
             cout << p << endl;
             delete[] p;
         }
+
+        cout << endl;
     }
 
     {
@@ -107,6 +116,24 @@ int main(void)
         Str u = "helasdfloasdf";
         cout << (s == t) << endl;
         cout << (s == u) << endl;
+        cout << endl;
+    }
+
+    {
+        cout << "relations" << endl;
+        Str small = "helloa";
+        Str mid = "hellog";
+        Str big = "helloz";
+
+        cout << (small < mid) << endl;
+        cout << (small > mid) << endl;
+
+        cout << (big > mid) << endl;
+        cout << (small <= mid) << endl;
+        cout << (big >= mid) << endl;
+        cout << (small <= small) << endl;
+        cout << (small >= small) << endl;
+
         cout << endl;
     }
 }

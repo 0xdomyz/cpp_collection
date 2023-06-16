@@ -83,3 +83,21 @@ bool operator==(const Str &s, const Str &t)
     int res = strcmp(s.c_str(), t.c_str());
     return res == 0;
 }
+
+bool operator<(const Str &s, const Str &t)
+{
+    int res = strcmp(s.c_str(), t.c_str());
+    return res < 0;
+};
+bool operator>(const Str &s, const Str &t)
+{
+    return !(s <= t);
+};
+bool operator<=(const Str &s, const Str &t)
+{
+    return s < t || s == t;
+};
+bool operator>=(const Str &s, const Str &t)
+{
+    return !(s < t);
+};
