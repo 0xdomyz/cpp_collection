@@ -3,6 +3,7 @@
 
 #include "vec.h"
 #include <cstring>
+#include <iostream>
 
 class Str
 {
@@ -12,37 +13,71 @@ class Str
 public:
     typedef Vec<char>::size_type size_type;
 
-    // default constructor; create an empty Str
-    Str() {}
-    // create a Str containing n copies of c
-    Str(size_type n, char c) : content(n, c) {}
-    // create a Str from a null-terminated array of char
+    // constructors
+    Str() : _c_str(new char[0]) {}
+    Str(size_type n, char c) : content(n, c), _c_str(new char[n + 1])
+    {
+        std::copy(content.begin(), content.end(), _c_str);
+        _c_str[n] = '\0';
+    }
     Str(const char *cp)
     {
         std::copy(cp, cp + std::strlen(cp), std::back_inserter(content));
+        _c_str = new char[content.size() + 1];
+        std::copy(content.begin(), content.end(), _c_str);
+        _c_str[content.size()] = '\0';
     }
-    // create a Str from the range denoted by iterators b and e
     template <class In>
     Str(In b, In e)
     {
         std::copy(b, e, std::back_inserter(content));
+        _c_str = new char[content.size() + 1];
+        std::copy(content.begin(), content.end(), _c_str);
+        _c_str[content.size()] = '\0';
+    }
+    ~Str()
+    {
+        delete[] _c_str;
+    }
+    Str(const Str &s) : content(s.content), _c_str(new char[s.content.size() + 1])
+    {
+        std::copy(s.content.begin(), s.content.end(), _c_str);
+        _c_str[s.content.size()] = '\0';
+    }
+    Str &operator=(const Str &s)
+    {
+        if (&s != this)
+        {
+            content = s.content;
+            delete[] _c_str;
+            _c_str = new char[s.content.size() + 1];
+            std::copy(s.content.begin(), s.content.end(), _c_str);
+            _c_str[s.content.size()] = '\0';
+        }
+        return *this;
     }
 
-    size_type size() const { return content.size(); }
-
+    // index operator
     char &operator[](size_type i) { return content[i]; }
     const char &operator[](size_type i) const
     {
         return content[i];
     }
 
+    // concatenation operator
     Str &operator+=(const Str &s)
     {
         std::copy(s.content.begin(), s.content.end(),
                   std::back_inserter(content));
+        delete[] _c_str;
+        _c_str = new char[content.size() + 1];
+        std::copy(content.begin(), content.end(), _c_str);
+        _c_str[content.size()] = '\0';
         return *this;
     }
 
+    // member functions
+    size_type size() const { return content.size(); }
     const char *c_str();
     const char *data() const;
     void copy(char *p, size_type n) const // copy into p
@@ -52,69 +87,10 @@ public:
 
 private:
     Vec<char> content;
+    char *_c_str;
 };
 
 Str operator+(const Str &, const Str &);
-
-// implementations
-
-std::ostream &operator<<(std::ostream &os, const Str &s)
-{
-    for (auto i = s.content.begin(); i != s.content.end(); ++i)
-        os << *i;
-    return os;
-}
-
-std::istream &operator>>(std::istream &is, Str &s)
-{
-    // obliterate existing value(s)
-    s.content.clear();
-    // read and discard leading whitespace
-    char c;
-    while (is.get(c) && std::isspace(c))
-        ; // nothing to do, except testing the condition
-          // if still something to read, do so until next whitespace character
-    if (is)
-    {
-        do
-            s.content.push_back(c);
-        while (is.get(c) && !std::isspace(c));
-        // if we read whitespace, then put it back on the stream
-        if (is)
-            is.unget();
-    }
-    return is;
-}
-
-Str operator+(const Str &s, const Str &t)
-{
-    Str r = s;
-    r += t;
-    return r;
-}
-
-const char *Str::c_str()
-{
-    content.push_back('\0');
-    return content.begin();
-}
-
-const char *Str::data() const
-{
-    return content.begin();
-}
-
-// relational operators
-bool operator==(const Str &lhs, const Str &rhs)
-{
-    char *l = new char[lhs.size() + 1];
-    char *r = new char[rhs.size() + 1];
-    lhs.copy(l, lhs.size());
-    rhs.copy(r, rhs.size());
-    bool ret = std::strcmp(l, r) == 0;
-    delete[] l;
-    delete[] r;
-    return ret;
-}
+bool operator==(const Str &, const Str &);
 
 #endif

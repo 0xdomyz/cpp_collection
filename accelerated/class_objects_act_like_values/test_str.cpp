@@ -1,4 +1,4 @@
-// g++ test_str.cpp -o test_str && ./test_str
+// g++ test_str.cpp str.cpp -o test_str && ./test_str
 
 #include <iostream>
 #include "str.h"
