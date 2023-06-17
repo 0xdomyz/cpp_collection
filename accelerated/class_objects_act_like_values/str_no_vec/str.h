@@ -70,9 +70,17 @@ public:
         return data_[i];
     }
 
+    operator void *() const
+    {
+        if (len == 0)
+            return nullptr;
+        return (void *)data_;
+    }
+
     Str &operator+=(const Str &s);
     Str &operator+=(const char *s);
     void push_back(const char &c);
+
     const char *c_str() const { return data_; };
     const char *data() const { return data_; };
     void copy(char *p, size_type n) const;

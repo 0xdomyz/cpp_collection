@@ -138,4 +138,13 @@ int main(void)
         assert(small != big);
         assert(small == small);
     }
+
+    {
+        // use in condition
+        Str s = "hello";
+        Str t;
+
+        assert(s);
+        assert(!t);
+    }
 }
