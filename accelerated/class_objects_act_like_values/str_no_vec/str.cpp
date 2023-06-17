@@ -8,21 +8,14 @@ using namespace std;
 
 void Str::push_back(const char &c)
 {
-    if (len == 0)
-    {
-        data_ = new char[1];
-        data_[0] = c;
-        len = 1;
-    }
-    else
-    {
-        char *new_data_ = new char[len + 1];
-        std::copy(data_, data_ + len, new_data_);
-        new_data_[len] = c;
-        delete[] data_;
-        data_ = new_data_;
-        ++len;
-    }
+
+    char *new_data_ = new char[len + 1];
+    std::copy(data_, data_ + len, new_data_);
+    new_data_[len] = c;
+    new_data_[len + 1] = '\0';
+    delete[] data_;
+    data_ = new_data_;
+    ++len;
 }
 
 void Str::copy(char *p, size_type n) const
@@ -41,7 +34,8 @@ std::istream &operator>>(std::istream &is, Str &s)
 {
     // obliterate existing value(s)
     delete[] s.data_;
-    s.data_ = new char[0];
+    s.data_ = new char[1];
+    s.data_[0] = '\0';
     s.len = 0;
     // read and discard leading whitespace
     char c;
@@ -62,9 +56,10 @@ std::istream &operator>>(std::istream &is, Str &s)
 
 Str &Str::operator+=(const Str &s)
 {
-    char *new_data_ = new char[len + s.len];
+    char *new_data_ = new char[len + s.len + 1];
     std::copy(data_, data_ + len, new_data_);
     std::copy(s.data_, s.data_ + s.len, new_data_ + len);
+    new_data_[len + s.len] = '\0';
     delete[] data_;
     data_ = new_data_;
     len += s.len;
@@ -83,6 +78,11 @@ bool operator==(const Str &s, const Str &t)
     int res = strcmp(s.c_str(), t.c_str());
     return res == 0;
 }
+
+bool operator!=(const Str &s, const Str &t)
+{
+    return !(s == t);
+};
 
 bool operator<(const Str &s, const Str &t)
 {

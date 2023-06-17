@@ -13,19 +13,25 @@ public:
     typedef size_t size_type;
 
     // constructors
-    Str() : data_(new char[0]), len(0) {}
+    Str() : data_(new char[1]), len(0)
+    {
+        data_[0] = '\0';
+    }
     Str(size_type n, char c) : data_(new char[n]), len(n)
     {
         std::fill(data_, data_ + len, c);
+        data_[len] = '\0';
     }
-    Str(const char *cp) : data_(new char[std::strlen(cp)]), len(std::strlen(cp))
+    Str(const char *cp) : data_(new char[std::strlen(cp) + 1]), len(std::strlen(cp))
     {
         std::copy(cp, cp + std::strlen(cp), data_);
+        data_[len] = '\0';
     }
     template <class In>
-    Str(In b, In e) : data_(new char[e - b]), len(e - b)
+    Str(In b, In e) : data_(new char[e - b + 1]), len(e - b)
     {
         std::copy(b, e, data_);
+        data_[len] = '\0';
     }
 
     // destructor
@@ -36,9 +42,10 @@ public:
     }
 
     // copy constructor
-    Str(const Str &s) : data_(new char[s.len]), len(s.len)
+    Str(const Str &s) : data_(new char[s.len + 1]), len(s.len)
     {
         std::copy(s.data_, s.data_ + s.len, data_);
+        data_[len] = '\0';
     }
 
     // assignment operator
@@ -48,8 +55,9 @@ public:
         {
             delete[] data_;
             len = s.len;
-            data_ = new char[len];
+            data_ = new char[len + 1];
             std::copy(s.data_, s.data_ + s.len, data_);
+            data_[len] = '\0';
         }
         return *this;
     }
@@ -79,6 +87,7 @@ std::istream &operator>>(std::istream &, Str &);
 Str operator+(const Str &, const Str &);
 
 bool operator==(const Str &, const Str &);
+bool operator!=(const Str &, const Str &);
 bool operator<(const Str &, const Str &);
 bool operator>(const Str &, const Str &);
 bool operator<=(const Str &, const Str &);
