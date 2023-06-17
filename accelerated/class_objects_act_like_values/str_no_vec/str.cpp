@@ -66,12 +66,31 @@ Str &Str::operator+=(const Str &s)
     return *this;
 }
 
+Str &Str::operator+=(const char *s)
+{
+    char *new_data_ = new char[len + strlen(s) + 1];
+    std::copy(data_, data_ + len, new_data_);
+    std::copy(s, s + strlen(s), new_data_ + len);
+    new_data_[len + strlen(s)] = '\0';
+    delete[] data_;
+    data_ = new_data_;
+    len += strlen(s);
+    return *this;
+};
+
 Str operator+(const Str &s, const Str &t)
 {
     Str r = s;
     r += t;
     return r;
 }
+
+Str operator+(const Str &s, const char *cs)
+{
+    Str r = s;
+    r += cs;
+    return r;
+};
 
 bool operator==(const Str &s, const Str &t)
 {

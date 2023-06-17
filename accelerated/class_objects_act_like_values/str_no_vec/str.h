@@ -71,6 +71,7 @@ public:
     }
 
     Str &operator+=(const Str &s);
+    Str &operator+=(const char *s);
     void push_back(const char &c);
     const char *c_str() const { return data_; };
     const char *data() const { return data_; };
@@ -85,6 +86,7 @@ std::ostream &operator<<(std::ostream &, const Str &);
 std::istream &operator>>(std::istream &, Str &);
 
 Str operator+(const Str &, const Str &);
+Str operator+(const Str &, const char *);
 
 bool operator==(const Str &, const Str &);
 bool operator!=(const Str &, const Str &);
