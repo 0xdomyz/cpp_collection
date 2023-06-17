@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include "str.h"
+#include <cassert>
 
 using namespace std;
 
@@ -125,14 +126,14 @@ int main(void)
         Str mid = "hellog";
         Str big = "helloz";
 
-        cout << (small < mid) << endl;
-        cout << (small > mid) << endl;
+        assert(small < mid);
+        assert(!(small > mid));
 
-        cout << (big > mid) << endl;
-        cout << (small <= mid) << endl;
-        cout << (big >= mid) << endl;
-        cout << (small <= small) << endl;
-        cout << (small >= small) << endl;
+        assert(big > mid);
+        assert(small <= mid);
+        assert(big >= mid);
+        assert(small <= small);
+        assert(small >= small);
 
         cout << endl;
     }
