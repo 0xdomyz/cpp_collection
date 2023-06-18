@@ -39,9 +39,6 @@ std::ostream &operator<<(std::ostream &os, const Str &s)
 {
     ostream_iterator<char> os_iter(os);
     copy(s.begin(), s.end(), os_iter);
-
-    // for (auto i = s.data_; i != s.data_ + s.len; ++i)
-    //     os << *i;
     return os;
 }
 
