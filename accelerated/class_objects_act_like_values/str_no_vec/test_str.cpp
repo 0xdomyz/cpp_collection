@@ -1,4 +1,4 @@
-// g++ test_str.cpp str.cpp -o test_str && ./test_str
+// g++ test_str.cpp str.cpp -o test_str && echo "hello world" | ./test_str
 
 #include <iostream>
 #include "str.h"
@@ -164,5 +164,12 @@ int main(void)
         {
             assert(s[i] == correct[i]);
         }
+    }
+
+    {
+        // getline
+        Str s;
+        s.getline(cin);
+        assert(s == Str("hello world"));
     }
 }

@@ -23,6 +23,17 @@ void Str::copy(char *p, size_type n) const
     std::copy(data_, data_ + n, p);
 };
 
+void Str::getline(std::istream &is)
+{
+    delete[] data_;
+    data_ = new char[1];
+    data_[0] = '\0';
+    len = 0;
+    char c;
+    while (is.get(c) && c != '\n')
+        push_back(c);
+}
+
 std::ostream &operator<<(std::ostream &os, const Str &s)
 {
     for (auto i = s.data_; i != s.data_ + s.len; ++i)

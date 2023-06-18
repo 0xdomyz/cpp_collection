@@ -18,16 +18,19 @@ public:
     {
         data_[0] = '\0';
     }
+
     Str(size_type n, char c) : data_(new char[n]), len(n)
     {
         std::fill(data_, data_ + len, c);
         data_[len] = '\0';
     }
+
     Str(const char *cp) : data_(new char[std::strlen(cp) + 1]), len(std::strlen(cp))
     {
         std::copy(cp, cp + std::strlen(cp), data_);
         data_[len] = '\0';
     }
+
     template <class In>
     Str(In b, In e) : data_(new char[e - b + 1]), len(e - b)
     {
@@ -88,6 +91,8 @@ public:
 
     char *begin() { return data_; }
     char *end() { return data_ + len; }
+
+    void getline(std::istream &is);
 
 private:
     char *data_;
