@@ -90,7 +90,9 @@ public:
     void copy(char *p, size_type n) const;
 
     char *begin() { return data_; }
+    const char *begin() const { return data_; }
     char *end() { return data_ + len; }
+    const char *end() const { return data_ + len; }
 
     void getline(std::istream &is);
 

@@ -172,4 +172,10 @@ int main(void)
         s.getline(cin);
         assert(s == Str("hello world"));
     }
+
+    {
+        // output stream
+        Str s = "hello world";
+        cout << "should be hello world: " << s << endl;
+    }
 }

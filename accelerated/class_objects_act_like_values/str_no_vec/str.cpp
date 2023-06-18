@@ -3,6 +3,7 @@
 #include <cstring>
 #include <algorithm>
 #include "str.h"
+#include <iterator>
 
 using namespace std;
 
@@ -36,8 +37,11 @@ void Str::getline(std::istream &is)
 
 std::ostream &operator<<(std::ostream &os, const Str &s)
 {
-    for (auto i = s.data_; i != s.data_ + s.len; ++i)
-        os << *i;
+    ostream_iterator<char> os_iter(os);
+    copy(s.begin(), s.end(), os_iter);
+
+    // for (auto i = s.data_; i != s.data_ + s.len; ++i)
+    //     os << *i;
     return os;
 }
 
