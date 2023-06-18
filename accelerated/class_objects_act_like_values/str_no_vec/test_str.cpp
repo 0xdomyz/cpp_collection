@@ -147,4 +147,22 @@ int main(void)
         assert(s);
         assert(!t);
     }
+
+    {
+        // begin and end
+        Str s = "hello";
+        const char *correct = "hello";
+        for (Str::iterator iter = s.begin(); iter != s.end(); ++iter)
+        {
+            assert(*iter == *correct);
+            ++correct;
+        }
+
+        // random access
+        correct = "hello";
+        for (Str::size_type i = 0; i != s.size(); ++i)
+        {
+            assert(s[i] == correct[i]);
+        }
+    }
 }

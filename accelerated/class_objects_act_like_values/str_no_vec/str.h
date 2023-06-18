@@ -11,6 +11,7 @@ class Str
 
 public:
     typedef size_t size_type;
+    typedef char *iterator;
 
     // constructors
     Str() : data_(new char[1]), len(0)
@@ -84,6 +85,9 @@ public:
     const char *c_str() const { return data_; };
     const char *data() const { return data_; };
     void copy(char *p, size_type n) const;
+
+    char *begin() { return data_; }
+    char *end() { return data_ + len; }
 
 private:
     char *data_;
