@@ -18,14 +18,14 @@ public:
     // constructors
     Str() : _c_str(nullptr) {}
     Str(size_type n, char c) : content(n, c), _c_str(nullptr) {}
-    Str(const char *cp) : _c_str(nullptr)
+    Str(const char *cp) : content(cp, cp + std::strlen(cp)), _c_str(nullptr)
     {
-        std::copy(cp, cp + std::strlen(cp), std::back_inserter(content));
+        // std::copy(cp, cp + std::strlen(cp), std::back_inserter(content));
     }
     template <class In>
-    Str(In b, In e) : _c_str(nullptr)
+    Str(In b, In e) : content(b, e), _c_str(nullptr)
     {
-        std::copy(b, e, std::back_inserter(content));
+        // std::copy(b, e, std::back_inserter(content));
     }
     ~Str()
     {
