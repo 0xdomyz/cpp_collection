@@ -144,7 +144,15 @@ int main(void)
         Str t;
 
         assert(s);
-        assert(!t);
+        if (s)
+            assert(true);
+        else
+            assert(false);
+
+        if (t)
+            assert(false);
+        else
+            assert(true);
     }
 
     {

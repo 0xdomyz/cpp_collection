@@ -1,7 +1,7 @@
-// g++ picture.cpp -o picture && cat test_picture.csv | ./picture
+// g++ picture.cpp str.cpp -o picture && cat test_picture.csv | ./picture
 
 #include <iostream>
-#include <string>
+#include "str.h"
 #include <vector>
 #include <fstream>
 #include "frame.h"
@@ -9,20 +9,12 @@
 
 using namespace std;
 
-vector<string> vcat(const vector<string> &top,
-                    const vector<string> &bottom)
+vector<Str> vcat(const vector<Str> &top,
+                 const vector<Str> &bottom)
 {
     // copy the top picture
-    vector<string> ret = top;
+    vector<Str> ret = top;
     // copy entire bottom picture
-
-    // via iterator
-    // for (vector<string>::const_iterator it = bottom.begin();
-    //      it != bottom.end(); ++it)
-    //     ret.push_back(*it);
-
-    // via insert method
-    // ret.insert(ret.end(), bottom.begin(), bottom.end());
 
     // via algo
     copy(bottom.begin(), bottom.end(), back_inserter(ret));
@@ -30,23 +22,23 @@ vector<string> vcat(const vector<string> &top,
     return ret;
 }
 
-vector<string>
-hcat(const vector<string> &left, const vector<string> &right)
+vector<Str>
+hcat(const vector<Str> &left, const vector<Str> &right)
 {
-    vector<string> ret;
+    vector<Str> ret;
     // add 1 to leave a space between pictures
-    string::size_type width1 = width(left) + 1;
+    Str::size_type width1 = width(left) + 1;
     // continue until we've seen all rows from both pictures
     for (auto i = left.begin(), j = right.begin();
          i != left.end() || j != right.end();)
     {
-        // construct new string to hold characters from both pictures
-        string s;
+        // construct new Str to hold characters from both pictures
+        Str s;
         // copy a row from the left-hand side, if there is one
         if (i != left.end())
             s = *i++; // ++ has higher precedence than *
         // pad to full width
-        s += string(width1 - s.size(), ' ');
+        s += Str(width1 - s.size(), ' ');
         // copy a row from the right-hand side, if there is one
         if (j != right.end())
             s += *j++;
@@ -54,31 +46,12 @@ hcat(const vector<string> &left, const vector<string> &right)
         ret.push_back(s);
     }
 
-    // using indices
-    // indices to look at elements from left and right respectively
-    // vector<string>::size_type i = 0, j = 0;
-    // while (i != left.size() || j != right.size())
-    // {
-    //     // construct new string to hold characters from both pictures
-    //     string s;
-    //     // copy a row from the left-hand side, if there is one
-    //     if (i != left.size())
-    //         s = left[i++];
-    //     // pad to full width
-    //     s += string(width1 - s.size(), ' ');
-    //     // copy a row from the right-hand side, if there is one
-    //     if (j != right.size())
-    //         s += right[j++];
-    //     // add s to the picture we're creating
-    //     ret.push_back(s);
-    // }
-
     return ret;
 }
 
-vector<string> center(const vector<string> &pic)
+vector<Str> center(const vector<Str> &pic)
 {
-    vector<string> ret;
+    vector<Str> ret;
     auto interior_len = pic.begin()->size() - 4;
     // cout << "interior_len: " << interior_len << endl;
 
@@ -88,22 +61,22 @@ vector<string> center(const vector<string> &pic)
     // build interior rows
     for (auto it = pic.begin() + 1; it != pic.end() - 1; ++it)
     {
-        // extract interior string, remove excessive spaces at the end
-        string s = it->substr(2, interior_len);
-        for (auto rit = s.rbegin(); rit != s.rend(); ++rit)
+        // extract interior Str, remove excessive spaces at the end
+        Str s = it->substr(2, interior_len);
+        for (auto it = s.end() - 1; it != s.begin(); --it)
         {
-            if (*rit != ' ')
+            if (*it != ' ')
             {
-                s = s.substr(0, s.size() - (rit - s.rbegin()));
+                s = s.substr(0, s.size() - (it - s.begin()));
                 break;
             }
         }
 
-        // position to the middle, via difference of interior_len and string length
+        // position to the middle, via difference of interior_len and Str length
         // divide by 2 to get the number of spaces to add to the left and right
         auto pos = (interior_len - s.size()) / 2;
         auto pos2 = (interior_len - s.size()) % 2;
-        string payload = string(pos, ' ') + s + string(pos + pos2, ' ');
+        Str payload = Str(pos, ' ') + s + Str(pos + pos2, ' ');
         ret.push_back("* " + payload + " *");
     }
 
@@ -116,12 +89,12 @@ vector<string> center(const vector<string> &pic)
 int main(void)
 {
     // read and split each line of input
-    string s;
-    vector<string> v;
-    while (getline(cin, s))
+    Str s;
+    vector<Str> v;
+    while (s.getline(cin))
         v.push_back(s);
 
-    vector<string> pic = frame(v);
+    vector<Str> pic = frame(v);
 
     // write each line of output
     cout << "pic:" << endl;
@@ -129,33 +102,33 @@ int main(void)
 
     // read a csv file using fstream
     ifstream infile("test_picture2.csv");
-    string line;
-    vector<string> v2;
-    while (getline(infile, line))
+    Str line;
+    vector<Str> v2;
+    while (line.getline(infile))
         v2.push_back(line);
 
-    vector<string> pic2 = frame(v2);
+    vector<Str> pic2 = frame(v2);
     cout << "pic2:" << endl;
     cout << pic2 << endl;
 
     // concatenate two pictures
-    vector<string> pic3 = vcat(pic, pic2);
+    vector<Str> pic3 = vcat(pic, pic2);
     cout << "pic3:" << endl;
     cout << pic3 << endl;
 
     // concatenate two pictures
-    vector<string> pic4 = hcat(pic, pic2);
+    vector<Str> pic4 = hcat(pic, pic2);
     cout << "pic4:" << endl;
     cout << pic4 << endl;
 
     // hcat a unframed picture and a framed picture
-    vector<string> pic5 = hcat(v, pic2);
-    // vector<string> pic5 = hcat(pic, v2);
+    vector<Str> pic5 = hcat(v, pic2);
+    // vector<Str> pic5 = hcat(pic, v2);
     cout << "pic5:" << endl;
     cout << pic5 << endl;
 
     // centralise a picture's contents
-    vector<string> pic6 = center(pic);
+    vector<Str> pic6 = center(pic);
     cout << "pic6:" << endl;
     cout << pic6 << endl;
 

@@ -80,7 +80,12 @@ public:
     iterator end() { return content.end(); }
     const_iterator end() const { return content.end(); }
 
-    void getline(std::istream &is);
+    std::istream &getline(std::istream &is);
+
+    Str substr(size_type pos, size_type len) const
+    {
+        return Str(content.begin() + pos, content.begin() + pos + len);
+    }
 
 private:
     Vec<char> content;

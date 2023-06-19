@@ -18,11 +18,13 @@ const char *Str::data() const
     return content.begin();
 }
 
-void Str::getline(std::istream &is)
+std::istream &Str::getline(std::istream &is)
 {
+    content.clear();
     char c;
     while (is.get(c) && c != '\n')
         content.push_back(c);
+    return is;
 };
 
 std::ostream &operator<<(std::ostream &os, const Str &s)
