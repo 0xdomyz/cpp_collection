@@ -12,6 +12,8 @@ class Str
 
 public:
     typedef Vec<char>::size_type size_type;
+    typedef Vec<char>::iterator iterator;
+    typedef Vec<char>::const_iterator const_iterator;
 
     // constructors
     Str() : _c_str(nullptr) {}
@@ -41,10 +43,7 @@ public:
 
     // index operator
     char &operator[](size_type i) { return content[i]; }
-    const char &operator[](size_type i) const
-    {
-        return content[i];
-    }
+    const char &operator[](size_type i) const { return content[i]; }
 
     // concatenation operator
     Str &operator+=(const Str &s)
@@ -53,9 +52,22 @@ public:
                   std::back_inserter(content));
         return *this;
     }
+    Str &operator+=(const char *s)
+    {
+        std::copy(s, s + std::strlen(s), std::back_inserter(content));
+        return *this;
+    };
 
     // member functions
     size_type size() const { return content.size(); }
+
+    operator void *() const
+    {
+        return content.size() ? (void *)this : nullptr;
+    }
+
+    void push_back(char c) { content.push_back(c); }
+
     const char *c_str();
     const char *data() const;
     void copy(char *p, size_type n) const // copy into p
@@ -63,12 +75,29 @@ public:
         std::copy(content.begin(), content.begin() + n, p);
     }
 
+    iterator begin() { return content.begin(); }
+    const_iterator begin() const { return content.begin(); }
+    iterator end() { return content.end(); }
+    const_iterator end() const { return content.end(); }
+
+    void getline(std::istream &is);
+
 private:
     Vec<char> content;
     char *_c_str;
 };
 
+std::ostream &operator<<(std::ostream &, const Str &);
+std::istream &operator>>(std::istream &, Str &);
+
 Str operator+(const Str &, const Str &);
+Str operator+(const Str &, const char *);
+
 bool operator==(const Str &, const Str &);
+bool operator!=(const Str &, const Str &);
+bool operator<(const Str &, const Str &);
+bool operator>(const Str &, const Str &);
+bool operator<=(const Str &, const Str &);
+bool operator>=(const Str &, const Str &);
 
 #endif

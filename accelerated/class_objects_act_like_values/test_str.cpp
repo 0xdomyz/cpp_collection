@@ -109,72 +109,72 @@ int main(void)
         }
     }
 
-    // {
-    //     // operator==
-    //     Str s = "hello world";
-    //     Str t = "hello world";
-    //     Str u = "helasdfloasdf";
-    //     assert(s == t);
-    //     assert(!(s == u));
-    // }
+    {
+        // operator==
+        Str s = "hello world";
+        Str t = "hello world";
+        Str u = "helasdfloasdf";
+        assert(s == t);
+        assert(!(s == u));
+    }
 
-    // {
-    //     // relations
-    //     Str small = "helloa";
-    //     Str mid = "hellog";
-    //     Str big = "helloz";
+    {
+        // relations
+        Str small = "helloa";
+        Str mid = "hellog";
+        Str big = "helloz";
 
-    //     assert(small < mid);
-    //     assert(!(small > mid));
+        assert(small < mid);
+        assert(!(small > mid));
 
-    //     assert(big > mid);
-    //     assert(small <= mid);
-    //     assert(big >= mid);
-    //     assert(small <= small);
-    //     assert(small >= small);
+        assert(big > mid);
+        assert(small <= mid);
+        assert(big >= mid);
+        assert(small <= small);
+        assert(small >= small);
 
-    //     // equality and inequality
-    //     assert(small != big);
-    //     assert(small == small);
-    // }
+        // equality and inequality
+        assert(small != big);
+        assert(small == small);
+    }
 
-    // {
-    //     // use in condition
-    //     Str s = "hello";
-    //     Str t;
+    {
+        // use in condition
+        Str s = "hello";
+        Str t;
 
-    //     assert(s);
-    //     assert(!t);
-    // }
+        assert(s);
+        assert(!t);
+    }
 
-    // {
-    //     // begin and end
-    //     Str s = "hello";
-    //     const char *correct = "hello";
-    //     for (Str::iterator iter = s.begin(); iter != s.end(); ++iter)
-    //     {
-    //         assert(*iter == *correct);
-    //         ++correct;
-    //     }
+    {
+        // begin and end
+        Str s = "hello";
+        const char *correct = "hello";
+        for (Str::iterator iter = s.begin(); iter != s.end(); ++iter)
+        {
+            assert(*iter == *correct);
+            ++correct;
+        }
 
-    //     // random access
-    //     correct = "hello";
-    //     for (Str::size_type i = 0; i != s.size(); ++i)
-    //     {
-    //         assert(s[i] == correct[i]);
-    //     }
-    // }
+        // random access
+        correct = "hello";
+        for (Str::size_type i = 0; i != s.size(); ++i)
+        {
+            assert(s[i] == correct[i]);
+        }
+    }
 
-    // {
-    //     // getline
-    //     Str s;
-    //     s.getline(cin);
-    //     assert(s == Str("hello world"));
-    // }
+    {
+        // getline
+        Str s;
+        s.getline(cin);
+        assert(s == Str("hello world"));
+    }
 
-    // {
-    //     // output stream
-    //     Str s = "hello world";
-    //     cout << "should be hello world: " << s << endl;
-    // }
+    {
+        // output stream
+        Str s = "hello world";
+        cout << "should be hello world: " << s << endl;
+    }
 }
