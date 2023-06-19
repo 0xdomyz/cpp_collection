@@ -17,6 +17,8 @@ public:
     // constructors
     Vec() { create(); }
     explicit Vec(size_type n, const T &val = T()) { create(n, val); }
+    template <class In>
+    Vec(In begin, In end) { create(begin, end); }
     Vec(const Vec &v) { create(v.begin(), v.end()); }
     Vec &operator=(const Vec &);
     ~Vec()
