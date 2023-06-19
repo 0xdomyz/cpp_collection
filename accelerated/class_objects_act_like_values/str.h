@@ -14,45 +14,27 @@ public:
     typedef Vec<char>::size_type size_type;
 
     // constructors
-    Str() : _c_str(new char[0]) {}
-    Str(size_type n, char c) : content(n, c), _c_str(new char[n + 1])
-    {
-        std::copy(content.begin(), content.end(), _c_str);
-        _c_str[n] = '\0';
-    }
-    Str(const char *cp)
+    Str() : _c_str(nullptr) {}
+    Str(size_type n, char c) : content(n, c), _c_str(nullptr) {}
+    Str(const char *cp) : _c_str(nullptr)
     {
         std::copy(cp, cp + std::strlen(cp), std::back_inserter(content));
-        _c_str = new char[content.size() + 1];
-        std::copy(content.begin(), content.end(), _c_str);
-        _c_str[content.size()] = '\0';
     }
     template <class In>
-    Str(In b, In e)
+    Str(In b, In e) : _c_str(nullptr)
     {
         std::copy(b, e, std::back_inserter(content));
-        _c_str = new char[content.size() + 1];
-        std::copy(content.begin(), content.end(), _c_str);
-        _c_str[content.size()] = '\0';
     }
     ~Str()
     {
         delete[] _c_str;
     }
-    Str(const Str &s) : content(s.content), _c_str(new char[s.content.size() + 1])
-    {
-        std::copy(s.content.begin(), s.content.end(), _c_str);
-        _c_str[s.content.size()] = '\0';
-    }
+    Str(const Str &s) : content(s.content), _c_str(nullptr) {}
     Str &operator=(const Str &s)
     {
         if (&s != this)
         {
             content = s.content;
-            delete[] _c_str;
-            _c_str = new char[s.content.size() + 1];
-            std::copy(s.content.begin(), s.content.end(), _c_str);
-            _c_str[s.content.size()] = '\0';
         }
         return *this;
     }
@@ -69,10 +51,6 @@ public:
     {
         std::copy(s.content.begin(), s.content.end(),
                   std::back_inserter(content));
-        delete[] _c_str;
-        _c_str = new char[content.size() + 1];
-        std::copy(content.begin(), content.end(), _c_str);
-        _c_str[content.size()] = '\0';
         return *this;
     }
 

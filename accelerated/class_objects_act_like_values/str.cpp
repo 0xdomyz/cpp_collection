@@ -1,4 +1,5 @@
 #include "str.h"
+#include <algorithm>
 
 using namespace std;
 
@@ -41,6 +42,7 @@ Str operator+(const Str &s, const Str &t)
 
 const char *Str::c_str()
 {
+    // static char *_c_str = nullptr;
     delete[] _c_str;
     _c_str = new char[content.size() + 1];
     std::copy(content.begin(), content.end(), _c_str);

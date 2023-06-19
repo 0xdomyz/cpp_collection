@@ -1,21 +1,27 @@
-// g++ test_str.cpp str.cpp -o test_str && ./test_str
+// g++ test_str.cpp str.cpp -o test_str && echo "hello world" | ./test_str
 
 #include <iostream>
 #include "str.h"
-// #include "str_no_vec.h"
+#include <cassert>
+#include <cstring>
+#include <algorithm>
 
 using namespace std;
 
 int main(void)
 {
-    Str s = "hello";
-    cout << s << endl;
+    {
+        // basic
+        Str s = "hello";
 
-    // indexing
-    cout << s[0] << endl;
+        // indexing
+        const char *correct = "hello";
+        for (Str::size_type i = 0; i != s.size(); ++i)
+            assert(s[i] == correct[i]);
+    }
 
     {
-        cout << "conversions" << endl;
+        // conversions
         double d = 10; // convert 10 to double and use the converted value to initialize d
         double d2;
         d2 = 10; // convert 10 to double and assign the converted value to d
@@ -24,71 +30,70 @@ int main(void)
 
         Str t = "hello"; // initialize t
         s = "hello";     // assign a new value to s
-
-        cout << endl;
     }
 
     {
-        cout << "concatenation of Str objects and C-style strings" << endl;
+        // concatenation of Str objects and C-style strings
         Str s = "hello";
         Str t = "1" + s + " abc";
-        cout << t << endl;
-
-        cout << endl;
+        const char *correct = "1hello abc";
+        for (Str::size_type i = 0; i != t.size(); ++i)
+            assert(t[i] == correct[i]);
     }
 
     {
-        cout << "c_str()" << endl;
+        // c_str()
         Str s = "hello";
-        cout << s.size() << endl;
+        assert(s.size() == 5);
 
         const char *c_str = s.c_str();
+        const char *correct = "hello";
         while (*c_str)
         {
-            cout << *c_str;
+            assert(*c_str == *correct);
             ++c_str;
+            ++correct;
         }
-        cout << endl;
-
-        cout << s.c_str() << endl;
 
         s += " world";
-        cout << s.c_str() << endl;
-
-        cout << endl;
+        const char *correct2 = "hello world";
+        assert(strcmp(s.c_str(), correct2) == 0);
     }
 
     {
-        cout << "data()" << endl;
+        // data()
         Str s = "hello";
-        cout << s.size() << endl;
+        assert(s.size() == 5);
 
         const char *data = s.data();
+        const char *correct = "hello";
         for (size_t i = 0; i < s.size(); ++i)
         {
-            cout << data[i];
+            assert(data[i] == correct[i]);
         }
-        cout << endl;
 
         s += " world";
 
         const char *data2 = s.data();
+        const char *correct2 = "hello world";
         for (size_t i = 0; i < s.size(); ++i)
         {
-            cout << data2[i];
+            assert(data2[i] == correct2[i]);
         }
-        cout << endl;
     }
 
     {
-        cout << "copy()" << endl;
+        // copy()
         Str s = "hello";
 
         {
             char *p = new char[s.size() + 1];
             s.copy(p, s.size());
             p[s.size()] = '\0';
-            cout << p << endl;
+
+            const char *correct = "hello";
+            assert(strcmp(p, correct) == 0);
+
             delete[] p;
         }
 
@@ -96,18 +101,80 @@ int main(void)
             char *p = new char[3 + 1];
             s.copy(p, 3);
             p[3] = '\0';
-            cout << p << endl;
+
+            const char *correct = "hel";
+            assert(strcmp(p, correct) == 0);
+
             delete[] p;
         }
     }
 
-    {
-        cout << "operator==" << endl;
-        Str s = "hello world";
-        Str t = "hello world";
-        Str u = "helasdfloasdf";
-        cout << (s == t) << endl;
-        cout << (s == u) << endl;
-        cout << endl;
-    }
+    // {
+    //     // operator==
+    //     Str s = "hello world";
+    //     Str t = "hello world";
+    //     Str u = "helasdfloasdf";
+    //     assert(s == t);
+    //     assert(!(s == u));
+    // }
+
+    // {
+    //     // relations
+    //     Str small = "helloa";
+    //     Str mid = "hellog";
+    //     Str big = "helloz";
+
+    //     assert(small < mid);
+    //     assert(!(small > mid));
+
+    //     assert(big > mid);
+    //     assert(small <= mid);
+    //     assert(big >= mid);
+    //     assert(small <= small);
+    //     assert(small >= small);
+
+    //     // equality and inequality
+    //     assert(small != big);
+    //     assert(small == small);
+    // }
+
+    // {
+    //     // use in condition
+    //     Str s = "hello";
+    //     Str t;
+
+    //     assert(s);
+    //     assert(!t);
+    // }
+
+    // {
+    //     // begin and end
+    //     Str s = "hello";
+    //     const char *correct = "hello";
+    //     for (Str::iterator iter = s.begin(); iter != s.end(); ++iter)
+    //     {
+    //         assert(*iter == *correct);
+    //         ++correct;
+    //     }
+
+    //     // random access
+    //     correct = "hello";
+    //     for (Str::size_type i = 0; i != s.size(); ++i)
+    //     {
+    //         assert(s[i] == correct[i]);
+    //     }
+    // }
+
+    // {
+    //     // getline
+    //     Str s;
+    //     s.getline(cin);
+    //     assert(s == Str("hello world"));
+    // }
+
+    // {
+    //     // output stream
+    //     Str s = "hello world";
+    //     cout << "should be hello world: " << s << endl;
+    // }
 }
