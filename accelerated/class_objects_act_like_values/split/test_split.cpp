@@ -1,7 +1,7 @@
-// g++ test_split.cpp -o test_split && ./test_split
+// g++ test_split.cpp str.cpp -o test_split && ./test_split
 
 #include <iostream>
-#include <string>
+#include "str.h"
 #include "split.h"
 #include <vector>
 #include <list>
@@ -14,11 +14,11 @@ int main()
 
     {
         // vector
-        string s = "this is a test";
-        vector<string> correct = {"this", "is", "a", "test"};
+        Str s = "this is a test";
+        vector<Str> correct = {"this", "is", "a", "test"};
 
-        vector<string> v = split<vector<string>>(s);
-        for (vector<string>::size_type i = 0; i != v.size(); ++i)
+        vector<Str> v = split<vector<Str>>(s);
+        for (vector<Str>::size_type i = 0; i != v.size(); ++i)
         {
             assert(v[i] == correct[i]);
         }
@@ -26,12 +26,12 @@ int main()
 
     {
         // list
-        string s = "this is a test";
-        list<string> correct = {"this", "is", "a", "test"};
+        Str s = "this is a test";
+        list<Str> correct = {"this", "is", "a", "test"};
 
-        list<string> l = split<list<string>>(s);
-        list<string>::iterator it = l.begin();
-        for (list<string>::size_type i = 0; i != l.size(); ++i)
+        list<Str> l = split<list<Str>>(s);
+        list<Str>::iterator it = l.begin();
+        for (list<Str>::size_type i = 0; i != l.size(); ++i)
         {
             assert(*it == correct.front());
             correct.pop_front();

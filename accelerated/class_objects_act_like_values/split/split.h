@@ -2,7 +2,7 @@
 #define GUARD_SPLIT_H
 
 #include <algorithm>
-#include <string>
+#include "str.h"
 #include <cctype>
 
 bool space(char c)
@@ -16,9 +16,9 @@ bool not_space(char c)
 }
 
 template <class Out> // changed
-void split(const std::string &str, Out os)
+void split(const Str &str, Out os)
 { // changed
-    typedef std::string::const_iterator iter;
+    typedef Str::const_iterator iter;
     iter i = str.begin();
     while (i != str.end())
     {
@@ -28,15 +28,15 @@ void split(const std::string &str, Out os)
         iter j = std::find_if(i, str.end(), space);
         // copy the characters in [i, j)
         if (i != str.end())
-            *os++ = std::string(i, j); // changed
+            *os++ = Str(i, j); // changed
         i = j;
     }
 }
 
 template <class container>
-container split(const std::string &str)
+container split(const Str &str)
 {
-    typedef std::string::const_iterator iter;
+    typedef Str::const_iterator iter;
     iter i = str.begin();
     container cont;
     while (i != str.end())
@@ -47,7 +47,7 @@ container split(const std::string &str)
         iter j = std::find_if(i, str.end(), space);
         // copy the characters in [i, j)
         if (i != str.end())
-            cont.push_back(std::string(i, j));
+            cont.push_back(Str(i, j));
         i = j;
     }
     return cont;
