@@ -93,6 +93,13 @@ public:
         return content.insert(i, b, e);
     };
 
+    void assign(std::initializer_list<char> il)
+    {
+        // content.clear();
+        // content.insert(content.begin(), il.begin(), il.end());
+        content.assign(il);
+    }
+
 private:
     Vec<char> content;
     char *_c_str;

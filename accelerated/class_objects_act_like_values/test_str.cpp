@@ -206,4 +206,12 @@ int main(void)
         s.insert(s.end(), v.begin(), v.end());
         assert(s == correct);
     }
+
+    {
+        // assign
+        Str s = "hello";
+        Str correct = "world";
+        s.assign({'w', 'o', 'r', 'l', 'd'});
+        assert(s == correct);
+    }
 }
