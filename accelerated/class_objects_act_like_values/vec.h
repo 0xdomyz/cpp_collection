@@ -63,9 +63,14 @@ public:
     iterator end() { return avail; }
     const_iterator end() const { return avail; }
 
-    // insert
     template <class In>
     iterator insert(iterator i, const In b, const In e);
+
+    void assign(std::initializer_list<T> li)
+    {
+        uncreate();
+        create(li.begin(), li.end());
+    };
 
 private:
     iterator data;
@@ -78,7 +83,8 @@ private:
     // allocate and initialize the underlying array
     void create();
     void create(size_type, const T &);
-    void create(const_iterator, const_iterator);
+    template <class In>
+    void create(const In, const In);
 
     // destroy the elements in the array and free the memory
     void uncreate();
@@ -123,7 +129,8 @@ void Vec<T>::create(size_type n, const T &val)
 }
 
 template <class T>
-void Vec<T>::create(const_iterator i, const_iterator j)
+template <class In>
+void Vec<T>::create(const In i, const In j)
 {
     data = alloc.allocate(j - i);
     limit = avail = std::uninitialized_copy(i, j, data);

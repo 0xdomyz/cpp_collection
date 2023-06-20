@@ -6,6 +6,7 @@
 #include <cassert>
 #include <cstring>
 #include <algorithm>
+#include <string>
 
 using namespace std;
 
@@ -23,7 +24,6 @@ int main(void)
         Str correct = s + t;
         for (Vec<char>::size_type i = 0; i != v.size(); ++i)
         {
-            // cout << v[i];
             assert(v[i] == correct[i]);
         }
     }
@@ -39,7 +39,6 @@ int main(void)
         Str correct = t + s;
         for (Vec<char>::size_type i = 0; i != v.size(); ++i)
         {
-            // cout << v[i];
             assert(v[i] == correct[i]);
         }
     }
@@ -55,7 +54,31 @@ int main(void)
         Str correct = "he" + t + "llo";
         for (Vec<char>::size_type i = 0; i != v.size(); ++i)
         {
-            // cout << v[i];
+            assert(v[i] == correct[i]);
+        }
+    }
+
+    {
+        // assign
+        Str s = "hello";
+        Vec<char> v(s.begin(), s.end());
+        Str correct = "world";
+
+        v.assign({'w', 'o', 'r', 'l', 'd'});
+
+        for (Vec<char>::size_type i = 0; i != v.size(); ++i)
+        {
+            assert(v[i] == correct[i]);
+        }
+    }
+
+    {
+        // vec from string
+        string s = "hello";
+        Vec<char> v(s.begin(), s.end());
+        Str correct = "hello";
+        for (Vec<char>::size_type i = 0; i != v.size(); ++i)
+        {
             assert(v[i] == correct[i]);
         }
     }
