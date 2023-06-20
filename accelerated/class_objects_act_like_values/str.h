@@ -87,6 +87,12 @@ public:
         return Str(content.begin() + pos, content.begin() + pos + len);
     }
 
+    template <class In>
+    iterator insert(iterator i, const In b, const In e)
+    {
+        return content.insert(i, b, e);
+    };
+
 private:
     Vec<char> content;
     char *_c_str;

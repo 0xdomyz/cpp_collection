@@ -185,4 +185,25 @@ int main(void)
         Str s = "hello world";
         cout << "should be hello world: " << s << endl;
     }
+
+    {
+        // insert
+        Str s = "hello";
+        Str t = " world";
+        Str::size_type pos = 2;
+        Str correct = "he worldllo";
+        s.insert(s.begin() + pos, t.begin(), t.end());
+        assert(s == correct);
+    }
+
+    {
+        // insert vec
+        Str s = "hello";
+        Vec<char> v;
+        for (Str::size_type i = 0; i != 5; ++i)
+            v.push_back('a' + i);
+        Str correct = "helloabcde";
+        s.insert(s.end(), v.begin(), v.end());
+        assert(s == correct);
+    }
 }

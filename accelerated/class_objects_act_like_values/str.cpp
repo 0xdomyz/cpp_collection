@@ -27,6 +27,8 @@ std::istream &Str::getline(std::istream &is)
     return is;
 };
 
+// non member functions
+
 std::ostream &operator<<(std::ostream &os, const Str &s)
 {
     for (auto i = s.content.begin(); i != s.content.end(); ++i)
