@@ -185,4 +185,52 @@ int main(void)
         Str s = "hello world";
         cout << "should be hello world: " << s << endl;
     }
+
+    {
+        // insert on vec
+        Str s = "hello";
+        Vec<char> v(s.begin(), s.end());
+        Str t = " world adasfdasfasdfdsadsfadsfasewfewfsfdasfdasgfasasdaf";
+
+        v.insert(v.end(), t.begin(), t.end());
+
+        Str correct = s + t;
+        for (Vec<char>::size_type i = 0; i != v.size(); ++i)
+        {
+            // cout << v[i];
+            assert(v[i] == correct[i]);
+        }
+    }
+
+    {
+        // insert on vec front
+        Str s = "hello";
+        Vec<char> v(s.begin(), s.end());
+        Str t = " world";
+
+        v.insert(v.begin(), t.begin(), t.end());
+
+        Str correct = t + s;
+        for (Vec<char>::size_type i = 0; i != v.size(); ++i)
+        {
+            // cout << v[i];
+            assert(v[i] == correct[i]);
+        }
+    }
+
+    {
+        // insert on vec middle
+        Str s = "hello";
+        Vec<char> v(s.begin(), s.end());
+        Str t = " world";
+
+        v.insert(v.begin() + 2, t.begin(), t.end());
+
+        Str correct = "he" + t + "llo";
+        for (Vec<char>::size_type i = 0; i != v.size(); ++i)
+        {
+            // cout << v[i];
+            assert(v[i] == correct[i]);
+        }
+    }
 }

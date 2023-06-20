@@ -8,6 +8,13 @@ template <class T>
 class Vec
 {
 public:
+    friend std::ostream &operator<<(std::ostream &os, const Vec &v)
+    {
+        for (auto i = v.begin(); i != v.end(); ++i)
+            os << *i << " ";
+        return os;
+    }
+
     // interface types
     typedef T *iterator;
     typedef const T *const_iterator;
@@ -16,9 +23,11 @@ public:
 
     // constructors
     Vec() { create(); }
+
     explicit Vec(size_type n, const T &val = T()) { create(n, val); }
     template <class In>
     Vec(In begin, In end) { create(begin, end); }
+
     Vec(const Vec &v) { create(v.begin(), v.end()); }
     Vec &operator=(const Vec &);
     ~Vec()
@@ -54,13 +63,9 @@ public:
     iterator end() { return avail; }
     const_iterator end() const { return avail; }
 
-    // friends
-    friend std::ostream &operator<<(std::ostream &os, const Vec &v)
-    {
-        for (auto i = v.begin(); i != v.end(); ++i)
-            os << *i << " ";
-        return os;
-    }
+    // insert
+    template <class In>
+    iterator insert(iterator i, const In b, const In e);
 
 private:
     iterator data;
@@ -179,6 +184,34 @@ typename Vec<T>::iterator Vec<T>::erase(iterator it)
             alloc.construct(i, *(i + 1));
     }
     --avail;
+    return it;
+}
+
+template <class T>
+template <class In>
+typename Vec<T>::iterator Vec<T>::insert(iterator it, const In b, const In e)
+{
+    size_type n = e - b;
+    if (limit - avail < n) // need more space
+    {
+        size_type new_size = std::max(2 * (limit - data), ptrdiff_t(n + size()));
+        iterator new_data = alloc.allocate(new_size);
+        iterator new_avail = std::uninitialized_copy(data, it, new_data);
+        new_avail = std::uninitialized_copy(b, e, new_avail);
+        new_avail = std::uninitialized_copy(it, avail, new_avail);
+        uncreate();
+        size_type prior = it - data;
+        data = new_data;
+        avail = new_avail;
+        limit = data + new_size;
+        it = data + prior + n;
+    }
+    else // enough space
+    {
+        std::uninitialized_copy(it, avail, it + n);
+        std::copy(b, e, it);
+        avail = avail + n;
+    }
     return it;
 }
 
