@@ -15,5 +15,9 @@ int main(void)
 
         s.read(cin);
         cout << s.name() << s.grade() << endl;
+
+        // copy cons and assign op on handle
+        Student_info s2(s);
+        // s2 = s;
     }
 }

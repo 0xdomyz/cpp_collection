@@ -11,9 +11,19 @@ class Core
     friend class Student_info;
 
 public:
-    Core() : midterm(0), final(0) {}
-    Core(std::istream &in) { read(in); }
-    virtual ~Core() {}
+    Core() : midterm(0), final(0)
+    {
+        std::cerr << "Core::Core()" << std::endl;
+    }
+    Core(std::istream &in)
+    {
+        std::cerr << "Core::Core(std::istream &in)" << std::endl;
+        read(in);
+    }
+    virtual ~Core()
+    {
+        std::cerr << "Core::~Core()" << std::endl;
+    }
     std::string name() const;
     virtual std::istream &read(std::istream &);
     virtual double grade() const;
@@ -31,8 +41,19 @@ private:
 class Grad : public Core
 {
 public:
-    Grad() : thesis(0) {}
-    Grad(std::istream &in) { read(in); }
+    Grad() : thesis(0)
+    {
+        std::cerr << "Grad::Grad()" << std::endl;
+    }
+    Grad(std::istream &in)
+    {
+        std::cerr << "Grad::Grad(std::istream &in)" << std::endl;
+        read(in);
+    }
+    ~Grad()
+    {
+        std::cerr << "Grad::~Grad()" << std::endl;
+    }
     double grade() const;
     std::istream &read(std::istream &);
 
