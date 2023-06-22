@@ -24,6 +24,19 @@ public:
     {
         std::cerr << "Core::~Core()" << std::endl;
     }
+    Core(const Core &c) : midterm(c.midterm), final(c.final), homework(c.homework), n(c.n)
+    {
+        std::cerr << "Core::Core(const Core &c)" << std::endl;
+    };
+    Core &operator=(const Core &c)
+    {
+        std::cerr << "Core::operator=(const Core &c)" << std::endl;
+        midterm = c.midterm;
+        final = c.final;
+        homework = c.homework;
+        n = c.n;
+        return *this;
+    }
     std::string name() const;
     virtual std::istream &read(std::istream &);
     virtual double grade() const;
