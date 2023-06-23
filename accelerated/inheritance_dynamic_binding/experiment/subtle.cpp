@@ -38,18 +38,21 @@ int main(void)
 {
     Core c;
     Core *cp = &c;
+
+    cout << "cp->regrade(100)" << endl;
     cp->regrade(100);
 
     Grad g;
-    // g.regrade(100);
+    cout << "g.regrade(100, 100)" << endl;
     g.regrade(100, 100);
 
     cp = &g;
+    cout << "cp->regrade(100)" << endl;
     cp->regrade(100);
-    // cp->regrade(100, 100);
 
     Grad *gp = &g;
-    // gp->regrade(100);
+    cout << "gp->regrade(100, 100)" << endl;
+    gp->regrade(100, 100);
 
     return 0;
 }
