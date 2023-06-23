@@ -17,6 +17,7 @@ public:
     std::string name() const;
     virtual std::istream &read(std::istream &);
     virtual double grade() const;
+    virtual bool valid() const { return !homework.empty(); }
 
 protected:
     std::istream &read_common(std::istream &);
@@ -35,6 +36,7 @@ public:
     Grad(std::istream &in) { read(in); }
     double grade() const;
     std::istream &read(std::istream &);
+    bool valid() const { return !homework.empty() && thesis != 0; }
 
 protected:
     virtual Grad *clone() const { return new Grad(*this); }
@@ -65,6 +67,14 @@ public:
     {
         if (cp)
             return cp->grade();
+        else
+            throw std::runtime_error("uninitialized Student");
+    }
+    bool initialized() const { return cp; }
+    bool valid() const
+    {
+        if (cp)
+            return cp->valid();
         else
             throw std::runtime_error("uninitialized Student");
     }
