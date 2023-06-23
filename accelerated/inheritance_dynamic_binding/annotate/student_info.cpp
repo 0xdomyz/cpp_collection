@@ -7,7 +7,11 @@
 
 using namespace std;
 
-string Core::name() const { return n; }
+string Core::name() const
+{
+    cout << "Core::name() const" << endl;
+    return n;
+}
 
 double Core::grade() const
 {
@@ -16,6 +20,7 @@ double Core::grade() const
 
 istream &Core::read_common(istream &in)
 {
+    cout << "Core::read_common(istream &in)" << endl;
     // read and store the student's name and exam grades
     in >> n >> midterm >> final;
     return in;
@@ -24,6 +29,7 @@ istream &Core::read_common(istream &in)
 // read homework grades from an input stream into a `vector'
 istream &read_hw(istream &in, vector<double> &hw)
 {
+    cout << "read_hw(istream &in, vector<double> &hw)" << endl;
     if (in)
     {
         // get rid of previous contents
@@ -40,6 +46,7 @@ istream &read_hw(istream &in, vector<double> &hw)
 
 istream &Core::read(istream &in)
 {
+    cout << "Core::read(istream &in)" << endl;
     read_common(in);
     read_hw(in, homework);
     return in;
@@ -47,8 +54,10 @@ istream &Core::read(istream &in)
 
 istream &Grad::read(istream &in)
 {
+    cout << "Grad::read(istream &in)" << endl;
     // read_common(in);
     Core::read_common(in);
+    cout << "Grad read thesis" << endl;
     in >> Grad::thesis;
     read_hw(in, homework);
     return in;
