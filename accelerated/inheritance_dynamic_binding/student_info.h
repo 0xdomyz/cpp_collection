@@ -46,6 +46,18 @@ private:
     double thesis;
 };
 
+class PassFail : public Core
+{
+public:
+    PassFail() : Core() {}
+    PassFail(std::istream &in) { read(in); }
+    double grade() const;
+    bool valid() const { return 1; }
+
+protected:
+    virtual PassFail *clone() const { return new PassFail(*this); }
+};
+
 class Student_info
 {
 public:

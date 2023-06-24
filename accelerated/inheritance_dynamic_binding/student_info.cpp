@@ -69,9 +69,18 @@ istream &Student_info::read(istream &is)
     {
         cp = new Core(is);
     }
-    else
+    else if (ch == 'P')
+    {
+        cp = new PassFail(is);
+    }
+    else if (ch == 'G')
     {
         cp = new Grad(is);
+    }
+    else
+    {
+        cp = 0;
+        // throw runtime_error("read student info failed, first character is not U, P or G");
     }
     return is;
 }
@@ -111,3 +120,9 @@ bool compare_Core_ptrs(const Core *cp1, const Core *cp2)
 }
 
 std::string Core::letter_grade() const { return ::letter_grade(grade()); };
+
+double PassFail::grade() const
+{
+    double score = (homework.empty()) ? (midterm + final) / 2 : Core::grade();
+    return (score >= 60) ? 1 : 0;
+}
