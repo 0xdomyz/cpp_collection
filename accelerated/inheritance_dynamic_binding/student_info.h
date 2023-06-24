@@ -58,6 +58,18 @@ protected:
     virtual PassFail *clone() const { return new PassFail(*this); }
 };
 
+class Audit : public Core
+{
+public:
+    Audit() : Core() {}
+    Audit(std::istream &in) { read(in); }
+    double grade() const { return 0; };
+    bool valid() const { return 1; }
+
+protected:
+    virtual Audit *clone() const { return new Audit(*this); }
+};
+
 class Student_info
 {
 public:

@@ -77,6 +77,10 @@ istream &Student_info::read(istream &is)
     {
         cp = new Grad(is);
     }
+    else if (ch == 'A')
+    {
+        cp = new Audit(is);
+    }
     else
     {
         cp = 0;
