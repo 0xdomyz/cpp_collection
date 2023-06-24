@@ -4,6 +4,7 @@
 #include "student_info.h"
 #include <algorithm>
 #include "grade.h"
+#include "letter_grade.h"
 
 using namespace std;
 
@@ -108,3 +109,5 @@ bool compare_Core_ptrs(const Core *cp1, const Core *cp2)
 {
     return compare(*cp1, *cp2);
 }
+
+std::string Core::letter_grade() const { return ::letter_grade(grade()); };

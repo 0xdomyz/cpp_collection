@@ -17,6 +17,7 @@ public:
     std::string name() const;
     virtual std::istream &read(std::istream &);
     virtual double grade() const;
+    std::string letter_grade() const;
     virtual bool valid() const { return !homework.empty(); }
 
 protected:
@@ -75,6 +76,13 @@ public:
     {
         if (cp)
             return cp->valid();
+        else
+            throw std::runtime_error("uninitialized Student");
+    }
+    std::string letter_grade() const
+    {
+        if (cp)
+            return cp->letter_grade();
         else
             throw std::runtime_error("uninitialized Student");
     }
