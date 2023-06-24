@@ -14,6 +14,11 @@ bool compare_Core_Ptrs(const Ptr<Core> &lhs, const Ptr<Core> &rhs)
     return lhs->name() < rhs->name();
 }
 
+bool operator<(const Ptr<Core> &lhs, const Ptr<Core> &rhs)
+{
+    return compare_Core_Ptrs(lhs, rhs);
+}
+
 int main()
 {
     vector<Ptr<Core>> students; // changed type
@@ -32,7 +37,8 @@ int main()
         students.push_back(record);
     }
     // compare must be rewritten to work on const Ptr<Core>&
-    sort(students.begin(), students.end(), compare_Core_Ptrs);
+    // sort(students.begin(), students.end(), compare_Core_Ptrs);
+    sort(students.begin(), students.end());
     // write the names and grades
     for (vector<Ptr<Core>>::size_type i = 0;
          i != students.size(); ++i)
