@@ -67,7 +67,7 @@ vector<Str> center(const vector<Str> &pic)
         {
             if (*it != ' ')
             {
-                s = s.substr(0, s.size() - (it - s.begin()));
+                s = s.substr(0, (it - s.begin() + 1));
                 break;
             }
         }
