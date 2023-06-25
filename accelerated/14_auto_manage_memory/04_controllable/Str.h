@@ -68,6 +68,24 @@ public:
     }
     const_iterator end() const { return data->end(); }
 
+    Str substr(size_type i, size_type length) const
+    {
+        Str ret;
+        std::copy(data->begin() + i, data->begin() + i + length,
+                  std::back_inserter(*ret.data));
+        return ret;
+    }
+
+    std::istream &getline(std::istream &is)
+    {
+        data.make_unique();
+        data->clear();
+        char c;
+        while (is.get(c) && c != '\n')
+            data->push_back(c);
+        return is;
+    }
+
 private:
     // store a Ptr to a vector
     Ptr<Vec<char>> data;
