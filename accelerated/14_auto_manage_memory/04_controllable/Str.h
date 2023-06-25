@@ -18,6 +18,10 @@ class Str
     friend std::istream &operator>>(std::istream &, Str &);
 
 public:
+    typedef Vec<char>::size_type size_type;
+    typedef Vec<char>::iterator iterator;
+    typedef Vec<char>::const_iterator const_iterator;
+
     Str &operator+=(const Str &s)
     {
         data.make_unique();
@@ -25,9 +29,6 @@ public:
                   std::back_inserter(*data));
         return *this;
     }
-
-    // interface as before
-    typedef Vec<char>::size_type size_type;
 
     // reimplement constructors to create Ptrs
     Str() : data(new Vec<char>) {}
@@ -53,6 +54,19 @@ public:
     const char &operator[](size_type i) const { return (*data)[i]; }
 
     size_type size() const { return data->size(); }
+
+    iterator begin()
+    {
+        data.make_unique();
+        return data->begin();
+    }
+    const_iterator begin() const { return data->begin(); }
+    iterator end()
+    {
+        data.make_unique();
+        return data->end();
+    }
+    const_iterator end() const { return data->end(); }
 
 private:
     // store a Ptr to a vector
