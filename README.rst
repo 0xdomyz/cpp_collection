@@ -1,8 +1,6 @@
 Collection of C++ Scripts
 =========================
 
-Accelerated book
-
 Boost scripts
 
 Collection of games
