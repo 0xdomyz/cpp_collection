@@ -29,3 +29,40 @@ libs
 `list of doco for libs <https://www.boost.org/doc/libs/?view=categorized>`_
 
 `list of libs A-Z <https://www.boost.org/doc/libs/1_82_0/libs/libraries.htm>`_
+
+https://www.boost.org/doc/libs/1_83_0/libs/format/doc/format.html
+
+https://www.boost.org/doc/libs/1_83_0/doc/html/program_options/tutorial.html#id-1.3.30.4.3
+
+https://www.boost.org/doc/libs/1_83_0/doc/html/thread/thread_management.html#thread.thread_management.synopsis
+
+https://www.boost.org/doc/libs/1_83_0/libs/tokenizer/doc/introduc.htm
+
+https://www.boost.org/doc/libs/1_83_0/doc/html/boost_lexical_cast/examples.html
+
+https://www.boost.org/doc/libs/1_83_0/doc/html/date_time/examples/general_usage_examples.html
+
+https://www.boost.org/doc/libs/1_83_0/libs/python/doc/html/tutorial/tutorial/functions.html#tutorial.functions.overloading
+
+https://www.boost.org/doc/libs/1_83_0/doc/html/process.html#boost_process.introduction
+
+https://www.boost.org/doc/libs/1_83_0/doc/html/boost_asio/overview/basics.html
+
+https://www.boost.org/doc/libs/1_83_0/libs/math/doc/html/math_toolkit/main_intro.html
+
+https://www.boost.org/doc/libs/1_83_0/libs/assign/doc/index.html#list_of
+
+https://www.boost.org/doc/libs/1_83_0/libs/core/doc/html/index.html
+
+https://www.boost.org/doc/libs/1_83_0/libs/bimap/doc/html/boost_bimap/one_minute_tutorial.html
+
+https://www.boost.org/doc/libs/1_83_0/libs/spirit/doc/html/index.html
+
+https://www.boost.org/doc/libs/1_83_0/libs/spirit/doc/html/spirit/introduction.html
+
+https://www.boost.org/doc/libs/1_83_0/libs/spirit/doc/html/spirit/lex/lexer_introduction.html
+
+https://www.boost.org/doc/libs/1_83_0/libs/spirit/doc/html/spirit/qi/tutorials/warming_up.html
+
+https://www.boost.org/doc/libs/1_83_0/libs/spirit/doc/html/spirit/karma/tutorials/quick_start.html
+
