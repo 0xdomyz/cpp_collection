@@ -21,6 +21,7 @@ Install specific bins::
     sudo ./b2 install
 
     ls -l /usr/local/lib/libboost_*
+    ls /usr/local/lib/libboost_*.a > bins.txt
 
 libs
 --------
