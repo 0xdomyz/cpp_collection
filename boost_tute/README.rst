@@ -23,6 +23,15 @@ Install specific bins::
     ls -l /usr/local/lib/libboost_*
     ls /usr/local/lib/libboost_*.a > bins.txt
 
+Copy out examples::
+
+    cp /usr/local/boost_1_82_0/libs/program_options/example/* .
+
+Compile example::
+
+    g++ -I /usr/local/boost_1_82_0 example.cpp -o example
+    g++ -I /usr/local/boost_1_82_0 -o bin_example bin_example.cpp /usr/local/lib/libboost_regex.a
+
 libs
 --------
 
